@@ -1,0 +1,16 @@
+{
+  "canonical_source": "/home/tttal/workspace/tools/developer-skills/skills/api-design-principles",
+  "base_revision": "193a7e7bd835b199f956bc214b0714692ffc81ec",
+  "uncommitted": false,
+  "files": {
+    "LICENSE.txt": "f89abb55d9f073f38f1703e4518f0613c788c6174be7f13b8dfe48a1c076c746",
+    "NOTICE.md": "0a400526a64d126f472110682ff3567573e905a485337234ce19974850e17350",
+    "SKILL.md": "559138942a0faf0bec818bb438368230b235f35571bd34baf7027d5d93d46bbd",
+    "assets/api-design-checklist.md": "7ea6fc49b6002cf2f8d8146da01e4595fa8992a02be6d726357a17095aa3fab9",
+    "assets/rest-api-template.py": "b359cda817740ee2cd3c9a901d7d5a14178cc0e2dcb46b75af053e5cc4d6012c",
+    "references/details.md": "e8b19b192ab1e1e99a5d7fed285670c2cfc0f23877338efe68da56eeaeaf1649",
+    "references/graphql-schema-design.md": "0f10cbe2f3d787be9de4ab8dcc88444ac36ab69786973666a229fdbffeb01638",
+    "references/message-contracts.md": "0f80a9314d03bae48516cc2acaf660e04e98839c4f2d35763e0f3182c3409618",
+    "references/rest-best-practices.md": "8c9b0ece736a7ed64209ee12e3544591e27c54012d2d32d540d298b54780904e"
+  }
+}
