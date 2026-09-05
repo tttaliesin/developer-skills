@@ -26,13 +26,20 @@ def main():
     with tempfile.TemporaryDirectory(prefix='developer-skills-patch-') as tmp:
         target = Path(tmp) / 'skills' / name
         shutil.copytree(snapshot / meta['source_directory'], target)
-        if not (target / 'LICENSE.txt').exists():
+        if not (target / 'LICENSE.txt').exists() and (snapshot / 'LICENSE').is_file():
             shutil.copyfile(snapshot / 'LICENSE', target / 'LICENSE.txt')
         old, new = inventory(target), inventory(package)
         chunks = []
         for path in sorted(old.keys() | new.keys()):
-            before = (target / path).read_text(encoding='utf-8') if path in old else ''
-            after = (package / path).read_text(encoding='utf-8') if path in new else ''
+            if old.get(path) == new.get(path):
+                continue
+            chunks.append(f'diff --git a/skills/{name}/{path} b/skills/{name}/{path}\n')
+            before = (target / path).read_bytes().decode('utf-8') if path in old else ''
+            after = (package / path).read_bytes().decode('utf-8') if path in new else ''
+            if not before and not after and (path in old) != (path in new):
+                mode = 'deleted file mode 100644\nindex e69de29..0000000\n' if path in old else 'new file mode 100644\nindex 0000000..e69de29\n'
+                chunks.append(mode)
+                continue
             for line in difflib.unified_diff(
                 before.splitlines(keepends=True), after.splitlines(keepends=True),
                 fromfile=f'a/skills/{name}/{path}' if path in old else '/dev/null',

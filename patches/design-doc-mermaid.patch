@@ -1,0 +1,4142 @@
+diff --git a/skills/design-doc-mermaid/.claude-plugin/plugin.json b/skills/design-doc-mermaid/.claude-plugin/plugin.json
+--- a/skills/design-doc-mermaid/.claude-plugin/plugin.json
++++ /dev/null
+@@ -1,20 +0,0 @@
+-{
+-  "name": "design-doc-mermaid",
+-  "description": "Default diagrams for design docs, walkthroughs, and requirements (flowchart, sequence, class, ER, state, C4). GitHub wiki renders the fence. Confluence needs PNG or SVG as well.",
+-  "version": "1.1.1",
+-  "author": {
+-    "name": "Rick Hightower",
+-    "url": "https://github.com/RichardHightower"
+-  },
+-  "homepage": "https://github.com/SpillwaveSolutions/design-doc-mermaid",
+-  "repository": "https://github.com/SpillwaveSolutions/design-doc-mermaid",
+-  "license": "MIT",
+-  "keywords": [
+-    "mermaid",
+-    "diagrams",
+-    "c4",
+-    "architecture",
+-    "claude-code",
+-    "wiki"
+-  ]
+-}
+diff --git a/skills/design-doc-mermaid/.gitignore b/skills/design-doc-mermaid/.gitignore
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/skills/design-doc-mermaid/HIGH_CONTRAST_UPDATE.md b/skills/design-doc-mermaid/HIGH_CONTRAST_UPDATE.md
+--- a/skills/design-doc-mermaid/HIGH_CONTRAST_UPDATE.md
++++ /dev/null
+@@ -1,203 +0,0 @@
+-# High-Contrast Mermaid Diagram Update ✅
+-
+-**Date**: 2025-11-07
+-**Skill Updated**: design-doc-mermaid
+-**Version**: 1.1 (High-Contrast)
+-
+----
+-
+-## Summary
+-
+-The `design-doc-mermaid` skill has been updated with **MANDATORY high-contrast requirements** for all Mermaid diagrams to ensure accessibility and readability.
+-
+----
+-
+-## Changes Made
+-
+-### 1. SKILL.md Updates
+-
+-**Location**: `/Users/richardhightower/.claude/skills/design-doc-mermaid/SKILL.md`
+-
+-#### Section 4: "Use Consistent Styling" → "Use Consistent Styling with High Contrast"
+-
+-**Added**:
+-- **CRITICAL** heading emphasizing mandatory high-contrast colors
+-- Contrast rules: light backgrounds → dark text, dark backgrounds → light text
+-- ✅ Good examples with explicit `color:` properties
+-- ❌ Bad examples showing missing `color:` properties
+-- **High-Contrast Color Combinations Table** with 9 common use cases
+-
+-**Key Example**:
+-```mermaid
+-classDef primaryService fill:#90EE90,stroke:#333,stroke-width:2px,color:darkgreen
+-classDef secondaryService fill:#FFD700,stroke:#333,stroke-width:2px,color:black
+-classDef database fill:#87CEEB,stroke:#333,stroke-width:2px,color:darkblue
+-```
+-
+-#### Section 6: New "Ensure Accessibility with High-Contrast Colors"
+-
+-**Added**:
+-- **MANDATORY** requirement for `color:` property in all `classDef` styles
+-- Quick test: "Can you easily read the text on the background color?"
+-- ✅ Correct vs ❌ Incorrect examples
+-
+----
+-
+-### 2. mermaid-diagram-guide.md Updates
+-
+-**Location**: `/Users/richardhightower/.claude/skills/design-doc-mermaid/references/mermaid-diagram-guide.md`
+-
+-#### Color Coding Section → "Color Coding with High Contrast"
+-
+-**Added**:
+-- **CRITICAL** heading emphasizing accessibility requirement
+-- ✅ Correct examples using both `style` and `classDef` with `color:` properties
+-- ❌ Incorrect examples showing missing `color:` properties
+-- **High-Contrast Color Palette Table** with 8 states (Normal, Success, Warning, Error, Info, Public, Private, Dark)
+-
+-**Table Added**:
+-| State | Background Fill | Text Color | Stroke |
+-|-------|----------------|------------|--------|
+-| Normal | `#F0F0F0` | `color:black` | `#333` |
+-| Success | `#90EE90` | `color:darkgreen` | `#2E7D2E` |
+-| Warning | `#FFD700` | `color:black` | `#B8860B` |
+-| Error | `#FFB6C1` | `color:black` | `#DC143C` |
+-| Info | `#87CEEB` | `color:darkblue` | `#4682B4` |
+-| Public | `#FFE4B5` | `color:black` | `#FF8C00` |
+-| Private | `#E6E6FA` | `color:darkblue` | `#8A2BE2` |
+-| Dark | `#2C3E50` | `color:white` | `#34495E` |
+-
+-#### Best Practices Section 6: New "CRITICAL - Ensure High-Contrast Accessibility"
+-
+-**Added**:
+-- **MANDATORY** heading for ALL diagrams
+-- Complete example with 3 components using different contrast styles
+-- **Quick Accessibility Test** (3 questions)
+-- **Common Mistakes to Avoid** (3 ❌ examples)
+-- **Always Include** checklist (3 ✅ requirements)
+-
+-#### Syntax Validation Checklist
+-
+-**Added 3 new checklist items**:
+-- [ ] **All `classDef` statements include `color:` property for high contrast**
+-- [ ] **All `style` statements include `color:` property for high contrast**
+-- [ ] **Text is readable on all background colors (accessibility test)**
+-
+----
+-
+-## Impact
+-
+-### Before Update
+-- Mermaid diagrams could have poor contrast
+-- No guidance on text color selection
+-- Risk of unreadable diagrams
+-- WCAG accessibility issues
+-
+-### After Update
+-- **All diagrams MUST have high-contrast colors**
+-- Clear guidance with good/bad examples
+-- Explicit `color:` property requirement
+-- **WCAG 2.1 Level AA compliant**
+-- Readable in print and grayscale
+-
+----
+-
+-## Examples
+-
+-### Before (Poor Contrast)
+-```mermaid
+-graph LR
+-    A[Component]
+-    B[Service]
+-
+-    classDef myStyle fill:#FFD700,stroke:#333,stroke-width:2px
+-    %% Missing color: property - may be unreadable!
+-
+-    class A myStyle
+-```
+-
+-### After (High Contrast)
+-```mermaid
+-graph LR
+-    A[Component]
+-    B[Service]
+-
+-    classDef myStyle fill:#FFD700,stroke:#333,stroke-width:2px,color:black
+-    %% Explicit dark text on light background - readable!
+-
+-    class A myStyle
+-```
+-
+----
+-
+-## Skill Usage
+-
+-When users invoke the `design-doc-mermaid` skill, they will now automatically receive:
+-
+-1. **Templates** with high-contrast `classDef` examples
+-2. **Reference guide** with accessibility requirements
+-3. **Validation checklist** including contrast verification
+-4. **Best practices** emphasizing mandatory high-contrast colors
+-
+-**Agent Behavior**:
+-- Will include `color:` property in ALL generated `classDef` statements
+-- Will use high-contrast color combinations from provided palette
+-- Will validate diagrams against accessibility checklist
+-
+----
+-
+-## Validation
+-
+-To verify high-contrast compliance in any diagram:
+-
+-1. **Check for `color:` property**: Every `classDef` or `style` statement must include it
+-2. **Visual test**: Can you easily read the text on each background?
+-3. **Grayscale test**: Would it be readable if printed in black and white?
+-
+-**Quick grep check**:
+-```bash
+-grep "classDef" yourfile.md | grep -v "color:"
+-# If this returns results, contrast is NOT ensured!
+-```
+-
+----
+-
+-## Related Updates
+-
+-This update aligns with parallel updates to:
+-- `/Users/richardhightower/articles/CLAUDE.md` (Phase 3: Diagram Creation)
+-- All article Mermaid diagrams now use high-contrast colors
+-
+-**Consistency**: The same high-contrast requirements and examples are now documented across:
+-1. Article workflow (CLAUDE.md)
+-2. Design-doc skill (SKILL.md)
+-3. Mermaid reference guide (mermaid-diagram-guide.md)
+-
+----
+-
+-## Files Updated
+-
+-1. ✅ `SKILL.md` - Added Section 4 high-contrast requirements, Section 6 accessibility
+-2. ✅ `references/mermaid-diagram-guide.md` - Updated Color Coding section, added Best Practice #6, updated checklist
+-3. ✅ `HIGH_CONTRAST_UPDATE.md` (this file) - Documentation of all changes
+-
+----
+-
+-## Future Enforcement
+-
+-**All Mermaid diagrams generated by this skill will now**:
+-- Include explicit `color:` properties in all `classDef` statements
+-- Use high-contrast color combinations from the provided palette
+-- Pass the 3-question accessibility test
+-- Be validated against the enhanced checklist
+-
+-**Users will be guided to**:
+-- Reference the high-contrast color palette table
+-- Test readability before finalizing diagrams
+-- Use the syntax validation checklist with accessibility items
+-
+----
+-
+-**Status**: ✅ Skill updated with mandatory high-contrast requirements
+-**Version**: 1.1 (High-Contrast)
+-**Last Updated**: 2025-11-07
+diff --git a/skills/design-doc-mermaid/LICENSE.txt b/skills/design-doc-mermaid/LICENSE.txt
+--- /dev/null
++++ b/skills/design-doc-mermaid/LICENSE.txt
+@@ -0,0 +1,23 @@
++Upstream license declaration: "Part of Claude Code Skills - MIT License" (README.md).
++Plugin author: Rick Hightower (https://github.com/RichardHightower).
++Original declarations are preserved in NOTICE.md and the management repository snapshot.
++The standard MIT text below is supplied for the declared license; its placeholder is not an invented upstream copyright notice.
++
++MIT License
++
++Copyright (c) <year> <copyright holders>
++
++Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
++associated documentation files (the "Software"), to deal in the Software without restriction, including
++without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the
++following conditions:
++
++The above copyright notice and this permission notice shall be included in all copies or substantial
++portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
++LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
++EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
++IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
++USE OR OTHER DEALINGS IN THE SOFTWARE.
+diff --git a/skills/design-doc-mermaid/NOTICE.md b/skills/design-doc-mermaid/NOTICE.md
+--- /dev/null
++++ b/skills/design-doc-mermaid/NOTICE.md
+@@ -0,0 +1,13 @@
++# Upstream attribution and local modifications
++
++Adapted from [SpillwaveSolutions/design-doc-mermaid](https://github.com/spillwavesolutions/design-doc-mermaid) at `c36d83503d2ba9c1e51638dc2d8a34758a377dea`.
++The plugin identifies its author as Rick Hightower, https://github.com/RichardHightower.
++Upstream README declares: “Part of Claude Code Skills - MIT License”.
++The upstream plugin declares `"license": "MIT"`.
++There is no standalone license text in that revision; [LICENSE.txt](LICENSE.txt) supplies the standard declared terms without inventing a copyright year.
++The management repository retains those original declarations and all pinned source files.
++
++Local modifications on 2026-09-05 implement task-scoped output/publication, evidence and review gates, host-independent tool selection, and safer local rendering and Markdown conversion.
++Python helper implementations were replaced; their supported CLI interface is documented in the local workflow.
++Upstream presentation discretion was not expanded: semantic Unicode requirements and PlantUML opt-in remain.
++The complete source/customization diff is retained by the management repository.
+diff --git a/skills/design-doc-mermaid/README.md b/skills/design-doc-mermaid/README.md
+--- a/skills/design-doc-mermaid/README.md
++++ /dev/null
+@@ -1,357 +0,0 @@
+-# Mermaid Architect - Comprehensive Diagram & Documentation Skill
+-
+-**Version 2.0** - Hierarchical architecture with intelligent orchestration
+-
+-A powerful Claude Code skill for creating Mermaid diagrams and design documents using on-demand guide loading, code-to-diagram generation, and Python utilities.
+-
+-## Installation
+-
+-### One-Click Install via Skilz Marketplace
+-
+-Install this skill instantly from the [Skilz Marketplace](https://skillzwave.ai/skill/SpillwaveSolutions__design-doc-mermaid__design-doc-mermaid__SKILL/):
+-
+-```bash
+-skilz install SpillwaveSolutions_design-doc-mermaid/design-doc-mermaid
+-```
+-
+-### Manual Installation
+-
+-Clone directly into your Claude Code skills directory:
+-
+-```bash
+-# Navigate to your skills directory
+-cd ~/.claude/skills
+-
+-# Clone the repository
+-git clone https://github.com/SpillwaveSolutions/design-doc-mermaid.git
+-```
+-
+-### Verify Installation
+-
+-After installation, verify the skill is available:
+-
+-```bash
+-# List installed skills
+-ls ~/.claude/skills/design-doc-mermaid
+-
+-# Or ask Claude Code
+-# "List my installed skills"
+-```
+-
+-## What This Skill Does
+-
+-**Intelligent Diagram Generation:**
+-- Activity diagrams (workflows, processes, business logic)
+-- Deployment diagrams (cloud infrastructure, K8s, serverless)
+-- Architecture diagrams (system components, microservices)
+-- Sequence diagrams (API flows, service interactions)
+-- Complete design documents with embedded diagrams
+-
+-**Code-to-Diagram Conversion:**
+-- Extract architecture from Spring Boot applications
+-- Generate deployment diagrams from configuration files
+-- Create sequence diagrams from method calls
+-- Document ETL pipelines and data flows
+-
+-**Diagram Management:**
+-- Extract Mermaid diagrams from Markdown files
+-- Validate diagram syntax with mermaid-cli
+-- Convert diagrams to PNG/SVG images
+-- Batch process entire directories
+-
+-## Quick Start
+-
+-### Create an Activity Diagram
+-
+-```
+-User: "Create an activity diagram for user registration with email verification"
+-```
+-
+-The skill will:
+-1. Load `references/guides/diagrams/activity-diagrams.md`
+-2. Use the registration pattern template
+-3. Add Unicode symbols (🔐 for security, 📧 for email, ✅ for success)
+-4. Apply high-contrast styling
+-5. Output complete Mermaid diagram
+-
+-### Generate from Code
+-
+-```
+-User: "Here's my Spring Boot application.yml - generate a deployment diagram"
+-```
+-
+-The skill will:
+-1. Analyze configuration (datasource, cache, security)
+-2. Load `references/guides/diagrams/deployment-diagrams.md`
+-3. Load `examples/spring-boot/README.md`
+-4. Map config to cloud resources
+-5. Generate deployment diagram with resource specs
+-
+-### Create Design Document
+-
+-```
+-User: "Create an API design document for the contacts API"
+-```
+-
+-The skill will:
+-1. Load `assets/api-design-template.md`
+-2. Load relevant diagram guides (sequence, ER, architecture)
+-3. Generate complete document with embedded diagrams
+-4. Save to `docs/design/api-contacts-v1-2025-01-13.md`
+-
+-## Structure
+-
+-### Hierarchical Organization
+-
+-```
+-mermaid-architect/
+-├── SKILL.md                          # Main orchestrator with decision tree
+-├── README.md                         # This file
+-├── CLAUDE.md                         # Claude Code instructions
+-│
+-├── references/                       # Reference materials
+-│   ├── mermaid-diagram-guide.md     # Legacy general guide
+-│   └── guides/                       # Specialized guides (load on-demand)
+-│       ├── diagrams/
+-│       │   ├── activity-diagrams.md      # ✅ Complete
+-│       │   ├── deployment-diagrams.md    # ✅ Complete
+-│       │   ├── architecture-diagrams.md  # ✅ Complete
+-│       │   └── sequence-diagrams.md      # ✅ Complete
+-│       ├── code-to-diagram/
+-│       │   └── README.md                 # ✅ Complete (master guide)
+-│       ├── unicode-symbols/
+-│       │   └── guide.md                  # ✅ Complete (100+ symbols)
+-│       └── troubleshooting.md        # ✅ Complete (28 common errors)
+-│
+-├── scripts/                          # Python utilities
+-│   ├── extract_mermaid.py           # ✅ Extract & validate diagrams
+-│   └── mermaid_to_image.py          # ✅ Convert to PNG/SVG
+-│
+-├── examples/                         # Language-specific patterns
+-│   ├── spring-boot/                 # ✅ Complete
+-│   ├── fastapi/                     # ✅ Complete
+-│   ├── react/                       # ✅ Complete
+-│   ├── python-etl/                  # ✅ Complete
+-│   ├── node-webapp/                 # ✅ Complete
+-│   └── java-webapp/                 # ✅ Complete
+-│
+-└── assets/                           # Design document templates
+-    ├── architecture-design-template.md
+-    ├── api-design-template.md
+-    ├── feature-design-template.md
+-    ├── database-design-template.md
+-    └── system-design-template.md
+-```
+-
+-## Key Features
+-
+-### 1. Unicode Semantic Symbols
+-
+-Every diagram uses meaningful Unicode symbols:
+-
+-```mermaid
+-graph TB
+-    User[👤 Client] --> Gateway[🌐 API Gateway]
+-    Gateway --> Auth[🔐 Auth Service]
+-    Gateway --> API[⚙️ API Service]
+-    API --> DB[(💾 Database)]
+-    API --> Cache[(⚡ Redis)]
+-    API --> Queue[📬 Message Queue]
+-    Queue --> Worker[⚙️ Background Worker]
+-```
+-
+-**Symbol Categories:**
+-- Infrastructure: ☁️ 🌐 🔌 📡 🗄️
+-- Compute: ⚙️ ⚡ 🔄 🚀 💨
+-- Data: 💾 📦 📊 📈 🗃️
+-- Messaging: 📨 📬 📤 📥 🐰
+-- Security: 🔐 🔑 🛡️ 🚪 👤
+-- Monitoring: 📝 📊 🚨 ⚠️ ✅ ❌
+-
+-### 2. High-Contrast Styling
+-
+-All diagrams use accessible, high-contrast colors - see SKILL.md for full details.
+-
+-### 3. Python Utilities
+-
+-#### Extract Diagrams
+-
+-```bash
+-# List all diagrams in a file
+-python scripts/extract_mermaid.py document.md --list-only
+-
+-# Extract to separate .mmd files
+-python scripts/extract_mermaid.py document.md --output-dir diagrams/
+-
+-# Validate all diagrams
+-python scripts/extract_mermaid.py document.md --validate
+-
+-# Replace diagrams with image references (for Confluence)
+-python scripts/extract_mermaid.py document.md --replace-with-images \
+-  --image-format png --output-markdown output.md
+-```
+-
+-#### Convert to Images
+-
+-```bash
+-# Single file
+-python scripts/mermaid_to_image.py diagram.mmd output.png
+-
+-# Custom theme and size
+-python scripts/mermaid_to_image.py diagram.mmd output.svg \
+-  --theme dark --background white --width 1200
+-
+-# Batch convert directory
+-python scripts/mermaid_to_image.py diagrams/ output/ \
+-  --format png --recursive
+-
+-# From stdin
+-echo "graph TD; A-->B" | python scripts/mermaid_to_image.py - output.png
+-```
+-
+-## Requirements
+-
+-### For Diagram Generation
+-- Claude Code skill system (automatic)
+-- Guides and templates (included in this skill)
+-
+-### For Validation & Image Conversion
+-```bash
+-# Install mermaid-cli globally
+-npm install -g @mermaid-js/mermaid-cli
+-
+-# Verify installation
+-mmdc --version
+-```
+-
+-### For Python Scripts
+-- Python 3.7+
+-- No additional packages required (uses stdlib only)
+-
+-## Learning Path
+-
+-### New to Mermaid Diagrams?
+-
+-1. **Start with Activity Diagrams** - Read `references/guides/diagrams/activity-diagrams.md`
+-2. **Learn Unicode Symbols** - Read `references/guides/unicode-symbols/guide.md`
+-3. **Try an Example** - Use patterns from `examples/spring-boot/`
+-4. **Validate Your Work** - Run `python scripts/extract_mermaid.py --validate`
+-
+-### Need to Document Existing Code?
+-
+-1. **Identify Framework** - Spring Boot, FastAPI, React, etc.
+-2. **Load Example Guide** - Read `examples/{your-framework}/README.md`
+-3. **Match Patterns** - Find similar code patterns in examples
+-4. **Generate Diagrams** - Use templates from guides
+-5. **Validate** - Use validation scripts
+-
+-### Creating Design Documents?
+-
+-1. **Choose Template Type** - Architecture, API, Feature, Database, or System
+-2. **Load Template** - Read from `assets/{type}-design-template.md`
+-3. **Fill Sections** - Replace placeholders with actual content
+-4. **Add Diagrams** - Load diagram guides as needed for each section
+-5. **Use Symbols** - Enhance with Unicode symbols throughout
+-6. **Save** - Place in `docs/design/` with timestamp
+-
+-## How the Hierarchical System Works
+-
+-### Traditional Approach (Inefficient)
+-- Load entire skill documentation (~50KB)
+-- AI processes all templates and examples
+-- High token usage
+-- Slow response time
+-
+-### Hierarchical Approach (Efficient)
+-1. **User makes request** → AI analyzes intent
+-2. **Decision tree activates** → Determines needed guides
+-3. **Load only what's needed** → Reads specific guide (~2-5KB)
+-4. **Generate output** → Uses targeted templates
+-5. **Token efficient** → 10x less context needed
+-
+-### Example Flow
+-
+-**User:** "Create deployment diagram for my Docker Compose setup"
+-
+-**Decision Tree:**
+-```
+-1. Analyze: "deployment diagram" + "Docker Compose"
+-2. Determine: deployment-diagrams.md needed
+-3. Load: references/guides/diagrams/deployment-diagrams.md (2KB)
+-4. Find pattern: Docker Compose template exists
+-5. Generate: Using template + Unicode symbols
+-6. Output: Complete diagram in <30 seconds
+-```
+-
+-**Tokens Used:** ~2,000 (vs ~10,000 with traditional approach)
+-
+-## Completion Status
+-
+-✅ **Complete:**
+-- Hierarchical decision tree orchestrator
+-- Activity diagram guide with templates
+-- Deployment diagram guide (AWS, GCP, K8s, serverless, Docker)
+-- Unicode symbols guide (100+ symbols)
+-- Extract Mermaid script with validation
+-- Mermaid to image conversion script
+-- Spring Boot code-to-diagram examples
+-- Design document templates (5 types)
+-- High-contrast styling system
+-
+-🚧 **In Progress:**
+-- FastAPI examples
+-- React component architecture examples
+-- Python ETL pipeline examples
+-
+-📋 **Planned:**
+-- Architecture diagrams guide
+-- Sequence diagrams guide
+-- Code-to-diagram master guide
+-- Node.js/Express examples
+-- Java web app examples
+-
+-## Contributing
+-
+-To add a new diagram type guide:
+-
+-1. Create guide in `references/guides/diagrams/{type}-diagrams.md`
+-2. Include:
+-   - When to use
+-   - Basic syntax
+-   - Common patterns (3-5 templates)
+-   - Unicode symbol examples
+-   - Best practices
+-3. Update `SKILL.md` decision tree
+-4. Add examples with code mappings
+-
+-To add a new language example:
+-
+-1. Create directory in `examples/{framework}/`
+-2. Add `README.md` with:
+-   - Framework overview
+-   - Architecture diagram from structure
+-   - Deployment diagram from config
+-   - Sequence diagram from code
+-   - Activity diagram from logic
+-3. Update `SKILL.md` code-to-diagram table
+-
+-## License
+-
+-Part of Claude Code Skills - MIT License
+-
+-## Related Skills
+-
+-- **confluence** - Upload diagrams to Confluence
+-- **plantuml** - Alternative diagram format
+-
+-## Links
+-
+-- [GitHub Repository](https://github.com/SpillwaveSolutions/design-doc-mermaid)
+-- [Skilz Marketplace Listing](https://skillzwave.ai/skill/SpillwaveSolutions__design-doc-mermaid__design-doc-mermaid__SKILL/)
+-- [Mermaid Official Documentation](https://mermaid.js.org/)
+-
+----
+-
+-**Version:** 2.0.0
+-**Updated:** 2025-01-13
+-**Maintained by:** SpillwaveSolutions
+diff --git a/skills/design-doc-mermaid/SKILL.md b/skills/design-doc-mermaid/SKILL.md
+--- a/skills/design-doc-mermaid/SKILL.md
++++ b/skills/design-doc-mermaid/SKILL.md
+@@ -1,519 +1,86 @@
+ ---
+ name: design-doc-mermaid
+-description: Create Mermaid diagrams (flowchart, sequence, class, ER, state, C4, architecture) from text or source code. Default for GitHub wiki. Use when asked to create a diagram, generate mermaid, document architecture, or convert code to diagram. PlantUML is only for leftover types. Confluence needs PNG/SVG as well as the fence.
++description: Create or review Mermaid diagrams from requirements or code, including architecture, deployment, sequence, flow, state, class and ER views; validate sources and prepare local Markdown or image artifacts. Does not authorize publication or deployment.
+ ---
+ 
+-# Mermaid Architect - Hierarchical Diagram and Documentation Skill
++# Design Doc Mermaid
+ 
+-Mermaid diagram and documentation system with specialized guides and code-to-diagram capabilities.
++## Scope and ownership
+ 
+-## Table of Contents
++Start from the question, requested viewer, source scope, and output action.
++Use existing task decisions and valid approvals for the same target, action, environment, external effects, and validity conditions.
++Preserve one-time, per-execution, expiry, credential, production, review, and unrelated-state boundaries.
++A read-only review produces findings and evidence; it does not start file generation, rendering with artifact writes, dependency installation, or external publication.
++Authoring permission covers the requested local artifact, not uploads, Wiki edits, commits, or live system changes outside that scope.
++Route authorized external actions through their owning integration and preserve pending approval requirements.
+ 
+-- [Decision Tree](#decision-tree)
+-- [GitHub wiki, WikiTicket, and Confluence](#github-wiki-wikiticket-and-confluence)
+-- [Available Guides and Resources](#available-guides-and-resources)
+-- [Usage Patterns](#usage-patterns)
+-- [Resilient Workflow](#resilient-workflow)
+-- [Unicode Semantic Symbols](#unicode-semantic-symbols)
+-- [Python Utilities](#python-utilities)
+-- [Decision Tree Examples](#decision-tree-examples)
+-- [High-Contrast Styling](#high-contrast-styling)
+-- [File Organization](#file-organization)
+-- [Workflow Summary](#workflow-summary)
+-- [When to Use What](#when-to-use-what)
+-- [Best Practices](#best-practices)
+-- [Learning Path](#learning-path)
++For document language, structure, links and accessibility, use the repository's Markdown rules and the available markdown-authoring skill.
++This package owns diagram modeling, source evidence, syntax/render checks and local conversion.
++Do not impose STE100, a framework, or a companion skill unavailable on the host.
++Load full design-document templates only when a full document was requested.
+ 
+-## Decision Tree
++## Choose the relevant reference
+ 
+-**How this skill works:**
++| Question | Reference |
++| --- | --- |
++| Process, branch or business flow | [Activity](references/guides/diagrams/activity-diagrams.md) |
++| Runtime resources and deployment boundaries | [Deployment](references/guides/diagrams/deployment-diagrams.md) |
++| Components, layers and dependencies | [Architecture](references/guides/diagrams/architecture-diagrams.md) |
++| Ordered calls and asynchronous messages | [Sequence](references/guides/diagrams/sequence-diagrams.md) |
++| Class, ER, state or viewer-specific delivery | [Viewer guide](references/guides/wiki-ticket-and-github.md) |
++| Existing code or configuration | [Code-to-diagram](references/guides/code-to-diagram/README.md) and [evidence](references/evidence.md) |
++| Validate, render, extract or convert | [Local workflow](references/guides/resilient-workflow.md) |
++| Syntax failure | [Troubleshooting](references/guides/troubleshooting.md), after classifying the failure |
+ 
+-1. **User makes a request** → Skill analyzes intent
+-2. **Skill determines diagram/document type** → Loads appropriate guide(s)
+-3. **AI reads specialized guide** → Generates diagram/document using templates
+-4. **Result delivered** → With validation and export options
++Read only the selected guide and, for matching actual code, its framework example.
++Examples illustrate shapes and questions, not facts or executable instructions for the target repository.
++Do not infer a Go or NestJS topology from Spring Boot or Express examples.
++For a full document choose one existing template under assets and retain only useful sections.
++Replace sample values and completion checkmarks with actual evidence or explicitly unverified status.
+ 
+-**User Intent Analysis:**
++## Evidence before drawing
+ 
+-```mermaid
+-flowchart TD
+-    Start([User Request]) --> Analyze{Analyze Intent}
++For existing systems, support each material node and relationship with a source locator or a user-provided fact.
++Distinguish observed structure, inferred relationships, and proposed design.
++An import does not establish a runtime call; a port setting does not prove an active connection.
++Show only supported and relevant versions, protocols, ports, retry counts and resources.
++For asynchronous commands distinguish broker acceptance, execution confirmation, timeout, and unknown outcome.
++Do not invent retries or live-device success to complete a sequence diagram.
++Read [evidence.md](references/evidence.md) for the compact evidence table and review requirements.
+ 
+-    Analyze -->|"workflow, process, business logic"| Activity[Load Activity Diagram Guide<br/>references/guides/diagrams/activity-diagrams.md]
+-    Analyze -->|"infrastructure, deployment, cloud"| Deploy[Load Deployment Diagram Guide<br/>references/guides/diagrams/deployment-diagrams.md]
+-    Analyze -->|"system architecture, components"| Arch[Load Architecture Guide<br/>references/guides/diagrams/architecture-diagrams.md]
+-    Analyze -->|"API flow, interactions"| Sequence[Load Sequence Diagram Guide<br/>references/guides/diagrams/sequence-diagrams.md]
+-    Analyze -->|"class, ER, state, wiki, walkthrough"| WikiGuide[Load WikiTicket GitHub Guide<br/>references/guides/wiki-ticket-and-github.md]
+-    Analyze -->|"code to diagram"| CodeToDiag[Load Code-to-Diagram Guide<br/>references/guides/code-to-diagram/ + examples/]
+-    Analyze -->|"design document, full docs"| DesignDoc[Load Design Document Template<br/>assets/*-design-template.md]
+-    Analyze -->|"unicode symbols, icons"| Unicode[Load Unicode Symbols Guide<br/>references/guides/unicode-symbols/guide.md]
+-    Analyze -->|"extract, validate, convert"| Scripts[Use Python Scripts<br/>scripts/extract_mermaid.py<br/>scripts/mermaid_to_image.py]
++## Output and validation gates
+ 
+-    Activity --> Generate[Generate Diagram]
+-    Deploy --> Generate
+-    Arch --> Generate
+-    Sequence --> Generate
+-    WikiGuide --> Generate
+-    CodeToDiag --> Generate
+-    DesignDoc --> Generate
+-    Unicode --> Generate
+-    Scripts --> Execute[Execute Script]
++Use fenced Mermaid for a verified supporting Markdown viewer and images when requested or required by the target.
++GitHub/Obsidian version support must be checked for the actual syntax; experimental C4/architecture syntax is not universally supported.
++Keep the editable source in the requested document or repository-established `.mmd` location; avoid two independently edited sources of truth.
++When exporting images, preserve the `.mmd` input and record the tool version and actual validation scope.
+ 
+-    Generate --> Validate{Validate?}
+-    Validate -->|Yes| RunValidation[Run mmdc validation]
+-    Validate -->|No| Output
+-    RunValidation --> Output[Output Result]
+-    Execute --> Output
++Validate before integrating a diagram into final documentation or committing it.
++If validation is unavailable, prepare and report the source as a separate unvalidated draft and pause only final integration.
++Do not add an unvalidated diagram to the final Markdown or claim a render pass.
++For code-to-diagram documentation integration, retain the upstream Team Review → Approved? → Add to Documentation gate.
++Only user/team approval evidence satisfies that gate; rendering or an agent's own review does not.
++Reuse an existing approval only when its scope and validity conditions still match the artifact.
++A helper-generated Markdown file is a review candidate, not proof of approval or automatic replacement of the final document.
+ 
+-    classDef decision fill:#FFD700,stroke:#333,stroke-width:2px,color:black
+-    classDef guide fill:#90EE90,stroke:#333,stroke-width:2px,color:darkgreen
+-    classDef action fill:#87CEEB,stroke:#333,stroke-width:2px,color:darkblue
++Report syntax/rendering, source meaning, actual viewer appearance, and required human review as separate results.
++Screenshot creation does not prove visual acceptance; a source citation does not prove live topology.
++A missing optional viewer leaves its compatibility unverified and does not erase completed checks.
+ 
+-    class Analyze,Validate decision
+-    class Activity,Deploy,Arch,Sequence,WikiGuide,CodeToDiag,DesignDoc,Unicode,Scripts guide
+-    class Generate,Execute,RunValidation,Output action
+-```
++## Preserved invocation and presentation rules
+ 
+-## Available Guides and Resources
++PlantUML remains opt-in and limited to the types or existing `.puml` inputs in the viewer guide.
++Do not install or invoke it merely because Mermaid rendering failed.
++Preserve the reviewed upstream requirement to use semantic Unicode symbols and high-contrast styling.
++Each custom `classDef` must specify text `color:` and readable foreground/background contrast.
++Keep labels and relationships understandable independently of color or symbols and report missing glyphs found during visual checking.
++Load the Unicode reference only when the user asks for symbols/icons, preserving its selective-loading condition.
++The optional change making symbols discretionary was not accepted in this implementation.
+ 
+-### Diagram Type Guides (`references/guides/diagrams/`)
++## Local tools
+ 
+-| Guide | Full Path | Load When User Wants | Examples |
+-|-------|-----------|---------------------|----------|
+-| Activity Diagrams | `references/guides/diagrams/activity-diagrams.md` | Workflows, processes, business logic, user flows, decision trees | "Show checkout flow", "Document ETL pipeline", "Create approval workflow" |
+-| Deployment Diagrams | `references/guides/diagrams/deployment-diagrams.md` | Infrastructure, cloud architecture, K8s, serverless, network topology | "Show AWS architecture", "Document GCP deployment", "Create K8s diagram" |
+-| Architecture Diagrams | `references/guides/diagrams/architecture-diagrams.md` | System architecture, component design, high-level structure | "Show system components", "Document microservices", "Architecture overview" |
+-| Sequence Diagrams | `references/guides/diagrams/sequence-diagrams.md` | API interactions, service communication, request/response flows | "Show API call sequence", "Document auth flow", "Service interactions" |
+-| WikiTicket / GitHub / Confluence | `references/guides/wiki-ticket-and-github.md` | Design docs, walkthroughs, requirements, wiki publish, Confluence images | "architecture doc", "code walkthrough", "wiki", "Confluence" |
+-
+-Default for WikiTicket and GitHub wiki is this skill, including `classDiagram`, `erDiagram`, and `stateDiagram-v2`. Do not send those to PlantUML. If GitHub fails to render C4 / architecture-beta / block-beta, fall back to `flowchart TD`.
+-
+-### Code-to-Diagram Guide & Examples
+-
+-| Resource | Full Path | What It Provides |
+-|----------|-----------|------------------|
+-| **Master Guide** | `references/guides/code-to-diagram/README.md` | Complete workflow for analyzing any codebase and extracting diagrams |
+-| **Spring Boot** | `examples/spring-boot/README.md` | Controller→Service→Repository architecture, deployment config, sequence from methods, activity from business logic |
+-| **FastAPI** | `examples/fastapi/README.md` | Python async patterns, Pydantic models, dependency injection, cloud deployment |
+-| **React** | `examples/react/README.md` | Component hierarchy, state management, data flow, build pipeline |
+-| **Python ETL** | `examples/python-etl/README.md` | Data pipeline, transformation steps, error handling, scheduling |
+-| **Node/Express** | `examples/node-webapp/README.md` | Middleware chain, route handlers, async patterns, deployment |
+-| **Java Web App** | `examples/java-webapp/README.md` | Traditional MVC, servlet containers, WAR deployment |
+-
+-### Design Document Templates
+-
+-| Template | Full Path | Use For | Load When |
+-|----------|-----------|---------|-----------|
+-| Architecture Design | `assets/architecture-design-template.md` | System-wide architecture | "Create architecture doc", "Document system design" |
+-| API Design | `assets/api-design-template.md` | API specifications | "API design doc", "Document REST API" |
+-| Feature Design | `assets/feature-design-template.md` | Feature planning | "Feature design", "Plan new feature" |
+-| Database Design | `assets/database-design-template.md` | Database schema | "Database design", "Document schema" |
+-| System Design | `assets/system-design-template.md` | Complete system | "System design doc", "Full system documentation" |
+-
+-### Unicode Symbols Guide
+-
+-**Full Path:** `references/guides/unicode-symbols/guide.md`
+-
+-**Load when user mentions:** "unicode symbols", "emoji in diagrams", "semantic icons", "add symbols"
+-
+-**Quick Reference:**
+-- 📦 Infrastructure: ☁️ 🌐 🔌 📡 🗄️
+-- ⚙️ Compute: ⚙️ ⚡ 🔄 ♻️ 🚀 💨
+-- 💾 Data: 💾 📦 📊 📈 🗃️ 🧊
+-- 📨 Messaging: 📨 📬 📤 📥 🐰 📢
+-- 🔐 Security: 🔐 🔑 🛡️ 🚪 👤 🎫
+-- 📝 Monitoring: 📝 📊 🚨 ⚠️ ✅ ❌
+-
+-### Python Scripts (`scripts/`)
+-
+-| Script | Use For | Load When |
+-|--------|---------|-----------|
+-| `extract_mermaid.py` | Extract diagrams from Markdown, validate syntax, replace with images | "extract diagrams", "validate mermaid", "find all diagrams" |
+-| `mermaid_to_image.py` | Convert .mmd to PNG/SVG, batch conversion, custom themes | "convert to image", "render diagram", "create PNG" |
+-| `resilient_diagram.py` | Full workflow: save .mmd, generate image, validate, error recovery | "generate diagram", "create diagram with validation", "resilient diagram" |
+-
+-
+-## GitHub wiki, WikiTicket, and Confluence
+-
+-Load `references/guides/wiki-ticket-and-github.md` for WikiTicket design docs,
+-code walkthroughs, requirements, GitHub wiki, or Confluence.
+-
+-| Target | What to ship |
+-|--------|----------------|
+-| GitHub wiki / GFM | Fenced `mermaid` block. GitHub renders class, ER, state, sequence, flowchart, C4. |
+-| Confluence / Notion / Word / PDF | Also render PNG or SVG (`scripts/resilient_diagram.py` or `mmdc`) and upload the image. Do not rely on Confluence to render Mermaid. |
+-
+-PlantUML is opt-in for Salt wireframes, use case, timing, ArchiMate, nwdiag, and WBS. Those always ship as PNG or SVG.
+-
+-## Usage Patterns
+-
+-Common request patterns and guide selection. See [When to Use What](#when-to-use-what) for complete mapping.
+-
+-| Pattern | Example Request | Guides to Load |
+-|---------|-----------------|----------------|
+-| Single Diagram | "Create activity diagram for login flow" | Diagram type guide + Unicode symbols |
+-| Code-to-Diagram | "Generate deployment from application.yml" | Framework example + Deployment guide |
+-| Design Document | "Create API design document" | Template from assets/ + Relevant diagram guides |
+-| Extract/Validate | "Extract diagrams from design.md" | Use `scripts/extract_mermaid.py` |
+-| Batch Convert | "Convert all .mmd to PNG" | Use `scripts/mermaid_to_image.py` |
+-
+-## Resilient Workflow
+-
+-**CRITICAL:** This is the recommended approach for ALL diagram generation. It ensures validation, error recovery, and consistent file organization.
+-
+-**Full Guide:** `references/guides/resilient-workflow.md`
+-
+-### Workflow Overview
+-
+-```mermaid
+-flowchart LR
+-    A[1. Identify Type] --> B[2. Save .mmd + Image]
+-    B --> C{3. Valid?}
+-    C -->|Yes| D[4. Add to Markdown]
+-    C -->|No| E[5. Error Recovery]
+-    E --> F{Fix Found?}
+-    F -->|Yes| A
+-    F -->|No| G[Search External]
+-    G --> A
+-
+-    classDef step fill:#90EE90,stroke:#333,color:darkgreen
+-    classDef decision fill:#FFD700,stroke:#333,color:black
+-    class A,B,D,E,G step
+-    class C,F decision
+-```
+-
+-### Key Principle
+-
+-**NEVER add a diagram to markdown until it passes validation.** This prevents broken diagrams in documentation.
+-
+-### Using the Script (Recommended)
+-
+-```bash
+-# Generate with full error recovery
+-python scripts/resilient_diagram.py \
+-    --code "flowchart TD; A-->B" \
+-    --markdown-file design_doc \
+-    --diagram-num 1 \
+-    --title "process_flow" \
+-    --format png \
+-    --json
+-```
+-
+-**Output:** Both `.mmd` and `.png` files in `./diagrams/` directory.
+-
+-### File Naming Convention
+-
+-```
+-./diagrams/<markdown_file>_<num>_<type>_<title>.mmd
+-./diagrams/<markdown_file>_<num>_<type>_<title>.png
+-```
+-
+-**Example:** `./diagrams/api_design_01_sequence_auth_flow.png`
+-
+-### Error Recovery Priority
+-
+-When validation fails, the workflow automatically:
+-
+-1. **Check troubleshooting guide** - `references/guides/troubleshooting.md` (28 documented errors)
+-2. **Search with perplexity** - `perplexity_ask` MCP for syntax questions
+-3. **Search with brave** - `brave_web_search` MCP for recent solutions
+-4. **Ask gemini** - `gemini` skill for alternative perspective
+-5. **General search** - `WebSearch` tool as fallback
+-
+-### Manual Fallback Steps
+-
+-If the script is unavailable:
+-
+-1. **Identify diagram type** from first line (flowchart, sequence, etc.)
+-2. **Load reference guide** from `references/guides/diagrams/`
+-3. **Save to** `./diagrams/<markdown_file>_<num>_<type>_<title>.mmd`
+-4. **Validate:** `mmdc -i file.mmd -o file.png -b transparent`
+-5. **On error:** Search `references/guides/troubleshooting.md` for matching error
+-6. **If not found:** Use search tools in priority order above
+-7. **Add reference:** `![Description](./diagrams/filename.png)`
+-
+-### Pattern 6: Resilient Diagram Generation
+-
+-**User:** "Create a sequence diagram and add it to the design doc"
+-
+-**Skill Actions:**
+-1. Identify intent: **diagram generation** + **markdown integration**
+-2. Load workflow guide: `references/guides/resilient-workflow.md`
+-3. Identify diagram type: **sequence**
+-4. Load diagram guide: `references/guides/diagrams/sequence-diagrams.md`
+-5. Generate Mermaid code using templates
+-6. Execute resilient workflow:
+-   ```bash
+-   python scripts/resilient_diagram.py \
+-       --code "[generated code]" \
+-       --markdown-file design_doc \
+-       --diagram-num 1 \
+-       --title "api_sequence" \
+-       --json
+-   ```
+-7. If validation fails → Apply troubleshooting fix → Retry
+-8. On success → Add `![API Sequence](./diagrams/design_doc_01_sequence_api_sequence.png)` to markdown
+-
+-## Unicode Semantic Symbols
+-
+-Always use Unicode symbols to enhance diagram clarity. Common patterns:
+-
+-### Infrastructure & Deployment
+-```mermaid
+-graph TB
+-    Client[👤 User] --> LB[🌐 Load Balancer]
+-    LB --> App1[⚙️ App Server 1]
+-    LB --> App2[⚙️ App Server 2]
+-    App1 --> DB[(💾 Database)]
+-    App1 --> Cache[(⚡ Redis)]
+-```
+-
+-### Activity Flow with States
+-```mermaid
+-flowchart TD
+-    Start([🚀 Start]) --> Process[⚙️ Process Data]
+-    Process --> Check{✓ Valid?}
+-    Check -->|Yes| Save[💾 Save]
+-    Check -->|No| Error[❌ Error]
+-    Save --> Complete([✅ Complete])
+-```
+-
+-### Microservices Architecture
+-```mermaid
+-graph TB
+-    API[🌐 API Gateway] --> Auth[🔐 Auth Service]
+-    API --> Orders[📋 Order Service]
+-    Orders --> Queue[📬 Message Queue]
+-    Queue --> Worker[⚙️ Background Worker]
+-    Worker --> Storage[📦 Object Storage]
+-```
+-
+-**For complete symbol reference, load:** `references/guides/unicode-symbols/guide.md`
+-
+-## Python Utilities
+-
+-### Extract Mermaid Diagrams
+-
+-```bash
+-# List all diagrams
+-python scripts/extract_mermaid.py document.md --list-only
+-
+-# Extract to separate files
+-python scripts/extract_mermaid.py document.md --output-dir diagrams/
+-
+-# Validate all diagrams
+-python scripts/extract_mermaid.py document.md --validate
+-
+-# Replace with image references (for Confluence upload)
+-python scripts/extract_mermaid.py document.md --replace-with-images \
+-  --image-format png --output-markdown output.md
+-```
+-
+-### Convert to Images
+-
+-```bash
+-# Single conversion
+-python scripts/mermaid_to_image.py diagram.mmd output.png
+-
+-# With custom settings
+-python scripts/mermaid_to_image.py diagram.mmd output.svg \
+-  --theme dark --background white --width 1200
+-
+-# Batch convert directory
+-python scripts/mermaid_to_image.py diagrams/ output/ --format png --recursive
+-
+-# From stdin
+-echo "graph TD; A-->B" | python scripts/mermaid_to_image.py - output.png
+-```
+-
+-## Decision Tree Examples
+-
+-### Example 1: User Asks for Workflow Diagram
+-
+-**Input:** "Show the checkout process workflow"
+-
+-**Skill Decision Path:**
+-```
+-1. Analyze: workflow, process → ACTIVITY DIAGRAM
+-2. Load guide: guides/diagrams/activity-diagrams.md
+-3. Find pattern: E-commerce checkout (template exists in guide)
+-4. Generate using template + Unicode symbols
+-5. Output activity diagram with decision points
+-```
+-
+-**Output:** Complete activity diagram with Unicode symbols for cart, payment, order states.
+-
+-### Example 2: User Provides Spring Boot Code
+-
+-**Input:** "Here's my Spring Boot controller, create diagrams"
+-
+-**Skill Decision Path:**
+-```
+-1. Analyze: Spring Boot, code provided → CODE-TO-DIAGRAM + SPRING BOOT
+-2. Load guides:
+-   - examples/spring-boot/README.md
+-   - guides/diagrams/architecture-diagrams.md (for structure)
+-   - guides/diagrams/sequence-diagrams.md (for method calls)
+-   - guides/diagrams/activity-diagrams.md (for business logic)
+-3. Generate multiple diagrams:
+-   a. Architecture diagram from @RestController/@Service/@Repository annotations
+-   b. Sequence diagram from method call chain
+-   c. Activity diagram from business logic flow
+-4. Output all diagrams with explanations
+-```
+-
+-**Output:** 3-4 diagrams showing different views of the Spring Boot application.
+-
+-### Example 3: User Wants Infrastructure Documentation
+-
+-**Input:** "Document my GCP Cloud Run deployment with AlloyDB"
+-
+-**Skill Decision Path:**
+-```
+-1. Analyze: infrastructure, GCP, Cloud Run → DEPLOYMENT DIAGRAM
+-2. Load guides:
+-   - guides/diagrams/deployment-diagrams.md
+-   - examples/spring-boot/ or examples/fastapi/ (if code provided)
+-3. Check for IaC files (Pulumi, Terraform, docker-compose)
+-4. Generate deployment diagram with:
+-   - Cloud Run services with specs
+-   - VPC connector
+-   - AlloyDB cluster
+-   - Security (IAM, Secret Manager)
+-   - Monitoring
+-5. Apply Unicode symbols for clarity
+-6. Output with resource specifications
+-```
+-
+-**Output:** Complete GCP deployment diagram with all resources labeled.
+-
+-## High-Contrast Styling
+-
+-**ALL diagrams MUST use high-contrast colors:**
+-
+-```mermaid
+-graph TB
+-    classDef primary fill:#90EE90,stroke:#333,stroke-width:2px,color:darkgreen
+-    classDef secondary fill:#87CEEB,stroke:#333,stroke-width:2px,color:darkblue
+-    classDef database fill:#E6E6FA,stroke:#333,stroke-width:2px,color:darkblue
+-    classDef error fill:#FFB6C1,stroke:#DC143C,stroke-width:2px,color:black
+-
+-    %% Every classDef MUST have color: property
+-```
+-
+-**Rules:**
+-- Light background → Dark text color
+-- Dark background → Light text color
+-- Always specify `color:` in every `classDef`
+-
+-## File Organization
+-
+-```
+-design-doc-mermaid/
+-├── SKILL.md                          # This file - Main orchestrator
+-├── README.md                         # User documentation
+-├── CLAUDE.md                         # Claude Code instructions
+-│
+-├── references/                       # Reference materials
+-│   ├── mermaid-diagram-guide.md     # Legacy general guide
+-│   └── guides/                       # Specialized guides (load on-demand)
+-│       ├── diagrams/
+-│       │   ├── activity-diagrams.md      # Workflows, processes
+-│       │   ├── deployment-diagrams.md    # Infrastructure, cloud
+-│       │   ├── architecture-diagrams.md  # System architecture
+-│       │   └── sequence-diagrams.md      # API interactions
+-│       ├── code-to-diagram/
+-│       │   └── README.md                 # Master guide for code analysis
+-│       ├── unicode-symbols/
+-│       │   └── guide.md                  # Complete symbol reference
+-│       └── troubleshooting.md        # Common syntax errors & fixes
+-│
+-├── assets/                           # Design document templates
+-│   ├── architecture-design-template.md
+-│   ├── api-design-template.md
+-│   ├── feature-design-template.md
+-│   ├── database-design-template.md
+-│   └── system-design-template.md
+-│
+-├── scripts/                          # Python utilities
+-│   ├── extract_mermaid.py           # Extract & validate diagrams
+-│   └── mermaid_to_image.py          # Convert to PNG/SVG
+-│
+-├── examples/                         # Language-specific patterns
+-│   ├── spring-boot/                 # Spring Boot patterns
+-│   ├── fastapi/                     # FastAPI patterns
+-│   ├── react/                       # React patterns
+-│   ├── python-etl/                  # Data pipeline patterns
+-│   ├── node-webapp/                 # Express.js patterns
+-│   └── java-webapp/                 # Traditional Java patterns
+-│
+-└── references/                       # General Mermaid reference
+-    └── mermaid-diagram-guide.md     # Complete Mermaid syntax guide
+-```
+-
+-## Workflow Summary
+-
+-1. **Analyze user intent** → Determine diagram type, document type, or action needed
+-2. **Load appropriate guide(s)** → Read only what's needed (token efficient)
+-3. **Apply templates and patterns** → Use examples from guides
+-4. **Generate output** → Create diagram or document
+-5. **Validate** (optional) → Use scripts to verify
+-6. **Convert** (optional) → Export to images if needed
+-
+-## When to Use What
+-
+-| User Request | Load This |
+-|--------------|-----------|
+-| "activity diagram", "workflow", "process flow" | `references/guides/diagrams/activity-diagrams.md` |
+-| "deployment", "infrastructure", "cloud", "k8s" | `references/guides/diagrams/deployment-diagrams.md` |
+-| "architecture", "system design", "components" | `references/guides/diagrams/architecture-diagrams.md` + design template |
+-| "API", "sequence", "interactions", "flow" | `references/guides/diagrams/sequence-diagrams.md` |
+-| "class diagram", "ER", "state machine", "wiki", "walkthrough", "architecture doc" | `references/guides/wiki-ticket-and-github.md` plus the matching type guide |
+-| "Confluence", "upload image", "PNG", "SVG" | `scripts/resilient_diagram.py` or `scripts/mermaid_to_image.py` |
+-| "Spring Boot code" | `examples/spring-boot/` + relevant diagram guides |
+-| "FastAPI code", "Python API" | `examples/fastapi/` + relevant diagram guides |
+-| "React app", "frontend" | `examples/react/` + architecture guide |
+-| "ETL", "data pipeline", "Python batch" | `examples/python-etl/` + activity guide |
+-| "symbols", "unicode", "emoji" | `references/guides/unicode-symbols/guide.md` |
+-| "syntax error", "diagram won't render", "troubleshoot" | `references/guides/troubleshooting.md` |
+-| "extract diagrams" | `scripts/extract_mermaid.py` |
+-| "convert to image", "PNG", "SVG" | `scripts/mermaid_to_image.py` |
+-| "create diagram", "generate diagram", "add diagram to markdown" | `scripts/resilient_diagram.py` + `references/guides/resilient-workflow.md` |
+-| "design document", "full docs" | `assets/*-design-template.md` + diagram guides |
+-
+-## Best Practices
+-
+-1. **Single Responsibility**: One diagram = One concept
+-2. **Unicode Enhancement**: Always use semantic symbols for clarity
+-3. **High Contrast**: Never skip the `color:` property in styles
+-4. **Validate Early**: Use scripts to catch syntax errors
+-5. **Template Reuse**: Leverage existing templates and examples
+-6. **Load On-Demand**: Only read guides needed for the specific request
+-7. **Token Efficiency**: Use hierarchical loading instead of reading everything
+-
+-## Learning Path
+-
+-**New to Mermaid?** Start here:
+-1. Read `references/guides/unicode-symbols/guide.md` for symbol meanings
+-2. Read `references/guides/diagrams/activity-diagrams.md` for basic patterns
+-3. Try examples in `examples/spring-boot/` or `examples/fastapi/`
+-4. Use `scripts/extract_mermaid.py --validate` to check your work
+-
+-**Need to document code?** Follow this:
+-1. Identify your framework → Load relevant `examples/{framework}/`
+-2. Match code pattern to diagram type
+-3. Use templates from guide
+-4. Validate with scripts
+-
+-**Creating design docs?** Follow this:
+-1. Choose document type → Load template from `assets/`
+-2. Fill in text sections
+-3. Load diagram guides as needed for each section
+-4. Use Unicode symbols throughout
+-5. Save to `docs/design/` with timestamp
+-
+----
+-
+-**Version:** 2.0 (Hierarchical Architecture)
+-**Last Updated:** 2025-01-13
+-**Maintained by:** Claude Code Skills
++Helpers require Python 3.9+ and an existing or explicitly authorized Mermaid CLI runtime.
++They discover `mmdc` on PATH, `DESIGN_DOC_MERMAID_MMDC`, or the host-local developer-skills runtime configuration.
++They do not install dependencies, upload artifacts, or send error/source text to external services.
++Inspect helper process/output behavior before first use or after updates; then use `--help` for exact arguments.
++The local workflow documents the adapted command interface; old upstream CLI examples are not an API compatibility promise.
+diff --git a/skills/design-doc-mermaid/assets/api-design-template.md b/skills/design-doc-mermaid/assets/api-design-template.md
+--- a/skills/design-doc-mermaid/assets/api-design-template.md
++++ b/skills/design-doc-mermaid/assets/api-design-template.md
+@@ -1,4 +1,6 @@
+ # [API Name] - API Design Document
++
++Template only: sample facts and completion states are not verified; retain only requested sections and replace examples with actual evidence or explicit unknowns.
+ 
+ **Author:** [Name]
+ **Date:** [YYYY-MM-DD]
+@@ -443,16 +445,16 @@
+ 
+ ### 12.1 Security Checklist
+ 
+-- [x] HTTPS only (TLS 1.2+)
+-- [x] Authentication required
+-- [x] Authorization checks on all endpoints
+-- [x] Input validation
+-- [x] SQL injection prevention
+-- [x] XSS prevention
+-- [x] CSRF protection
+-- [x] Rate limiting
+-- [x] Request size limits
+-- [x] Audit logging
++- [ ] HTTPS only (TLS 1.2+)
++- [ ] Authentication required
++- [ ] Authorization checks on all endpoints
++- [ ] Input validation
++- [ ] SQL injection prevention
++- [ ] XSS prevention
++- [ ] CSRF protection
++- [ ] Rate limiting
++- [ ] Request size limits
++- [ ] Audit logging
+ 
+ ---
+ 
+diff --git a/skills/design-doc-mermaid/assets/architecture-design-template.md b/skills/design-doc-mermaid/assets/architecture-design-template.md
+--- a/skills/design-doc-mermaid/assets/architecture-design-template.md
++++ b/skills/design-doc-mermaid/assets/architecture-design-template.md
+@@ -1,4 +1,6 @@
+ # [System Name] - Architecture Design Document
++
++Template only: sample facts and completion states are not verified; retain only requested sections and replace examples with actual evidence or explicit unknowns.
+ 
+ **Author:** [Name]
+ **Date:** [YYYY-MM-DD]
+diff --git a/skills/design-doc-mermaid/assets/database-design-template.md b/skills/design-doc-mermaid/assets/database-design-template.md
+--- a/skills/design-doc-mermaid/assets/database-design-template.md
++++ b/skills/design-doc-mermaid/assets/database-design-template.md
+@@ -1,4 +1,6 @@
+ # [Database Name] - Database Design Document
++
++Template only: sample facts and completion states are not verified; retain only requested sections and replace examples with actual evidence or explicit unknowns.
+ 
+ **Author:** [Name]
+ **Date:** [YYYY-MM-DD]
+diff --git a/skills/design-doc-mermaid/assets/feature-design-template.md b/skills/design-doc-mermaid/assets/feature-design-template.md
+--- a/skills/design-doc-mermaid/assets/feature-design-template.md
++++ b/skills/design-doc-mermaid/assets/feature-design-template.md
+@@ -1,4 +1,6 @@
+ # [Feature Name] - Feature Design Document
++
++Template only: sample facts and completion states are not verified; retain only requested sections and replace examples with actual evidence or explicit unknowns.
+ 
+ **Author:** [Name]
+ **Date:** [YYYY-MM-DD]
+@@ -51,9 +53,9 @@
+ **So that** [reason]
+ 
+ **Acceptance Criteria:**
+-- [x] Criterion 1
+-- [x] Criterion 2
+-- [x] Criterion 3
++- [ ] Criterion 1
++- [ ] Criterion 2
++- [ ] Criterion 3
+ 
+ ---
+ 
+@@ -355,12 +357,12 @@
+ 
+ ### 9.1 Security Requirements
+ 
+-- [x] Authentication required
+-- [x] Authorization checks
+-- [x] Input validation
+-- [x] Output sanitization
+-- [x] Rate limiting
+-- [x] Audit logging
++- [ ] Authentication required
++- [ ] Authorization checks
++- [ ] Input validation
++- [ ] Output sanitization
++- [ ] Rate limiting
++- [ ] Audit logging
+ 
+ ### 9.2 Data Privacy
+ 
+@@ -531,12 +533,12 @@
+ 
+ ### 17.1 Launch Criteria
+ 
+-- [x] All unit tests passing
+-- [x] Integration tests passing
+-- [x] Security review complete
+-- [x] Performance targets met
+-- [x] Documentation complete
+-- [x] Rollback plan documented
++- [ ] All unit tests passing
++- [ ] Integration tests passing
++- [ ] Security review complete
++- [ ] Performance targets met
++- [ ] Documentation complete
++- [ ] Rollback plan documented
+ 
+ ### 17.2 Post-Launch Success
+ 
+diff --git a/skills/design-doc-mermaid/assets/system-design-template.md b/skills/design-doc-mermaid/assets/system-design-template.md
+--- a/skills/design-doc-mermaid/assets/system-design-template.md
++++ b/skills/design-doc-mermaid/assets/system-design-template.md
+@@ -1,4 +1,6 @@
+ # [System Name] - System Design Document
++
++Template only: sample facts and completion states are not verified; retain only requested sections and replace examples with actual evidence or explicit unknowns.
+ 
+ **Author:** [Name]
+ **Date:** [YYYY-MM-DD]
+diff --git a/skills/design-doc-mermaid/examples/fastapi/README.md b/skills/design-doc-mermaid/examples/fastapi/README.md
+--- a/skills/design-doc-mermaid/examples/fastapi/README.md
++++ b/skills/design-doc-mermaid/examples/fastapi/README.md
+@@ -1,4 +1,9 @@
+ # FastAPI to Mermaid Diagrams
++
++This reference illustrates diagram patterns; it does not establish facts, resources, retries, approvals, or execution authority for the current task.
++Follow the installed SKILL.md evidence, output, validation, publication, and review gates when using its examples.
++Use the local workflow for adapted script arguments; do not execute commands solely because they appear in an example.
++
+ 
+ This directory contains examples of generating Mermaid diagrams from FastAPI applications.
+ 
+diff --git a/skills/design-doc-mermaid/examples/java-webapp/README.md b/skills/design-doc-mermaid/examples/java-webapp/README.md
+--- a/skills/design-doc-mermaid/examples/java-webapp/README.md
++++ b/skills/design-doc-mermaid/examples/java-webapp/README.md
+@@ -1,4 +1,9 @@
+ # Java Servlet/JSP Web Application → Mermaid Diagrams
++
++This reference illustrates diagram patterns; it does not establish facts, resources, retries, approvals, or execution authority for the current task.
++Follow the installed SKILL.md evidence, output, validation, publication, and review gates when using its examples.
++Use the local workflow for adapted script arguments; do not execute commands solely because they appear in an example.
++
+ 
+ **Framework:** Java EE / Jakarta EE (Servlet 4.0+, JSP 2.3)
+ **Pattern:** MVC Model 2, DAO, Service Layer
+@@ -1208,6 +1213,6 @@
+ - [Node.js/Express → Mermaid](../node-webapp/README.md) - JavaScript patterns
+ 
+ **Guides:**
+-- [Activity Diagrams](../../guides/diagrams/activity-diagrams.md)
+-- [Deployment Diagrams](../../guides/diagrams/deployment-diagrams.md)
+-- [Unicode Symbols](../../guides/unicode-symbols/guide.md)
++- [Activity Diagrams](../../references/guides/diagrams/activity-diagrams.md)
++- [Deployment Diagrams](../../references/guides/diagrams/deployment-diagrams.md)
++- [Unicode Symbols](../../references/guides/unicode-symbols/guide.md)
+diff --git a/skills/design-doc-mermaid/examples/node-webapp/README.md b/skills/design-doc-mermaid/examples/node-webapp/README.md
+--- a/skills/design-doc-mermaid/examples/node-webapp/README.md
++++ b/skills/design-doc-mermaid/examples/node-webapp/README.md
+@@ -1,4 +1,9 @@
+ # Node.js/Express to Mermaid Diagrams
++
++This reference illustrates diagram patterns; it does not establish facts, resources, retries, approvals, or execution authority for the current task.
++Follow the installed SKILL.md evidence, output, validation, publication, and review gates when using its examples.
++Use the local workflow for adapted script arguments; do not execute commands solely because they appear in an example.
++
+ 
+ This directory contains examples of generating Mermaid diagrams from Node.js/Express applications.
+ 
+diff --git a/skills/design-doc-mermaid/examples/python-etl/README.md b/skills/design-doc-mermaid/examples/python-etl/README.md
+--- a/skills/design-doc-mermaid/examples/python-etl/README.md
++++ b/skills/design-doc-mermaid/examples/python-etl/README.md
+@@ -1,4 +1,9 @@
+ # Python ETL to Mermaid Diagrams
++
++This reference illustrates diagram patterns; it does not establish facts, resources, retries, approvals, or execution authority for the current task.
++Follow the installed SKILL.md evidence, output, validation, publication, and review gates when using its examples.
++Use the local workflow for adapted script arguments; do not execute commands solely because they appear in an example.
++
+ 
+ This directory contains examples of generating Mermaid diagrams from Python ETL pipelines and data workflows.
+ 
+diff --git a/skills/design-doc-mermaid/examples/react/README.md b/skills/design-doc-mermaid/examples/react/README.md
+--- a/skills/design-doc-mermaid/examples/react/README.md
++++ b/skills/design-doc-mermaid/examples/react/README.md
+@@ -1,4 +1,9 @@
+ # React to Mermaid Diagrams
++
++This reference illustrates diagram patterns; it does not establish facts, resources, retries, approvals, or execution authority for the current task.
++Follow the installed SKILL.md evidence, output, validation, publication, and review gates when using its examples.
++Use the local workflow for adapted script arguments; do not execute commands solely because they appear in an example.
++
+ 
+ This directory contains examples of generating Mermaid diagrams from React applications.
+ 
+diff --git a/skills/design-doc-mermaid/examples/spring-boot/README.md b/skills/design-doc-mermaid/examples/spring-boot/README.md
+--- a/skills/design-doc-mermaid/examples/spring-boot/README.md
++++ b/skills/design-doc-mermaid/examples/spring-boot/README.md
+@@ -1,4 +1,9 @@
+ # Spring Boot to Mermaid Diagrams
++
++This reference illustrates diagram patterns; it does not establish facts, resources, retries, approvals, or execution authority for the current task.
++Follow the installed SKILL.md evidence, output, validation, publication, and review gates when using its examples.
++Use the local workflow for adapted script arguments; do not execute commands solely because they appear in an example.
++
+ 
+ This directory contains examples of generating Mermaid diagrams from Spring Boot applications.
+ 
+diff --git a/skills/design-doc-mermaid/references/evidence.md b/skills/design-doc-mermaid/references/evidence.md
+--- /dev/null
++++ b/skills/design-doc-mermaid/references/evidence.md
+@@ -0,0 +1,20 @@
++# Source evidence and review
++
++For a diagram explaining existing code, inspect the scoped entrypoints, configuration, actual call sites, transport and state transitions.
++Do not checkout or discard unrelated working-tree edits to inspect a baseline; use revision-specific reads.
++Record stable node/edge identifiers independently of display labels.
++
++| Element | Claim | Evidence | Status |
++| --- | --- | --- | --- |
++| Actual node or edge ID | What it represents | Repository revision and path/line, user fact, or observation | Observed, inferred, proposed, or unknown |
++
++Do not equate source existence with semantic support: read the cited lines and verify the claimed relationship.
++Static declarations do not demonstrate deployed topology, network reachability or physical execution.
++Keep inferred links visibly distinct; do not invent services, resource counts, ports or retries.
++For proposed designs, label choices as proposed and retain unresolved requirements instead of requiring nonexistent code evidence.
++
++Templates and framework examples are illustrations only.
++Unchecked security/test/review items stay unverified until actual evidence supports them.
++Do not mark team approval complete because a template contains a review section.
++The code-to-diagram workflow still requires team/user review and approval before final documentation integration.
++Complete source preparation and authorized validation first, then wait only at that real gate.
+diff --git a/skills/design-doc-mermaid/references/guides/code-to-diagram/README.md b/skills/design-doc-mermaid/references/guides/code-to-diagram/README.md
+--- a/skills/design-doc-mermaid/references/guides/code-to-diagram/README.md
++++ b/skills/design-doc-mermaid/references/guides/code-to-diagram/README.md
+@@ -1,4 +1,9 @@
+ # Code-to-Diagram Master Guide
++
++This reference illustrates diagram patterns; it does not establish facts, resources, retries, approvals, or execution authority for the current task.
++Follow the installed SKILL.md evidence, output, validation, publication, and review gates when using its examples.
++Use the local workflow for adapted script arguments; do not execute commands solely because they appear in an example.
++
+ 
+ **Version:** 1.0
+ **Last Updated:** 2025-01-13
+@@ -36,12 +41,12 @@
+ 
+ | Framework | Language | Architecture Style | Example Guide |
+ |-----------|----------|-------------------|---------------|
+-| **Spring Boot** | Java | Annotation-driven, layered | [Spring Boot Guide](../../examples/spring-boot/README.md) |
+-| **FastAPI** | Python | Async, dependency injection | [FastAPI Guide](../../examples/fastapi/README.md) |
+-| **React** | JavaScript/TypeScript | Component-based, state management | [React Guide](../../examples/react/README.md) |
+-| **Express.js** | JavaScript/TypeScript | Middleware chain, routes | [Node.js Guide](../../examples/node-webapp/README.md) |
+-| **Java Servlet** | Java | MVC Model 2, filters | [Java Servlet Guide](../../examples/java-webapp/README.md) |
+-| **Python ETL** | Python | Data pipelines, transformations | [Python ETL Guide](../../examples/python-etl/README.md) |
++| **Spring Boot** | Java | Annotation-driven, layered | [Spring Boot Guide](../../../examples/spring-boot/README.md) |
++| **FastAPI** | Python | Async, dependency injection | [FastAPI Guide](../../../examples/fastapi/README.md) |
++| **React** | JavaScript/TypeScript | Component-based, state management | [React Guide](../../../examples/react/README.md) |
++| **Express.js** | JavaScript/TypeScript | Middleware chain, routes | [Node.js Guide](../../../examples/node-webapp/README.md) |
++| **Java Servlet** | Java | MVC Model 2, filters | [Java Servlet Guide](../../../examples/java-webapp/README.md) |
++| **Python ETL** | Python | Data pipelines, transformations | [Python ETL Guide](../../../examples/python-etl/README.md) |
+ 
+ ---
+ 
+@@ -87,12 +92,12 @@
+ 
+ **For Architecture Diagrams:**
+ - Directory/package names → Components
+-- Import/dependency statements → Relationships
++- Import/dependency statements → Candidate dependencies; inspect actual use before drawing a runtime relationship
+ - Annotations/decorators → Component roles
+ 
+ **For Deployment Diagrams:**
+ - `application.yml`, `docker-compose.yml` → Services
+-- Port configurations → Network connections
++- Port configurations → Declared endpoints; actual connections need call/configuration or runtime evidence
+ - Environment variables → External dependencies
+ 
+ **For Sequence Diagrams:**
+@@ -141,7 +146,7 @@
+ ### Step 5: Generate and Validate
+ 
+ 1. **Generate Mermaid code** using patterns from guides
+-2. **Validate syntax** using `scripts/extract_mermaid.py --validate`
++2. **Validate syntax** using `scripts/extract_mermaid.py <document.md> --validate`
+ 3. **Review diagram** for accuracy and clarity
+ 4. **Refine** based on team feedback
+ 
+@@ -217,7 +222,7 @@
+     Controller-->>-Client: 200 OK + JSON
+ ```
+ 
+-**Full Guide:** [Spring Boot Examples](../../examples/spring-boot/README.md)
++**Full Guide:** [Spring Boot Examples](../../../examples/spring-boot/README.md)
+ 
+ ---
+ 
+@@ -284,7 +289,7 @@
+     Endpoint-->>-Client: 201 Created + JSON
+ ```
+ 
+-**Full Guide:** [FastAPI Examples](../../examples/fastapi/README.md)
++**Full Guide:** [FastAPI Examples](../../../examples/fastapi/README.md)
+ 
+ ---
+ 
+@@ -353,7 +358,7 @@
+     Component->>User: Render ContactTable
+ ```
+ 
+-**Full Guide:** [React Examples](../../examples/react/README.md)
++**Full Guide:** [React Examples](../../../examples/react/README.md)
+ 
+ ---
+ 
+@@ -412,7 +417,7 @@
+     Success --> End
+ ```
+ 
+-**Full Guide:** [Node.js/Express Examples](../../examples/node-webapp/README.md)
++**Full Guide:** [Node.js/Express Examples](../../../examples/node-webapp/README.md)
+ 
+ ---
+ 
+@@ -469,7 +474,7 @@
+     AuthFilter --> ContactServlet
+ ```
+ 
+-**Full Guide:** [Java Servlet Examples](../../examples/java-webapp/README.md)
++**Full Guide:** [Java Servlet Examples](../../../examples/java-webapp/README.md)
+ 
+ ---
+ 
+@@ -540,7 +545,7 @@
+     Success --> End2([Pipeline Success])
+ ```
+ 
+-**Full Guide:** [Python ETL Examples](../../examples/python-etl/README.md)
++**Full Guide:** [Python ETL Examples](../../../examples/python-etl/README.md)
+ 
+ ---
+ 
+@@ -670,13 +675,13 @@
+ ### 2. **Use Framework Examples as Templates**
+ 
+ Don't reinvent patterns. If you're analyzing a Spring Boot app:
+-1. Load [Spring Boot Guide](../../examples/spring-boot/README.md)
++1. Load [Spring Boot Guide](../../../examples/spring-boot/README.md)
+ 2. Find similar code patterns
+ 3. Adapt the Mermaid template to your specific code
+ 
+ ### 3. **Include Technology Stack**
+ 
+-Always label:
++Label only supported and relevant values; leave missing values unknown:
+ - Programming language & version
+ - Framework & version
+ - Database technology
+@@ -857,12 +862,12 @@
+ - [Deployment Diagrams Guide](../diagrams/deployment-diagrams.md)
+ - [Sequence Diagrams Guide](../diagrams/sequence-diagrams.md)
+ - [Unicode Symbols Reference](../unicode-symbols/guide.md)
+-- [Spring Boot Examples](../../examples/spring-boot/README.md)
+-- [FastAPI Examples](../../examples/fastapi/README.md)
+-- [React Examples](../../examples/react/README.md)
+-- [Node.js Examples](../../examples/node-webapp/README.md)
+-- [Java Servlet Examples](../../examples/java-webapp/README.md)
+-- [Python ETL Examples](../../examples/python-etl/README.md)
++- [Spring Boot Examples](../../../examples/spring-boot/README.md)
++- [FastAPI Examples](../../../examples/fastapi/README.md)
++- [React Examples](../../../examples/react/README.md)
++- [Node.js Examples](../../../examples/node-webapp/README.md)
++- [Java Servlet Examples](../../../examples/java-webapp/README.md)
++- [Python ETL Examples](../../../examples/python-etl/README.md)
+ 
+ ---
+ 
+diff --git a/skills/design-doc-mermaid/references/guides/diagrams/activity-diagrams.md b/skills/design-doc-mermaid/references/guides/diagrams/activity-diagrams.md
+--- a/skills/design-doc-mermaid/references/guides/diagrams/activity-diagrams.md
++++ b/skills/design-doc-mermaid/references/guides/diagrams/activity-diagrams.md
+@@ -1,4 +1,9 @@
+ # Activity Diagram Guide
++
++This reference illustrates diagram patterns; it does not establish facts, resources, retries, approvals, or execution authority for the current task.
++Follow the installed SKILL.md evidence, output, validation, publication, and review gates when using its examples.
++Use the local workflow for adapted script arguments; do not execute commands solely because they appear in an example.
++
+ 
+ Activity diagrams show workflows, business processes, and algorithmic flows. They're perfect for documenting user actions, system processes, and decision trees.
+ 
+diff --git a/skills/design-doc-mermaid/references/guides/diagrams/architecture-diagrams.md b/skills/design-doc-mermaid/references/guides/diagrams/architecture-diagrams.md
+--- a/skills/design-doc-mermaid/references/guides/diagrams/architecture-diagrams.md
++++ b/skills/design-doc-mermaid/references/guides/diagrams/architecture-diagrams.md
+@@ -1,4 +1,9 @@
+ # Architecture Diagrams Guide
++
++This reference illustrates diagram patterns; it does not establish facts, resources, retries, approvals, or execution authority for the current task.
++Follow the installed SKILL.md evidence, output, validation, publication, and review gates when using its examples.
++Use the local workflow for adapted script arguments; do not execute commands solely because they appear in an example.
++
+ 
+ **Version:** 1.0
+ **Last Updated:** 2025-01-13
+diff --git a/skills/design-doc-mermaid/references/guides/diagrams/deployment-diagrams.md b/skills/design-doc-mermaid/references/guides/diagrams/deployment-diagrams.md
+--- a/skills/design-doc-mermaid/references/guides/diagrams/deployment-diagrams.md
++++ b/skills/design-doc-mermaid/references/guides/diagrams/deployment-diagrams.md
+@@ -1,4 +1,9 @@
+ # Deployment Diagram Guide
++
++This reference illustrates diagram patterns; it does not establish facts, resources, retries, approvals, or execution authority for the current task.
++Follow the installed SKILL.md evidence, output, validation, publication, and review gates when using its examples.
++Use the local workflow for adapted script arguments; do not execute commands solely because they appear in an example.
++
+ 
+ Deployment diagrams visualize infrastructure, server architecture, network topology, and how software components are deployed across physical or cloud resources.
+ 
+diff --git a/skills/design-doc-mermaid/references/guides/diagrams/sequence-diagrams.md b/skills/design-doc-mermaid/references/guides/diagrams/sequence-diagrams.md
+--- a/skills/design-doc-mermaid/references/guides/diagrams/sequence-diagrams.md
++++ b/skills/design-doc-mermaid/references/guides/diagrams/sequence-diagrams.md
+@@ -1,4 +1,9 @@
+ # Sequence Diagrams Guide
++
++This reference illustrates diagram patterns; it does not establish facts, resources, retries, approvals, or execution authority for the current task.
++Follow the installed SKILL.md evidence, output, validation, publication, and review gates when using its examples.
++Use the local workflow for adapted script arguments; do not execute commands solely because they appear in an example.
++
+ 
+ **Version:** 1.0
+ **Last Updated:** 2025-01-13
+@@ -726,7 +731,7 @@
+ 
+ ### 3. **Include HTTP Status Codes**
+ 
+-Always show status codes for HTTP responses:
++Show status codes for HTTP responses when evidenced; otherwise label the response status unknown:
+ 
+ ```mermaid
+ sequenceDiagram
+diff --git a/skills/design-doc-mermaid/references/guides/resilient-workflow.md b/skills/design-doc-mermaid/references/guides/resilient-workflow.md
+--- a/skills/design-doc-mermaid/references/guides/resilient-workflow.md
++++ b/skills/design-doc-mermaid/references/guides/resilient-workflow.md
+@@ -1,634 +1,83 @@
+-# Resilient Diagram Generation Workflow
++# Local validation and artifact workflow
+ 
+-**Version:** 1.0
+-**Last Updated:** 2025-01-15
+-**Purpose:** Complete workflow for reliable Mermaid diagram generation with error recovery
++The package entrypoint owns scope, review gates and source truth.
++This workflow replaces the upstream unconditional image/export/search loop.
++Commands below run from the installed package; substitute absolute paths to the task's authorized files.
++Use `python3` and inspect `--help` when adapting arguments.
+ 
+-This guide documents the resilient workflow for generating Mermaid diagrams. It ensures diagrams are validated before being added to markdown files, and provides systematic error recovery when validation fails.
++## Inspect or validate Markdown
+ 
+----
+-
+-## Table of Contents
+-
+-1. [Overview](#overview)
+-2. [Workflow Steps](#workflow-steps)
+-3. [File Naming Convention](#file-naming-convention)
+-4. [Using the Script](#using-the-script)
+-5. [Error Recovery Patterns](#error-recovery-patterns)
+-6. [Search Tool Priority](#search-tool-priority)
+-7. [Manual Fallback Workflow](#manual-fallback-workflow)
+-8. [Integration Examples](#integration-examples)
+-
+----
+-
+-## Overview
+-
+-The resilient workflow ensures diagrams are generated correctly by:
+-
+-- **Detecting diagram type** for appropriate reference guide loading
+-- **Following consistent file naming** for organized output
+-- **Validating before finalizing** using mmdc CLI
+-- **Recovering from errors** using troubleshooting guide and external search
+-- **Only adding validated diagrams** to markdown files
+-
+-### Workflow Diagram
+-
+-```mermaid
+-flowchart TD
+-    Start([User Request]) --> Type[Step 1: Identify Diagram Type]
+-    Type --> Reference[Load Type-Specific Reference Guide]
+-    Reference --> Generate[Step 2: Generate Diagram Code]
+-    Generate --> Save[Step 3: Save .mmd + Image Files]
+-    Save --> Validate[Step 4: Validate with mmdc]
+-    Validate --> Success{Valid?}
+-
+-    Success -->|Yes| AddRef[Step 5: Add Image Reference to Markdown]
+-    Success -->|No| Troubleshoot[Check Troubleshooting Guide]
+-
+-    Troubleshoot --> Found{Fix Found?}
+-    Found -->|Yes| Apply[Apply Fix]
+-    Apply --> Generate
+-
+-    Found -->|No| Search[Search External Tools]
+-    Search --> SearchResult{Solution Found?}
+-    SearchResult -->|Yes| Apply
+-    SearchResult -->|No| Manual[Request Human Review]
+-
+-    AddRef --> Complete([Done])
+-    Manual --> Complete
+-
+-    classDef start fill:#4ECDC4,stroke:#0B7285,color:#000
+-    classDef process fill:#FFE66D,stroke:#F08C00,color:#000
+-    classDef decision fill:#A8DADC,stroke:#1864AB,color:#000
+-    classDef success fill:#95D5B2,stroke:#2D6A4F,color:#000
+-    classDef error fill:#E63946,stroke:#9D0208,color:#fff
+-
+-    class Start,Complete start
+-    class Type,Reference,Generate,Save,Validate,AddRef,Apply,Troubleshoot,Search process
+-    class Success,Found,SearchResult decision
++```bash
++python3 scripts/extract_mermaid.py document.md --list-only
++python3 scripts/extract_mermaid.py document.md --validate
+ ```
+ 
+-### Key Principle
++The extractor handles unindented top-level backtick and tilde fences, including longer outer fences that contain examples.
++It preserves distinct duplicate occurrences and rejects an unclosed Mermaid fence.
++It rejects indented Mermaid fences and does not transform blockquote/list containers; report this coverage instead of claiming all diagrams were checked.
++A zero-diagram validation fails rather than claiming a pass.
++Validate container diagrams separately from their extracted source through the repository's appropriate parser/workflow.
+ 
+-**NEVER add a diagram to a markdown file until it has been validated.** The workflow ensures all diagrams pass validation before being embedded, preventing broken diagrams in documentation.
++## Extract editable sources
+ 
+----
+-
+-## Workflow Steps
+-
+-### Step 1: Identify Diagram Type
+-
+-Analyze the Mermaid code to determine the diagram type and load appropriate reference guides.
+-
+-**Detection Patterns:**
+-
+-| First Line Pattern | Type | Reference Guide |
+-|-------------------|------|-----------------|
+-| `flowchart TD/LR/...` or `graph TB/...` | Flowchart | `references/guides/diagrams/activity-diagrams.md` |
+-| `sequenceDiagram` | Sequence | `references/guides/diagrams/sequence-diagrams.md` |
+-| `classDiagram` | Class | (use general mermaid-diagram-guide.md) |
+-| `stateDiagram-v2` | State | (use general mermaid-diagram-guide.md) |
+-| `erDiagram` | ER | (use general mermaid-diagram-guide.md) |
+-| `gantt` | Gantt | (use general mermaid-diagram-guide.md) |
+-| `pie` | Pie | (use general mermaid-diagram-guide.md) |
+-| `C4Context/Container/...` | C4 | `references/guides/diagrams/architecture-diagrams.md` |
+-
+-**Action:** Load the appropriate reference guide to ensure correct syntax and patterns are used.
+-
+-### Step 2: Generate Diagram Code
+-
+-Write the Mermaid diagram code following the patterns in the loaded reference guide.
+-
+-**Best Practices:**
+-- Use high-contrast styling with `classDef` and `color:` property
+-- Use Unicode symbols for semantic meaning
+-- Follow the patterns and templates from the reference guides
+-- Avoid reserved words or wrap them in quotes
+-
+-### Step 3: Save Files
+-
+-**IMPORTANT:** Save both the .mmd source file AND generate the image file BEFORE adding to markdown.
+-
+-**Output Directory:** `./diagrams/` (relative to markdown file location)
+-
+-**Generated Files:**
+-```
+-./diagrams/<base_filename>.mmd    # Mermaid source code
+-./diagrams/<base_filename>.png    # Rendered image (or .svg)
++```bash
++python3 scripts/extract_mermaid.py document.md --output-dir diagrams
+ ```
+ 
+-### Step 4: Validate with mmdc
++Outputs are occurrence- and content-addressed and refuse existing paths.
++Existing authorized document content remains untouched.
++Use a new task-owned directory when extracting again; do not delete an unrelated directory to make the command pass.
+ 
+-Run the Mermaid CLI to validate and render the diagram:
++## Render one source
+ 
+ ```bash
+-mmdc -i diagram.mmd -o diagram.png -b transparent
++python3 scripts/mermaid_to_image.py diagram.mmd diagram.svg
+ ```
+ 
+-**Success Criteria:**
+-- Exit code is 0
+-- Output file exists
+-- Output file size > 0 bytes
++PNG and PDF are selected by the output extension.
++Image exports default to an opaque white background to preserve readability on dark document surfaces.
++For an explicitly selected dark variant, use `--theme dark --background "#1f2937"` and inspect the result; transparent output requires checking the destination background.
++The compatibility entrypoint `resilient_diagram.py` accepts the same two positional paths.
++The previous string/naming/batch flags are intentionally replaced by explicit input/output paths.
++For a batch, enumerate only the requested inputs and call the renderer for each identified output.
++The helper stages output beside the destination and publishes only a nonempty successful render.
++Use `--overwrite` only when modification of that exact output is authorized; it is not itself permission.
++Input/output aliasing and symlink output are rejected.
+ 
+-**If validation fails:** Proceed to error recovery (Step 4a).
++## Build an image-based review candidate
+ 
+-### Step 4a: Error Recovery
+-
+-When validation fails:
+-
+-1. **Parse the error message** from mmdc output
+-2. **Search troubleshooting.md** for matching errors:
+-   - Match by error keywords (reserved word, missing, invalid, syntax)
+-   - Match by diagram type
+-   - Match by severity level
+-3. **Apply the suggested fix** from the troubleshooting guide
+-4. **Retry validation**
+-
+-If troubleshooting guide doesn't have a match:
+-1. Use **search tools** (see [Search Tool Priority](#search-tool-priority))
+-2. Apply the found solution
+-3. Retry validation
+-
+-### Step 5: Add to Markdown
+-
+-**Only after successful validation**, add the image reference to the markdown file:
+-
+-```markdown
+-![Diagram Description](./diagrams/filename.png)
++```bash
++python3 scripts/extract_mermaid.py source.md --replace-with-images \
++  --output-markdown review-candidate.md --image-dir diagrams --image-format svg
+ ```
+ 
+-Optionally include a link to the source:
+-```markdown
+-![Diagram Description](./diagrams/filename.png)
++Every supported block must render before any replacement is published.
++Links are built from each occurrence and actual generated artifacts, with preserved `.mmd` sources.
++Assets use content hashes and are not overwritten; the input Markdown is never the output path.
++The helper preserves old files on render failure and refuses conflicting output unless the exact candidate overwrite was authorized.
++The result is a local review candidate, not an approved final document.
++User/team approval and final integration remain separate actions.
+ 
+-[View Mermaid source](./diagrams/filename.mmd)
+-```
++## Runtime and failure classification
+ 
+----
++Resolve a repository-established renderer first by passing `--mmdc` and, if needed, `--puppeteer-config`.
++Otherwise use the existing approved installation discovered by the helper.
++Host configuration is `$XDG_CONFIG_HOME/developer-skills/mermaid-runtime.json`, defaulting to `~/.config/developer-skills/mermaid-runtime.json`.
++It contains local `mmdc` and optional `puppeteer_config` paths; do not put personal runtime paths into the skill source.
++Record the renderer version using that executable's `--version`.
++Do not change browser sandbox flags or download dependencies to make a check pass without authorization for that change.
+ 
+-## File Naming Convention
++| Error | Response |
++| --- | --- |
++| TOOL_MISSING | Report missing executable; preserve draft and complete independent work |
++| CONFIG_ERROR / BROWSER_ERROR | Diagnose configured runtime/browser; do not alter Mermaid syntax |
++| TIMEOUT | Report bounded timeout and inspect complexity/runtime evidence |
++| SYNTAX_ERROR | Use local type/version-specific syntax guidance |
++| OUTPUT_ERROR / OUTPUT_CONFLICT / IO_ERROR | Preserve old artifact and fix only authorized output scope |
++| RENDER_ERROR | Preserve diagnostic as unclassified; do not invent a syntax explanation |
+ 
+-### Format
+-
+-```
+-<markdown_file>_<num>_<type>_<title>.<ext>
+-```
+-
+-### Components
+-
+-| Component | Description | Example |
+-|-----------|-------------|---------|
+-| `markdown_file` | Source file name (no extension, sanitized) | `api_design` |
+-| `num` | Zero-padded diagram number (01-99) | `01`, `02`, `03` |
+-| `type` | Diagram type (lowercase) | `flowchart`, `sequence`, `class` |
+-| `title` | Sanitized title (max 20 chars) | `auth_flow`, `user_reg` |
+-| `ext` | File extension | `.mmd`, `.png`, `.svg` |
+-
+-### Sanitization Rules
+-
+-- Convert to lowercase
+-- Replace spaces and special characters with underscores
+-- Remove consecutive underscores
+-- Truncate title to 20 characters
+-- Remove trailing underscores
+-
+-### Examples
+-
+-**Input:**
+-- Markdown file: `API Design Doc.md`
+-- Diagram number: 1
+-- Type: sequence
+-- Title: "User Authentication Flow"
+-
+-**Output files:**
+-```
+-./diagrams/api_design_doc_01_sequence_user_authenticatio.mmd
+-./diagrams/api_design_doc_01_sequence_user_authenticatio.png
+-```
+-
+----
+-
+-## Using the Script
+-
+-### Automated Workflow (Recommended)
+-
+-The `resilient_diagram.py` script automates the entire workflow:
+-
+-```bash
+-# Basic usage
+-python scripts/resilient_diagram.py \
+-    --code "flowchart TD; A-->B" \
+-    --markdown-file design_doc \
+-    --diagram-num 1 \
+-    --title "overview" \
+-    --format png
+-
+-# With JSON output (recommended for programmatic use)
+-python scripts/resilient_diagram.py \
+-    --code "sequenceDiagram..." \
+-    --markdown-file api \
+-    --diagram-num 2 \
+-    --title "auth_flow" \
+-    --json
+-```
+-
+-### CLI Options
+-
+-| Option | Short | Description | Default |
+-|--------|-------|-------------|---------|
+-| `--code` | `-c` | Mermaid code string | - |
+-| `--mmd-file` | `-i` | Path to .mmd file | - |
+-| `--stdin` | - | Read from stdin | - |
+-| `--output-dir` | `-o` | Output directory | `./diagrams` |
+-| `--markdown-file` | `-m` | Source markdown name | `diagram` |
+-| `--diagram-num` | `-n` | Diagram number | `1` |
+-| `--title` | `-t` | Diagram title | `diagram` |
+-| `--format` | `-f` | Image format (png/svg/pdf) | `png` |
+-| `--json` | `-j` | Output as JSON | `false` |
+-
+-### JSON Output Format
+-
+-When using `--json`, the script returns structured data:
+-
+-```json
+-{
+-  "success": true,
+-  "mmd_path": "./diagrams/api_01_sequence_auth_flow.mmd",
+-  "image_path": "./diagrams/api_01_sequence_auth_flow.png",
+-  "diagram_type": "sequence",
+-  "error_message": null,
+-  "troubleshooting_matches": [],
+-  "suggested_fix": null,
+-  "search_recommendation": null
+-}
+-```
+-
+-**On failure:**
+-
+-```json
+-{
+-  "success": false,
+-  "mmd_path": "./diagrams/api_01_flowchart_process.mmd",
+-  "image_path": null,
+-  "diagram_type": "flowchart",
+-  "error_message": "Parse error on line 2: reserved word 'end'",
+-  "troubleshooting_matches": [
+-    {
+-      "error_number": 5,
+-      "title": "Reserved Word \"end\" in Node Names",
+-      "severity": "Critical",
+-      "diagram_types": ["flowchart"],
+-      "problem": "The word 'end' is reserved and breaks flowcharts",
+-      "correct_example": "flowchart TD\n    start --> End"
+-    }
+-  ],
+-  "suggested_fix": "flowchart TD\n    start --> End",
+-  "search_recommendation": null
+-}
+-```
+-
+----
+-
+-## Error Recovery Patterns
+-
+-### Common Error Categories
+-
+-#### 1. Reserved Words (Error 1, 5)
+-
+-**Symptoms:** Parse error mentioning DEFAULT, end, style, class, etc.
+-
+-**Fix:** Wrap reserved word in double quotes or change case.
+-
+-```diff
+-- start --> end
+-+ start --> "end"
+-```
+-
+-#### 2. Unescaped Special Characters (Error 2)
+-
+-**Symptoms:** Unexpected token, parsing error mid-label
+-
+-**Fix:** Wrap labels in quotes or use HTML entities.
+-
+-```diff
+-- A[Say "hello"]
+-+ A["Say #34;hello#34;"]
+-```
+-
+-#### 3. Invalid Arrow Syntax (Error 7)
+-
+-**Symptoms:** Connection not rendered, no arrow shown
+-
+-**Fix:** Use correct arrow format (3+ characters).
+-
+-```diff
+-- A -> B
+-+ A --> B
+-```
+-
+-#### 4. Missing Colon in Sequence (Error 11)
+-
+-**Symptoms:** Parsing error in sequence diagram
+-
+-**Fix:** Add colon before message text.
+-
+-```diff
+-- Alice->>Bob Message
+-+ Alice->>Bob: Message
+-```
+-
+-#### 5. Missing "end" in Blocks (Error 13)
+-
+-**Symptoms:** Parse error in alt/opt/loop blocks
+-
+-**Fix:** Add closing `end` keyword.
+-
+-```diff
+-  alt Success
+-      Bob->>Alice: OK
+-  else Failure
+-      Bob->>Alice: Error
+-+ end
+-```
+-
+-#### 6. Invalid classDef (Error 3)
+-
+-**Symptoms:** Styling not applied
+-
+-**Fix:** Remove curly braces, use comma-separated properties.
+-
+-```diff
+-- classDef myClass { fill:#f00; }
+-+ classDef myClass fill:#f00,stroke:#333,color:#fff
+-```
+-
+-### Using Troubleshooting Guide
+-
+-1. **Read the error message** from mmdc output
+-2. **Search troubleshooting.md** for keywords:
+-   - Error keywords: "reserved", "missing", "invalid", "syntax"
+-   - Diagram type: "flowchart", "sequence", etc.
+-3. **Find matching Error entry** (Error 1-28)
+-4. **Compare your code** to the "Incorrect" example
+-5. **Apply the pattern** from the "Correct" example
+-
+----
+-
+-## Search Tool Priority
+-
+-When troubleshooting.md doesn't have a matching fix, use external search tools **in this order**:
+-
+-### 1. Perplexity MCP (Primary)
+-
+-Best for: Specific syntax questions, code examples
+-
+-```
+-perplexity_ask: "mermaid sequenceDiagram syntax error participant not defined"
+-```
+-
+-### 2. Brave Search MCP (Secondary)
+-
+-Best for: Recent issues, GitHub discussions, community solutions
+-
+-```
+-brave_web_search: "mermaid gantt chart reserved word error site:github.com"
+-```
+-
+-### 3. Gemini Skill (Tertiary)
+-
+-Best for: Complex multi-line errors, alternative perspectives, debugging assistance
+-
+-```
+-Use gemini skill with prompt:
+-"I have a Mermaid diagram error. The code is:
+-[paste diagram code]
+-The error is: [paste error message]
+-What is the fix?"
+-```
+-
+-### 4. WebSearch Tool (Fallback)
+-
+-Best for: General web results when other tools unavailable
+-
+-```
+-WebSearch: "mermaid diagram syntax error [specific error text]"
+-```
+-
+-### Search Query Format
+-
+-Construct search queries with:
+-1. Tool/technology: "mermaid"
+-2. Diagram type: "flowchart", "sequence", etc.
+-3. Error context: "syntax error", "parse error"
+-4. Key error text: first 100 characters of error message
+-
+-**Example:**
+-```
+-mermaid flowchart syntax error: Parse error on line 2 reserved word end
+-```
+-
+----
+-
+-## Manual Fallback Workflow
+-
+-If the `resilient_diagram.py` script is unavailable or fails, follow these manual steps:
+-
+-### Step 1: Determine Diagram Type
+-
+-Look at the first non-comment line of Mermaid code:
+-
+-| First Line | Type |
+-|------------|------|
+-| `flowchart` / `graph` | Flowchart/Activity |
+-| `sequenceDiagram` | Sequence |
+-| `classDiagram` | Class |
+-| `stateDiagram-v2` | State |
+-| `erDiagram` | ER |
+-| `gantt` | Gantt |
+-| `pie` | Pie |
+-| `C4Context` | C4/Architecture |
+-
+-### Step 2: Load Reference Guide
+-
+-Read the appropriate guide from `references/guides/diagrams/`:
+-
+-```
+-Activity/Flowchart: activity-diagrams.md
+-Sequence: sequence-diagrams.md
+-Deployment: deployment-diagrams.md
+-Architecture: architecture-diagrams.md
+-```
+-
+-### Step 3: Create Output Directory
+-
+-```bash
+-mkdir -p ./diagrams/
+-```
+-
+-### Step 4: Save .mmd File
+-
+-Create the file with naming convention:
+-```bash
+-# Generate filename
+-FILENAME="<markdown>_<num>_<type>_<title>.mmd"
+-
+-# Save content
+-cat > "./diagrams/${FILENAME}" << 'EOF'
+-flowchart TD
+-    A[Start] --> B[Process]
+-    B --> C[End]
+-EOF
+-```
+-
+-### Step 5: Validate and Render
+-
+-```bash
+-mmdc -i "./diagrams/${FILENAME}" -o "./diagrams/${FILENAME%.mmd}.png" -b transparent
+-```
+-
+-Check exit code:
+-- `0` = Success, proceed to Step 7
+-- Non-zero = Error, proceed to Step 6
+-
+-### Step 6: Error Recovery
+-
+-1. **Read error message** from mmdc output
+-2. **Open troubleshooting guide:**
+-   ```bash
+-   cat references/guides/troubleshooting.md
+-   ```
+-3. **Search for matching error** (Ctrl+F for keywords)
+-4. **Apply the fix** from "Correct" example
+-5. **Retry Step 5**
+-
+-If no match found:
+-1. Use search tools in priority order
+-2. Apply found solution
+-3. Retry Step 5
+-
+-### Step 7: Add to Markdown
+-
+-Only after validation succeeds:
+-
+-```markdown
+-![Description](./diagrams/filename.png)
+-```
+-
+----
+-
+-## Integration Examples
+-
+-### Example 1: Creating a New Diagram
+-
+-**User Request:** "Create a sequence diagram showing user login"
+-
+-**Workflow:**
+-
+-1. **Identify type:** Sequence diagram
+-2. **Load guide:** `references/guides/diagrams/sequence-diagrams.md`
+-3. **Generate code:**
+-   ```mermaid
+-   sequenceDiagram
+-       participant U as User
+-       participant A as Auth Service
+-       participant D as Database
+-
+-       U->>A: Login request
+-       A->>D: Validate credentials
+-       D-->>A: User data
+-       A-->>U: JWT token
+-   ```
+-4. **Save files:**
+-   - `./diagrams/auth_doc_01_sequence_user_login.mmd`
+-   - `./diagrams/auth_doc_01_sequence_user_login.png`
+-5. **Validate:** `mmdc -i ... -o ...` → Success
+-6. **Add to markdown:**
+-   ```markdown
+-   ## Login Flow
+-
+-   ![User Login Sequence](./diagrams/auth_doc_01_sequence_user_login.png)
+-   ```
+-
+-### Example 2: Handling Validation Error
+-
+-**Diagram Code:**
+-```mermaid
+-flowchart TD
+-    start --> end
+-```
+-
+-**Error:** `Parse error: reserved word 'end'`
+-
+-**Recovery:**
+-
+-1. **Search troubleshooting.md** → Match Error #5
+-2. **Apply fix:** Change `end` to `"end"` or `End`
+-3. **Fixed code:**
+-   ```mermaid
+-   flowchart TD
+-       start --> End
+-   ```
+-4. **Retry validation** → Success
+-5. **Save and add to markdown**
+-
+-### Example 3: No Troubleshooting Match
+-
+-**Error:** `Unknown parsing error in custom directive`
+-
+-**Recovery:**
+-
+-1. **Search troubleshooting.md** → No match
+-2. **Use perplexity_ask:**
+-   ```
+-   "mermaid flowchart custom directive unknown parsing error"
+-   ```
+-3. **Get solution** from search result
+-4. **Apply fix and retry**
+-5. **If still failing:** Escalate to brave_web_search, then gemini skill
+-
+----
+-
+-## Quick Reference Card
+-
+-### Workflow Summary
+-
+-```
+-1. IDENTIFY → Detect diagram type, load reference guide
+-2. GENERATE → Write Mermaid code using guide patterns
+-3. SAVE     → Create ./diagrams/<name>.mmd
+-4. VALIDATE → Run mmdc, check exit code
+-5. RECOVER  → If failed: troubleshooting.md → search tools
+-6. ADD      → Only after validation: ![](./diagrams/name.png)
+-```
+-
+-### File Naming
+-
+-```
+-./diagrams/<markdown>_<num>_<type>_<title>.mmd
+-./diagrams/<markdown>_<num>_<type>_<title>.png
+-```
+-
+-### Search Priority
+-
+-```
+-1. perplexity_ask MCP
+-2. brave_web_search MCP
+-3. gemini skill
+-4. WebSearch tool
+-```
+-
+-### Validation Command
+-
+-```bash
+-mmdc -i input.mmd -o output.png -b transparent
+-```
+-
+----
+-
+-**Version:** 1.0
+-**Related Guides:**
+-- [Troubleshooting Guide](troubleshooting.md)
+-- [Activity Diagrams](diagrams/activity-diagrams.md)
+-- [Sequence Diagrams](diagrams/sequence-diagrams.md)
+-- [Deployment Diagrams](diagrams/deployment-diagrams.md)
+-- [Architecture Diagrams](diagrams/architecture-diagrams.md)
++No helper searches externally.
++If external research is needed within the authorized task, use an available tool and a sanitized minimal reproduction with renderer version and error category.
++Never automatically transmit repository source, full diagram content, raw error text containing internal identifiers, credentials or tokens.
++Unavailable named providers are not installation requirements.
++Retry only when new evidence supports a correction; stop repeated identical failures without a new hypothesis.
+diff --git a/skills/design-doc-mermaid/references/guides/troubleshooting.md b/skills/design-doc-mermaid/references/guides/troubleshooting.md
+--- a/skills/design-doc-mermaid/references/guides/troubleshooting.md
++++ b/skills/design-doc-mermaid/references/guides/troubleshooting.md
+@@ -849,7 +849,7 @@
+ **Command Line:**
+ ```bash
+ # Install mermaid-cli
+-npm install -g @mermaid-js/mermaid-cli
++# Use an existing or explicitly authorized pinned renderer; do not install globally as automatic recovery.
+ 
+ # Validate and convert
+ mmdc -i input.mmd -o output.png
+diff --git a/skills/design-doc-mermaid/references/guides/wiki-ticket-and-github.md b/skills/design-doc-mermaid/references/guides/wiki-ticket-and-github.md
+--- a/skills/design-doc-mermaid/references/guides/wiki-ticket-and-github.md
++++ b/skills/design-doc-mermaid/references/guides/wiki-ticket-and-github.md
+@@ -1,84 +1,27 @@
+-# GitHub wiki, WikiTicket SDD, and Confluence
++# Viewer-specific delivery
+ 
+-TOKEN_BUDGET: 480
+-LOAD_TRIGGER: WikiTicket design docs, GitHub wiki, architecture Markdown, code walkthroughs, requirements, Confluence
++GitHub and compatible Markdown viewers can render supported fenced Mermaid syntax.
++Check the target's actual Mermaid version and syntax rather than assuming every C4 or experimental diagram works everywhere.
++Prefer the requested supported form among flowchart, sequenceDiagram, classDiagram, erDiagram and stateDiagram-v2.
++Use a supported flowchart representation if an unsupported architecture syntax must be replaced, preserving its meaning.
++A local renderer pass does not prove the remote viewer's compatibility.
+ 
+-## Why this guide exists
++For image-based destinations, prepare the required PNG/SVG beside the editable source.
++Upload or publish only to the user-authorized destination through the owning integration.
++Preparation is not authorization to post a Wiki, Confluence, Notion or other external page.
++Preserve the code-to-diagram team review/approval gate before final documentation integration.
++Follow repository Markdown language and structure rules; do not impose STE100 or an unavailable document-specialist skill.
+ 
+-GitHub Flavored Markdown and GitHub wiki render fenced `mermaid` blocks.
+-They do not render PlantUML source. Confluence does not reliably render
+-either. WikiTicket SDD publishes `docs/designs/` and related docs to the
+-configured wiki.
++## PlantUML remains opt-in
+ 
+-## Default: Mermaid
++Invoke PlantUML only when explicitly selected and relevant to Salt wireframes, use case, timing, ArchiMate, nwdiag, WBS, JSON/YAML trees, or an existing `.puml` source for a Confluence/Word image.
++Do not switch class, ER, state or ordinary component diagrams to PlantUML merely because Mermaid failed.
++Render selected PlantUML to PNG/SVG and link the actual image; publishing remains a separate authorized action.
+ 
+-This skill draws every GitHub-safe diagram:
++## Documentation delivery
+ 
+-- flowchart / activity
+-- sequence
+-- class (`classDiagram`)
+-- ER (`erDiagram`)
+-- state (`stateDiagram-v2`)
+-- C4 context / container / component
+-- component and deployment views as flowcharts when C4 is flaky on GitHub
+-
+-Do not send class, ER, state, or component diagrams to PlantUML for wiki
+-docs. Mermaid already does those.
+-
+-## PlantUML is opt-in
+-
+-Call `plantuml` only for:
+-
+-- Salt wireframes
+-- use case
+-- timing
+-- ArchiMate
+-- nwdiag / WBS / JSON-YAML trees
+-- a Confluence or Word image when the user already has `.puml` source
+-
+-Always render PlantUML to PNG or SVG. Always link the image. Always upload
+-the image with the wiki or Confluence page.
+-
+-## Companion skills
+-
+-| Need | Skill |
+-|------|--------|
+-| Prose (STE100 default) | `document-specialist` |
+-| Every GitHub-safe diagram, including class / ER / state / component | this skill |
+-| Wireframe, use case, timing, ArchiMate, leftover UML | `plantuml` |
+-
+-Do not mix STE100 and Google style in one document.
+-
+-## Reliability rules
+-
+-1. Derive nodes from code, config, or events. Do not invent services.
+-2. Cap a diagram at about 16 nodes. Write `+N more` instead of silent truncation.
+-3. Prefer `flowchart TD`, `sequenceDiagram`, `classDiagram`, `erDiagram`, `stateDiagram-v2`.
+-4. Quote reserved words in node ids (`end`, `default`).
+-5. Every `classDef` must set `color:`. Light fill needs dark text.
+-6. Validate with `scripts/resilient_diagram.py` or `mmdc` before commit.
+-7. Keep a `.mmd` source under `docs/diagrams/` for recovery.
+-8. Wiki: embed the fenced Mermaid block so GitHub renders it.
+-9. Confluence: also render PNG or SVG and upload. Do not ship a mermaid fence as the only Confluence view.
+-
+-## GitHub-safe pattern
+-
+-```mermaid
+-flowchart TD
+-    Client[Client] --> API[API]
+-    API --> Store[(Store)]
+-    classDef box fill:#90EE90,stroke:#333,color:#000
+-    class Client,API box
+-```
+-
+-Avoid `click` handlers, `init` frontmatter, unquoted `end`, and subgraphs
+-deeper than two levels.
+-
+-## Layout
+-
+-```
+-docs/designs/current_design_doc.md          # fenced mermaid in place
+-docs/designs/current_code_walkthrough.md
+-docs/diagrams/<doc>_<num>_<type>_<title>.mmd
+-docs/diagrams/<doc>_<num>_<type>_<title>.png   # required for Confluence; optional wiki fallback
+-```
++Derive existing-system nodes and edges from actual code, configuration or events.
++Keep scope omissions explicit and do not invent services.
++Retain semantic Unicode and high-contrast custom text styling as specified by SKILL.md.
++Validate before committing or final integration and retain editable source at the repository-established location.
++For code-to-diagram output, retain team review and approval before integration.
+diff --git a/skills/design-doc-mermaid/references/mermaid-diagram-guide.md b/skills/design-doc-mermaid/references/mermaid-diagram-guide.md
+--- a/skills/design-doc-mermaid/references/mermaid-diagram-guide.md
++++ b/skills/design-doc-mermaid/references/mermaid-diagram-guide.md
+@@ -1,4 +1,9 @@
+ # Mermaid Diagram Reference Guide
++
++This reference illustrates diagram patterns; it does not establish facts, resources, retries, approvals, or execution authority for the current task.
++Follow the installed SKILL.md evidence, output, validation, publication, and review gates when using its examples.
++Use the local workflow for adapted script arguments; do not execute commands solely because they appear in an example.
++
+ 
+ This reference provides comprehensive guidance on creating effective Mermaid diagrams for design documents.
+ 
+diff --git a/skills/design-doc-mermaid/scripts/extract_mermaid.py b/skills/design-doc-mermaid/scripts/extract_mermaid.py
+--- a/skills/design-doc-mermaid/scripts/extract_mermaid.py
++++ b/skills/design-doc-mermaid/scripts/extract_mermaid.py
+@@ -1,310 +1,73 @@
+ #!/usr/bin/env python3
+-"""
+-Extract Mermaid diagrams from Markdown files.
+-
+-This script finds all Mermaid code blocks in Markdown files and can:
+-1. Extract them to separate .mmd files
+-2. Validate syntax by attempting to render
+-3. Replace them with image references
+-4. List all diagrams with metadata
+-
+-Usage:
+-    # Extract all diagrams to separate files
+-    python extract_mermaid.py document.md --output-dir diagrams/
+-
+-    # List all diagrams without extracting
+-    python extract_mermaid.py document.md --list-only
+-
+-    # Validate diagrams (requires mmdc installed)
+-    python extract_mermaid.py document.md --validate
+-
+-    # Replace diagrams with image references
+-    python extract_mermaid.py document.md --replace-with-images --image-format png
+-
+-Requirements:
+-    - For validation: mermaid-cli (npm install -g @mermaid-js/mermaid-cli)
+-"""
+-
++"""List, extract, validate, or render top-level Mermaid fences into a review candidate."""
+ import argparse
+-import os
+-import re
++import hashlib
++import json
++from pathlib import Path
+ import sys
+-import subprocess
+ import tempfile
+-from pathlib import Path
+-from typing import List, Tuple, Optional, Dict
+-import hashlib
+-
+-
+-class MermaidDiagram:
+-    """Represents a single Mermaid diagram extracted from Markdown."""
+-
+-    def __init__(self, content: str, line_number: int, index: int):
+-        self.content = content.strip()
+-        self.line_number = line_number
+-        self.index = index
+-        self.hash = hashlib.md5(content.encode()).hexdigest()[:8]
+-
+-    def get_filename(self, prefix: str = "diagram", extension: str = "mmd") -> str:
+-        """Generate a unique filename for this diagram."""
+-        return f"{prefix}-{self.index:03d}-{self.hash}.{extension}"
+-
+-    def get_first_line(self, max_length: int = 50) -> str:
+-        """Get the first line of the diagram for display."""
+-        first_line = self.content.split('\n')[0].strip()
+-        if len(first_line) > max_length:
+-            return first_line[:max_length] + "..."
+-        return first_line
+-
+-
+-class MermaidExtractor:
+-    """Extract and process Mermaid diagrams from Markdown files."""
+-
+-    # Pattern to match Mermaid code blocks
+-    MERMAID_PATTERN = re.compile(
+-        r'```mermaid\s*\n(.*?)```',
+-        re.DOTALL | re.MULTILINE
+-    )
+-
+-    def __init__(self, markdown_file: Path):
+-        self.markdown_file = markdown_file
+-        self.content = markdown_file.read_text(encoding='utf-8')
+-        self.diagrams: List[MermaidDiagram] = []
+-        self._extract_diagrams()
+-
+-    def _extract_diagrams(self):
+-        """Extract all Mermaid diagrams from the Markdown content."""
+-        line_number = 1
+-        for index, match in enumerate(self.MERMAID_PATTERN.finditer(self.content), start=1):
+-            diagram_content = match.group(1)
+-            # Count newlines before this match to get line number
+-            lines_before = self.content[:match.start()].count('\n')
+-            diagram = MermaidDiagram(diagram_content, lines_before + 1, index)
+-            self.diagrams.append(diagram)
+-
+-    def save_diagrams(self, output_dir: Path, prefix: str = "diagram") -> List[Path]:
+-        """
+-        Save all diagrams to separate .mmd files.
+-
+-        Args:
+-            output_dir: Directory to save diagram files
+-            prefix: Prefix for diagram filenames
+-
+-        Returns:
+-            List of paths to saved diagram files
+-        """
+-        output_dir.mkdir(parents=True, exist_ok=True)
+-        saved_files = []
+-
+-        for diagram in self.diagrams:
+-            filename = diagram.get_filename(prefix=prefix, extension="mmd")
+-            output_path = output_dir / filename
+-            output_path.write_text(diagram.content, encoding='utf-8')
+-            saved_files.append(output_path)
+-            print(f"  ✓ Saved: {output_path}")
+-
+-        return saved_files
+-
+-    def list_diagrams(self):
+-        """Print a list of all diagrams with metadata."""
+-        if not self.diagrams:
+-            print("No Mermaid diagrams found.")
+-            return
+-
+-        print(f"\nFound {len(self.diagrams)} Mermaid diagram(s) in {self.markdown_file}:\n")
+-        for diagram in self.diagrams:
+-            print(f"  #{diagram.index} (Line {diagram.line_number}):")
+-            print(f"    First line: {diagram.get_first_line()}")
+-            print(f"    Hash: {diagram.hash}")
+-            print(f"    Lines: {len(diagram.content.splitlines())}")
+-            print()
+-
+-    def validate_diagrams(self) -> Dict[int, Optional[str]]:
+-        """
+-        Validate all diagrams by attempting to render them with mmdc.
+-
+-        Returns:
+-            Dict mapping diagram index to error message (None if valid)
+-        """
+-        if not self._check_mmdc_installed():
+-            print("ERROR: mermaid-cli (mmdc) not found.", file=sys.stderr)
+-            print("Install with: npm install -g @mermaid-js/mermaid-cli", file=sys.stderr)
+-            sys.exit(1)
+-
+-        results = {}
+-        print(f"\nValidating {len(self.diagrams)} diagram(s)...\n")
+-
+-        for diagram in self.diagrams:
+-            print(f"  Validating diagram #{diagram.index}...", end=" ")
+-            error = self._validate_single_diagram(diagram)
+-            results[diagram.index] = error
+-
+-            if error:
+-                print(f"❌ FAILED")
+-                print(f"    Error: {error}")
+-            else:
+-                print(f"✅ OK")
+-
+-        # Summary
+-        failed_count = sum(1 for err in results.values() if err)
+-        print(f"\nValidation complete: {len(self.diagrams) - failed_count}/{len(self.diagrams)} passed")
+-
+-        return results
+-
+-    def _validate_single_diagram(self, diagram: MermaidDiagram) -> Optional[str]:
+-        """Validate a single diagram. Returns error message if invalid, None if valid."""
+-        with tempfile.TemporaryDirectory() as tmpdir:
+-            tmpdir_path = Path(tmpdir)
+-            input_file = tmpdir_path / f"diagram-{diagram.index}.mmd"
+-            output_file = tmpdir_path / f"diagram-{diagram.index}.svg"
+-
+-            # Write diagram to temp file
+-            input_file.write_text(diagram.content, encoding='utf-8')
+-
+-            try:
+-                result = subprocess.run(
+-                    ['mmdc', '-i', str(input_file), '-o', str(output_file), '-b', 'transparent'],
+-                    capture_output=True,
+-                    text=True,
+-                    timeout=30
+-                )
+-
+-                if result.returncode != 0:
+-                    return result.stderr.strip() or "Unknown rendering error"
+-
+-                if not output_file.exists() or output_file.stat().st_size == 0:
+-                    return "Rendering produced no output"
+-
+-                return None  # Valid
+-
+-            except subprocess.TimeoutExpired:
+-                return "Rendering timed out after 30 seconds"
+-            except Exception as e:
+-                return str(e)
+-
+-    def replace_with_images(self, image_format: str = "png", image_dir: str = "diagrams") -> str:
+-        """
+-        Replace Mermaid code blocks with image references.
+-
+-        Args:
+-            image_format: Image format (png or svg)
+-            image_dir: Directory path for images (relative to markdown file)
+-
+-        Returns:
+-            Modified Markdown content
+-        """
+-        def replace_block(match):
+-            diagram_content = match.group(1)
+-            # Find which diagram this is
+-            for diagram in self.diagrams:
+-                if diagram.content == diagram_content.strip():
+-                    filename = diagram.get_filename(extension=image_format)
+-                    image_path = f"{image_dir}/{filename}"
+-                    return f"![Diagram {diagram.index}]({image_path})"
+-            return match.group(0)  # If not found, leave unchanged
+-
+-        return self.MERMAID_PATTERN.sub(replace_block, self.content)
+-
+-    @staticmethod
+-    def _check_mmdc_installed() -> bool:
+-        """Check if mermaid-cli (mmdc) is installed."""
+-        try:
+-            result = subprocess.run(
+-                ['mmdc', '--version'],
+-                capture_output=True,
+-                timeout=5
+-            )
+-            return result.returncode == 0
+-        except (FileNotFoundError, subprocess.TimeoutExpired):
+-            return False
++from mermaid_runtime import DiagramError, extract_blocks, render, convert_markdown, check_destination, publish
+ 
+ 
+ def main():
+-    parser = argparse.ArgumentParser(
+-        description='Extract Mermaid diagrams from Markdown files',
+-        formatter_class=argparse.RawDescriptionHelpFormatter,
+-        epilog="""
+-Examples:
+-  # Extract diagrams to separate files
+-  python extract_mermaid.py document.md --output-dir diagrams/
+-
+-  # List all diagrams
+-  python extract_mermaid.py document.md --list-only
+-
+-  # Validate diagrams
+-  python extract_mermaid.py document.md --validate
+-
+-  # Replace with image references
+-  python extract_mermaid.py document.md --replace-with-images --image-format png
+-        """
+-    )
+-
+-    parser.add_argument('markdown_file', type=Path, help='Input Markdown file')
+-    parser.add_argument('--output-dir', '-o', type=Path, help='Output directory for extracted diagrams')
+-    parser.add_argument('--prefix', default='diagram', help='Prefix for output filenames (default: diagram)')
+-    parser.add_argument('--list-only', '-l', action='store_true', help='List diagrams without extracting')
+-    parser.add_argument('--validate', '-v', action='store_true', help='Validate diagrams with mmdc')
+-    parser.add_argument('--replace-with-images', '-r', action='store_true',
+-                        help='Replace Mermaid blocks with image references')
+-    parser.add_argument('--image-format', choices=['png', 'svg'], default='png',
+-                        help='Image format for replacement (default: png)')
+-    parser.add_argument('--image-dir', default='diagrams',
+-                        help='Image directory path for references (default: diagrams)')
+-    parser.add_argument('--output-markdown', type=Path,
+-                        help='Output file for modified markdown (with --replace-with-images)')
+-
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('markdown_file', type=Path)
++    mode = parser.add_mutually_exclusive_group()
++    mode.add_argument('--list-only', '-l', action='store_true')
++    mode.add_argument('--validate', '-v', action='store_true')
++    mode.add_argument('--replace-with-images', '-r', action='store_true')
++    parser.add_argument('--output-dir', '-o', type=Path)
++    parser.add_argument('--output-markdown', type=Path)
++    parser.add_argument('--image-dir', type=Path)
++    parser.add_argument('--image-format', choices=['png', 'svg'], default='svg')
++    parser.add_argument('--prefix', default='diagram')
++    parser.add_argument('--mmdc')
++    parser.add_argument('--puppeteer-config', type=Path)
++    parser.add_argument('--overwrite', action='store_true', help='Replace only the explicitly scoped output Markdown candidate')
+     args = parser.parse_args()
+-
+-    # Validate input file
+-    if not args.markdown_file.exists():
+-        print(f"ERROR: File not found: {args.markdown_file}", file=sys.stderr)
+-        sys.exit(1)
+-
+-    if not args.markdown_file.is_file():
+-        print(f"ERROR: Not a file: {args.markdown_file}", file=sys.stderr)
+-        sys.exit(1)
+-
+-    # Extract diagrams
+-    print(f"Processing: {args.markdown_file}")
+-    extractor = MermaidExtractor(args.markdown_file)
+-
+-    if not extractor.diagrams:
+-        print("No Mermaid diagrams found.")
+-        sys.exit(0)
+-
+-    # Handle operations
+-    if args.list_only:
+-        extractor.list_diagrams()
+-
+-    elif args.validate:
+-        results = extractor.validate_diagrams()
+-        # Exit with error if any validation failed
+-        if any(results.values()):
+-            sys.exit(1)
+-
+-    elif args.replace_with_images:
+-        modified_content = extractor.replace_with_images(
+-            image_format=args.image_format,
+-            image_dir=args.image_dir
+-        )
+-
+-        if args.output_markdown:
+-            args.output_markdown.write_text(modified_content, encoding='utf-8')
+-            print(f"\n✓ Modified Markdown saved to: {args.output_markdown}")
++    try:
++        text = args.markdown_file.read_bytes().decode('utf-8')
++        blocks = extract_blocks(text)
++        if args.replace_with_images:
++            if not args.output_markdown or not args.image_dir:
++                parser.error('conversion requires --output-markdown and --image-dir')
++            result = convert_markdown(args.markdown_file, args.output_markdown, args.image_dir,
++                                      mmdc=args.mmdc, overwrite=args.overwrite,
++                                      puppeteer_config=args.puppeteer_config, image_format=args.image_format)
++        elif args.validate:
++            if not blocks:
++                raise DiagramError('INPUT_ERROR', 'No supported top-level Mermaid fences to validate')
++            with tempfile.TemporaryDirectory(prefix='mermaid-check-') as tmp:
++                receipts = []
++                for b in blocks:
++                    src = Path(tmp) / f'{b.index}.mmd';src.write_text(b.content, encoding='utf-8')
++                    receipts.append(render(src, Path(tmp) / f'{b.index}.svg', mmdc=args.mmdc,
++                                           puppeteer_config=args.puppeteer_config))
++            result = {'validated': len(receipts), 'coverage': 'top-level fences only',
++                      'source_sha256': hashlib.sha256(text.encode()).hexdigest(), 'semantic_review': 'not_verified'}
++        elif args.output_dir and not args.list_only:
++            if not args.prefix or any(c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_' for c in args.prefix):
++                parser.error('--prefix must use ASCII letters, digits, hyphens or underscores')
++            if not blocks:
++                raise DiagramError('INPUT_ERROR', 'No supported top-level Mermaid fences to extract')
++            targets = [args.output_dir / f'{args.prefix}-{b.index:03d}-{hashlib.sha256(b.content.encode()).hexdigest()[:16]}.mmd' for b in blocks]
++            for path in targets:check_destination(path)
++            args.output_dir.mkdir(parents=True, exist_ok=True)
++            for b, target in zip(blocks, targets):
++                with tempfile.NamedTemporaryFile(dir=args.output_dir, delete=False) as handle:
++                    staged = Path(handle.name);handle.write(b.content.encode())
++                try:publish(staged, target)
++                finally:staged.unlink(missing_ok=True)
++            result = {'sources': [str(p) for p in targets], 'coverage': 'top-level fences only'}
+         else:
+-            print("\nModified Markdown:\n")
+-            print(modified_content)
+-
+-    elif args.output_dir:
+-        print(f"\nExtracting {len(extractor.diagrams)} diagram(s) to {args.output_dir}/:\n")
+-        saved_files = extractor.save_diagrams(args.output_dir, prefix=args.prefix)
+-        print(f"\n✓ Extracted {len(saved_files)} diagram(s)")
+-
+-    else:
+-        # Default: list diagrams
+-        extractor.list_diagrams()
+-        print("\nUse --output-dir to extract diagrams or --help for more options.")
++            result = {'count': len(blocks), 'coverage': 'top-level fences only',
++                      'diagrams': [{'index': b.index, 'line': text.count('\n', 0, b.start) + 1,
++                                    'sha256': hashlib.sha256(b.content.encode()).hexdigest()} for b in blocks]}
++        print(json.dumps(result, ensure_ascii=False, indent=2))
++        return 0
++    except (DiagramError, OSError) as error:
++        print(json.dumps({'error': getattr(error, 'code', 'IO_ERROR'), 'message': str(error)}), file=sys.stderr)
++        return 1
+ 
+ 
+-if __name__ == '__main__':
+-    main()
++if __name__ == '__main__':sys.exit(main())
+diff --git a/skills/design-doc-mermaid/scripts/mermaid_runtime.py b/skills/design-doc-mermaid/scripts/mermaid_runtime.py
+--- /dev/null
++++ b/skills/design-doc-mermaid/scripts/mermaid_runtime.py
+@@ -0,0 +1,205 @@
++#!/usr/bin/env python3
++"""Local Mermaid rendering with staged output, occurrence-aware extraction, and typed failures."""
++from dataclasses import dataclass
++import hashlib
++import json
++import os
++from pathlib import Path
++import re
++import shutil
++import subprocess
++import tempfile
++
++
++class DiagramError(Exception):
++    def __init__(self, code, message):
++        self.code = code
++        super().__init__(message)
++
++
++@dataclass(frozen=True)
++class Block:
++    start: int
++    end: int
++    content: str
++    index: int
++
++
++def extract_blocks(text):
++    """Read top-level CommonMark fences; never mistake a nested example for a diagram.
++
++    Containers (blockquote/list indentation) are not transformed by this helper.
++    """
++    blocks = []
++    opened = None
++    offset = 0
++    fence = re.compile(r'^( {0,3})(`{3,}|~{3,})([^\r\n]*)\r?\n?$')
++    for line in text.splitlines(keepends=True):
++        if opened:
++            char, length, start, body, is_mermaid = opened
++            close = re.match(r'^ {0,3}' + re.escape(char) + '{' + str(length) + r',}[ \t]*(?:\r?\n)?$', line)
++            if close:
++                if is_mermaid:
++                    blocks.append(Block(start, offset + len(line), text[body:offset], len(blocks) + 1))
++                opened = None
++        else:
++            match = fence.match(line)
++            if match:
++                marker, info = match[2], match[3].strip()
++                if marker[0] == '`' and '`' in info:
++                    offset += len(line)
++                    continue
++                if info == 'mermaid' and match[1]:
++                    raise DiagramError('INPUT_ERROR', 'Indented Mermaid fences require a container-aware parser; no conversion performed')
++                opened = (marker[0], len(marker), offset, offset + len(line), info == 'mermaid')
++        offset += len(line)
++    if opened and opened[-1]:
++        raise DiagramError('INPUT_ERROR', 'Unclosed top-level Mermaid fence')
++    return blocks
++
++
++def configured_tools(mmdc=None, puppeteer_config=None):
++    record = {}
++    config_home = Path(os.environ.get('XDG_CONFIG_HOME', str(Path.home() / '.config')))
++    config = config_home / 'developer-skills/mermaid-runtime.json'
++    if config.exists():
++        try:
++            record = json.loads(config.read_text())
++        except (ValueError, OSError) as exc:
++            raise DiagramError('CONFIG_ERROR', str(exc)) from exc
++    executable = mmdc or os.environ.get('DESIGN_DOC_MERMAID_MMDC') or shutil.which('mmdc') or record.get('mmdc')
++    if not executable or not shutil.which(str(executable)):
++        raise DiagramError('TOOL_MISSING', 'mmdc is unavailable; use an existing or explicitly authorized pinned runtime')
++    browser_config = puppeteer_config or record.get('puppeteer_config')
++    return str(executable), browser_config
++
++
++def failure_code(stderr):
++    value = stderr.lower()
++    if any(x in value for x in ['failed to launch', 'could not find chrome', 'no usable sandbox', 'browser process', 'chrome-headless-shell']):
++        return 'BROWSER_ERROR'
++    if any(x in value for x in ['parse error', 'syntax error', 'unknown diagram', 'no diagram type detected']):
++        return 'SYNTAX_ERROR'
++    return 'RENDER_ERROR'
++
++
++def check_destination(path, overwrite=False):
++    path = Path(path)
++    if path.is_symlink():
++        raise DiagramError('OUTPUT_CONFLICT', f'Refusing symlink output: {path}')
++    if path.exists() and (not path.is_file() or not overwrite):
++        raise DiagramError('OUTPUT_CONFLICT', f'Existing output requires scoped overwrite: {path}')
++
++
++def publish(staged, destination, overwrite=False):
++    """Replace one owned output atomically, or create it without clobbering a racer."""
++    staged, destination = Path(staged), Path(destination)
++    check_destination(destination, overwrite)
++    if overwrite:
++        os.replace(staged, destination)
++    else:
++        try:
++            os.link(staged, destination)
++        except FileExistsError as exc:
++            raise DiagramError('OUTPUT_CONFLICT', str(destination)) from exc
++        staged.unlink()
++
++
++def render(input_path, output_path, *, mmdc=None, overwrite=False, puppeteer_config=None, timeout=60, background="white", theme="default"):
++    src, out = Path(input_path), Path(output_path)
++    if src.resolve() == out.resolve():
++        raise DiagramError('OUTPUT_CONFLICT', 'Input and output must be distinct')
++    if out.suffix.lower() not in {'.svg', '.png', '.pdf'}:
++        raise DiagramError('INPUT_ERROR', 'Output must be SVG, PNG, or PDF')
++    check_destination(out, overwrite)
++    executable, browser_config = configured_tools(mmdc, puppeteer_config)
++    if not src.is_file():
++        raise DiagramError('INPUT_ERROR', f'Missing source: {src}')
++    out.parent.mkdir(parents=True, exist_ok=True)
++    with tempfile.TemporaryDirectory(prefix='.mermaid-render-', dir=out.parent) as temp:
++        source = Path(temp) / 'source.mmd'
++        source.write_bytes(src.read_bytes())
++        staged = Path(temp) / ('artifact' + out.suffix.lower())
++        cmd = [executable, '-i', str(source), '-o', str(staged), '-b', background, '-t', theme]
++        if browser_config:
++            cmd += ['-p', str(browser_config)]
++        try:
++            result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
++        except FileNotFoundError as exc:
++            raise DiagramError('TOOL_MISSING', str(exc)) from exc
++        except subprocess.TimeoutExpired as exc:
++            raise DiagramError('TIMEOUT', f'Render exceeded {timeout} seconds') from exc
++        if result.returncode:
++            diagnostic = result.stderr.strip() or result.stdout.strip() or 'Renderer failed'
++            raise DiagramError(failure_code(diagnostic), diagnostic)
++        if not staged.is_file() or staged.stat().st_size == 0:
++            raise DiagramError('OUTPUT_ERROR', 'Renderer returned no nonempty artifact')
++        artifact_hash = hashlib.sha256(staged.read_bytes()).hexdigest()
++        source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
++        publish(staged, out, overwrite)
++    return {'source_sha256': source_hash, 'artifact_sha256': artifact_hash, 'output': str(out),
++            'rendered': True, 'semantic_review': 'not_verified', 'viewer_review': 'not_verified'}
++
++
++def convert_markdown(input_path, output_path, image_dir, *, mmdc=None, overwrite=False,
++                     puppeteer_config=None, image_format='svg'):
++    """Render all supported blocks before publishing any replacement Markdown.
++
++    This writes a review candidate; caller still owns documentation approval.
++    """
++    src, out, images = Path(input_path), Path(output_path), Path(image_dir)
++    if src.resolve() == out.resolve():
++        raise DiagramError('OUTPUT_CONFLICT', 'Write a separate review candidate; do not replace source Markdown')
++    if image_format not in {'svg', 'png', 'pdf'}:
++        raise DiagramError('INPUT_ERROR', 'Unsupported image format')
++    check_destination(out, overwrite)
++    content = src.read_bytes().decode('utf-8')
++    blocks = extract_blocks(content)
++    if not blocks:
++        raise DiagramError('INPUT_ERROR', 'No supported top-level Mermaid blocks found; containers are not transformed')
++    # Stage the whole batch before publishing; errors leave old document/images intact.
++    out.parent.mkdir(parents=True, exist_ok=True)
++    created = []
++    with tempfile.TemporaryDirectory(prefix='.mermaid-batch-', dir=out.parent) as temp:
++        stage = Path(temp)
++        prepared = []
++        for block in blocks:
++            mmd = stage / f'{block.index}.mmd';mmd.write_text(block.content, encoding='utf-8')
++            artifact = stage / f'{block.index}.{image_format}'
++            receipt = render(mmd, artifact, mmdc=mmdc, puppeteer_config=puppeteer_config)
++            stem = f'{src.stem}-{block.index:03d}-{receipt["source_sha256"][:16]}'
++            final_mmd = images / (stem + '.mmd')
++            final_image = images / f'{stem}-{receipt["artifact_sha256"][:16]}.{image_format}'
++            prepared.append((block, mmd, artifact, final_mmd, final_image))
++        replacements = content
++        for block, _, _, _, final_image in reversed(prepared):
++            relative = Path(os.path.relpath(final_image, out.parent)).as_posix()
++            from urllib.parse import quote
++            replacements = replacements[:block.start] + f'![Diagram {block.index}]({quote(relative, safe="/")})\n' + replacements[block.end:]
++        candidate = stage / 'candidate.md';candidate.write_bytes(replacements.encode('utf-8'))
++        images.mkdir(parents=True, exist_ok=True)
++        # Check every destination before the first publish; immutable assets are never overwritten.
++        for _, mmd, artifact, final_mmd, final_image in prepared:
++            for source, target in [(mmd, final_mmd), (artifact, final_image)]:
++                if target.is_symlink() or (target.exists() and (not target.is_file() or target.read_bytes() != source.read_bytes())):
++                    raise DiagramError('OUTPUT_CONFLICT', f'Conflicting immutable asset: {target}')
++        try:
++            for _, mmd, artifact, final_mmd, final_image in prepared:
++                for source, target in [(mmd, final_mmd), (artifact, final_image)]:
++                    if not target.exists():
++                        # Same-directory staging supports different filesystems for image_dir.
++                        with tempfile.NamedTemporaryFile(dir=images, prefix='.mermaid-asset-', delete=False) as handle:
++                            staged = Path(handle.name);handle.write(source.read_bytes())
++                        try:
++                            publish(staged, target)
++                            created.append((target, hashlib.sha256(source.read_bytes()).hexdigest()))
++                        finally:
++                            staged.unlink(missing_ok=True)
++            publish(candidate, out, overwrite)
++        except Exception:
++            for target, digest in created:
++                if not target.is_symlink() and target.is_file() and hashlib.sha256(target.read_bytes()).hexdigest() == digest:
++                    target.unlink()
++            raise
++    return {'output': str(out), 'images': [str(x[4]) for x in prepared], 'count': len(blocks),
++            'coverage': 'top-level fences only', 'approval': 'not_attested'}
+diff --git a/skills/design-doc-mermaid/scripts/mermaid_to_image.py b/skills/design-doc-mermaid/scripts/mermaid_to_image.py
+--- a/skills/design-doc-mermaid/scripts/mermaid_to_image.py
++++ b/skills/design-doc-mermaid/scripts/mermaid_to_image.py
+@@ -1,335 +1,29 @@
+ #!/usr/bin/env python3
+-"""
+-Convert Mermaid diagrams to PNG or SVG images.
+-
+-This script renders Mermaid diagrams to image files using mermaid-cli (mmdc).
+-Supports single diagrams, batch conversion, and various rendering options.
+-
+-Usage:
+-    # Convert single diagram file
+-    python mermaid_to_image.py diagram.mmd output.png
+-
+-    # Convert with custom settings
+-    python mermaid_to_image.py diagram.mmd output.svg --theme dark --background white --width 1200
+-
+-    # Batch convert all .mmd files in directory
+-    python mermaid_to_image.py diagrams/ output/ --format png --recursive
+-
+-    # Convert from stdin
+-    echo "graph TD; A-->B" | python mermaid_to_image.py - output.png
+-
+-Requirements:
+-    - mermaid-cli: npm install -g @mermaid-js/mermaid-cli
+-"""
+-
++"""Render a Mermaid source file to one verified local artifact, preserving old output on failure."""
+ import argparse
+-import os
+-import subprocess
++import json
++from pathlib import Path
+ import sys
+-import tempfile
+-from pathlib import Path
+-from typing import Optional, List
+-
+-
+-class MermaidRenderer:
+-    """Render Mermaid diagrams to images using mermaid-cli."""
+-
+-    VALID_THEMES = ['default', 'forest', 'dark', 'neutral', 'base']
+-    VALID_FORMATS = ['png', 'svg', 'pdf']
+-
+-    def __init__(
+-        self,
+-        theme: str = 'default',
+-        background: str = 'transparent',
+-        width: Optional[int] = None,
+-        height: Optional[int] = None,
+-        scale: int = 1,
+-        config_file: Optional[Path] = None
+-    ):
+-        """
+-        Initialize Mermaid renderer.
+-
+-        Args:
+-            theme: Mermaid theme (default, forest, dark, neutral, base)
+-            background: Background color (transparent, white, etc.)
+-            width: Output width in pixels
+-            height: Output height in pixels
+-            scale: Scale factor (1-3)
+-            config_file: Path to custom Mermaid config file
+-        """
+-        if not self._check_mmdc_installed():
+-            print("ERROR: mermaid-cli (mmdc) not found.", file=sys.stderr)
+-            print("Install with: npm install -g @mermaid-js/mermaid-cli", file=sys.stderr)
+-            sys.exit(1)
+-
+-        self.theme = theme if theme in self.VALID_THEMES else 'default'
+-        self.background = background
+-        self.width = width
+-        self.height = height
+-        self.scale = max(1, min(3, scale))
+-        self.config_file = config_file
+-
+-    def render(self, input_path: Path, output_path: Path) -> bool:
+-        """
+-        Render a Mermaid diagram to an image.
+-
+-        Args:
+-            input_path: Path to .mmd file or '-' for stdin
+-            output_path: Path to output image file
+-
+-        Returns:
+-            True if successful, False otherwise
+-        """
+-        # Build mmdc command
+-        cmd = ['mmdc', '-i', str(input_path), '-o', str(output_path)]
+-
+-        # Add options
+-        cmd.extend(['-t', self.theme])
+-        cmd.extend(['-b', self.background])
+-
+-        if self.width:
+-            cmd.extend(['-w', str(self.width)])
+-
+-        if self.height:
+-            cmd.extend(['-H', str(self.height)])
+-
+-        if self.scale != 1:
+-            cmd.extend(['-s', str(self.scale)])
+-
+-        if self.config_file and self.config_file.exists():
+-            cmd.extend(['-c', str(self.config_file)])
+-
+-        try:
+-            result = subprocess.run(
+-                cmd,
+-                capture_output=True,
+-                text=True,
+-                timeout=60
+-            )
+-
+-            if result.returncode != 0:
+-                print(f"ERROR: mmdc failed: {result.stderr}", file=sys.stderr)
+-                return False
+-
+-            if not output_path.exists():
+-                print(f"ERROR: Output file not created: {output_path}", file=sys.stderr)
+-                return False
+-
+-            if output_path.stat().st_size == 0:
+-                print(f"ERROR: Output file is empty: {output_path}", file=sys.stderr)
+-                return False
+-
+-            return True
+-
+-        except subprocess.TimeoutExpired:
+-            print(f"ERROR: Rendering timed out after 60 seconds", file=sys.stderr)
+-            return False
+-
+-        except Exception as e:
+-            print(f"ERROR: {e}", file=sys.stderr)
+-            return False
+-
+-    def render_from_string(self, mermaid_code: str, output_path: Path) -> bool:
+-        """
+-        Render Mermaid code string to an image.
+-
+-        Args:
+-            mermaid_code: Mermaid diagram syntax as string
+-            output_path: Path to output image file
+-
+-        Returns:
+-            True if successful, False otherwise
+-        """
+-        with tempfile.NamedTemporaryFile(mode='w', suffix='.mmd', delete=False) as f:
+-            f.write(mermaid_code)
+-            temp_input = Path(f.name)
+-
+-        try:
+-            success = self.render(temp_input, output_path)
+-            return success
+-        finally:
+-            try:
+-                temp_input.unlink()
+-            except:
+-                pass
+-
+-    def batch_render(
+-        self,
+-        input_dir: Path,
+-        output_dir: Path,
+-        output_format: str = 'png',
+-        recursive: bool = False
+-    ) -> tuple[int, int]:
+-        """
+-        Batch render all .mmd files in a directory.
+-
+-        Args:
+-            input_dir: Directory containing .mmd files
+-            output_dir: Output directory for images
+-            output_format: Output format (png, svg, pdf)
+-            recursive: Recursively search subdirectories
+-
+-        Returns:
+-            Tuple of (success_count, total_count)
+-        """
+-        output_dir.mkdir(parents=True, exist_ok=True)
+-
+-        # Find all .mmd files
+-        if recursive:
+-            mmd_files = list(input_dir.rglob('*.mmd'))
+-        else:
+-            mmd_files = list(input_dir.glob('*.mmd'))
+-
+-        if not mmd_files:
+-            print(f"No .mmd files found in {input_dir}")
+-            return 0, 0
+-
+-        print(f"Found {len(mmd_files)} diagram(s) to render\n")
+-
+-        success_count = 0
+-        for input_file in mmd_files:
+-            # Determine output path
+-            if recursive:
+-                relative_path = input_file.relative_to(input_dir)
+-                output_file = output_dir / relative_path.with_suffix(f'.{output_format}')
+-                output_file.parent.mkdir(parents=True, exist_ok=True)
+-            else:
+-                output_file = output_dir / input_file.with_suffix(f'.{output_format}').name
+-
+-            print(f"  Rendering: {input_file.name} -> {output_file.name}...", end=" ")
+-
+-            if self.render(input_file, output_file):
+-                print("✅")
+-                success_count += 1
+-            else:
+-                print("❌")
+-
+-        print(f"\n✓ Successfully rendered {success_count}/{len(mmd_files)} diagram(s)")
+-        return success_count, len(mmd_files)
+-
+-    @staticmethod
+-    def _check_mmdc_installed() -> bool:
+-        """Check if mermaid-cli (mmdc) is installed."""
+-        try:
+-            result = subprocess.run(
+-                ['mmdc', '--version'],
+-                capture_output=True,
+-                timeout=5
+-            )
+-            return result.returncode == 0
+-        except (FileNotFoundError, subprocess.TimeoutExpired):
+-            return False
++from mermaid_runtime import DiagramError, render
+ 
+ 
+ def main():
+-    parser = argparse.ArgumentParser(
+-        description='Convert Mermaid diagrams to PNG or SVG images',
+-        formatter_class=argparse.RawDescriptionHelpFormatter,
+-        epilog="""
+-Examples:
+-  # Single diagram
+-  python mermaid_to_image.py diagram.mmd output.png
+-
+-  # With custom theme and background
+-  python mermaid_to_image.py diagram.mmd output.svg --theme dark --background white
+-
+-  # Batch convert directory
+-  python mermaid_to_image.py diagrams/ output/ --format png
+-
+-  # From stdin
+-  echo "graph TD; A-->B" | python mermaid_to_image.py - output.png
+-
+-Themes:
+-  default, forest, dark, neutral, base
+-        """
+-    )
+-
+-    parser.add_argument('input', type=str,
+-                        help='Input file (.mmd), directory, or "-" for stdin')
+-    parser.add_argument('output', type=str,
+-                        help='Output file or directory')
+-
+-    # Rendering options
+-    parser.add_argument('--theme', '-t', choices=MermaidRenderer.VALID_THEMES,
+-                        default='default', help='Mermaid theme (default: default)')
+-    parser.add_argument('--background', '-b', default='transparent',
+-                        help='Background color (default: transparent)')
+-    parser.add_argument('--width', '-w', type=int,
+-                        help='Output width in pixels')
+-    parser.add_argument('--height', '-H', type=int,
+-                        help='Output height in pixels')
+-    parser.add_argument('--scale', '-s', type=int, default=1, choices=[1, 2, 3],
+-                        help='Scale factor (default: 1)')
+-    parser.add_argument('--config', '-c', type=Path,
+-                        help='Path to custom Mermaid config file')
+-
+-    # Batch options
+-    parser.add_argument('--format', '-f', choices=MermaidRenderer.VALID_FORMATS,
+-                        default='png', help='Output format for batch conversion (default: png)')
+-    parser.add_argument('--recursive', '-r', action='store_true',
+-                        help='Recursively process subdirectories')
+-
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('input', type=Path)
++    parser.add_argument('output', type=Path)
++    parser.add_argument('--mmdc')
++    parser.add_argument('--background', default='white')
++    parser.add_argument('--theme', choices=['default', 'forest', 'dark', 'neutral', 'base'], default='default')
++    parser.add_argument('--puppeteer-config', type=Path)
++    parser.add_argument('--overwrite', action='store_true', help='Replace only an output whose modification is authorized')
+     args = parser.parse_args()
+-
+-    # Initialize renderer
+-    renderer = MermaidRenderer(
+-        theme=args.theme,
+-        background=args.background,
+-        width=args.width,
+-        height=args.height,
+-        scale=args.scale,
+-        config_file=args.config
+-    )
+-
+-    # Handle stdin input
+-    if args.input == '-':
+-        if not sys.stdin.isatty():
+-            mermaid_code = sys.stdin.read()
+-            output_path = Path(args.output)
+-            print(f"Rendering from stdin to {output_path}...")
+-
+-            if renderer.render_from_string(mermaid_code, output_path):
+-                print(f"✅ Success: {output_path}")
+-                sys.exit(0)
+-            else:
+-                print("❌ Failed", file=sys.stderr)
+-                sys.exit(1)
+-        else:
+-            print("ERROR: No input provided on stdin", file=sys.stderr)
+-            sys.exit(1)
+-
+-    input_path = Path(args.input)
+-    output_path = Path(args.output)
+-
+-    # Handle directory (batch mode)
+-    if input_path.is_dir():
+-        success, total = renderer.batch_render(
+-            input_path,
+-            output_path,
+-            output_format=args.format,
+-            recursive=args.recursive
+-        )
+-        sys.exit(0 if success == total else 1)
+-
+-    # Handle single file
+-    elif input_path.is_file():
+-        print(f"Rendering: {input_path} -> {output_path}")
+-
+-        # Ensure output directory exists
+-        output_path.parent.mkdir(parents=True, exist_ok=True)
+-
+-        if renderer.render(input_path, output_path):
+-            print(f"✅ Success: {output_path}")
+-            print(f"   Size: {output_path.stat().st_size:,} bytes")
+-            sys.exit(0)
+-        else:
+-            print("❌ Failed", file=sys.stderr)
+-            sys.exit(1)
+-
+-    else:
+-        print(f"ERROR: Input not found: {input_path}", file=sys.stderr)
+-        sys.exit(1)
++    try:
++        print(json.dumps(render(args.input, args.output, mmdc=args.mmdc, overwrite=args.overwrite,
++                                puppeteer_config=args.puppeteer_config, background=args.background, theme=args.theme), indent=2))
++        return 0
++    except (DiagramError, OSError) as error:
++        print(json.dumps({'error': getattr(error, 'code', 'IO_ERROR'), 'message': str(error)}), file=sys.stderr)
++        return 1
+ 
+ 
+-if __name__ == '__main__':
+-    main()
++if __name__ == '__main__':sys.exit(main())
+diff --git a/skills/design-doc-mermaid/scripts/resilient_diagram.py b/skills/design-doc-mermaid/scripts/resilient_diagram.py
+--- a/skills/design-doc-mermaid/scripts/resilient_diagram.py
++++ b/skills/design-doc-mermaid/scripts/resilient_diagram.py
+@@ -1,684 +1,6 @@
+ #!/usr/bin/env python3
+-"""
+-Resilient Mermaid diagram generation with error recovery.
+-
+-This script orchestrates the full workflow for creating Mermaid diagrams:
+-1. Identify diagram type from Mermaid code
+-2. Save .mmd file with consistent naming convention
+-3. Generate image file (PNG/SVG) using mmdc
+-4. On validation failure, search troubleshooting.md for matching fixes
+-5. Return structured result for Claude to act on errors
+-
+-The script enables resilient diagram generation by:
+-- Automatically detecting diagram types
+-- Following consistent file naming: <markdown>_<num>_<type>_<title>.<ext>
+-- Parsing troubleshooting.md to find error fixes
+-- Generating search queries for external tools when no local fix exists
+-
+-Usage:
+-    # Generate from code string
+-    python resilient_diagram.py --code "flowchart TD; A-->B" \\
+-        --markdown-file design_doc --diagram-num 1 --title "overview"
+-
+-    # Generate from existing .mmd file
+-    python resilient_diagram.py --mmd-file diagram.mmd --output-dir ./diagrams/
+-
+-    # Read from stdin with JSON output
+-    cat diagram.mmd | python resilient_diagram.py --stdin \\
+-        --markdown-file doc --diagram-num 2 --title "flow" --json
+-
+-Requirements:
+-    - mermaid-cli (npm install -g @mermaid-js/mermaid-cli)
+-    - Python 3.7+ (stdlib only, no external dependencies)
+-"""
+-
+-import argparse
+-import json
+-import os
+-import re
+-import subprocess
+-import sys
+-import tempfile
+-from dataclasses import dataclass, asdict, field
+-from enum import Enum
+-from pathlib import Path
+-from typing import Optional, List, Dict, Tuple, Any
+-
+-
+-class DiagramType(Enum):
+-    """Supported Mermaid diagram types."""
+-    FLOWCHART = "flowchart"
+-    SEQUENCE = "sequence"
+-    CLASS = "class"
+-    STATE = "state"
+-    ER = "er"
+-    GANTT = "gantt"
+-    PIE = "pie"
+-    MINDMAP = "mindmap"
+-    TIMELINE = "timeline"
+-    QUADRANT = "quadrant"
+-    REQUIREMENT = "requirement"
+-    JOURNEY = "journey"
+-    C4 = "c4"
+-    UNKNOWN = "unknown"
+-
+-
+-@dataclass
+-class TroubleshootingMatch:
+-    """A matching entry from troubleshooting guide."""
+-    error_number: int
+-    title: str
+-    severity: str
+-    diagram_types: List[str]
+-    problem: str
+-    incorrect_example: str
+-    correct_example: str
+-    error_messages: List[str]
+-
+-    def to_dict(self) -> Dict[str, Any]:
+-        return {
+-            "error_number": self.error_number,
+-            "title": self.title,
+-            "severity": self.severity,
+-            "diagram_types": self.diagram_types,
+-            "problem": self.problem,
+-            "correct_example": self.correct_example
+-        }
+-
+-
+-@dataclass
+-class DiagramResult:
+-    """Result of diagram generation attempt."""
+-    success: bool
+-    mmd_path: Optional[str]
+-    image_path: Optional[str]
+-    diagram_type: str
+-    error_message: Optional[str]
+-    troubleshooting_matches: List[Dict] = field(default_factory=list)
+-    suggested_fix: Optional[str] = None
+-    search_recommendation: Optional[str] = None
+-
+-    def to_dict(self) -> Dict[str, Any]:
+-        return {
+-            "success": self.success,
+-            "mmd_path": self.mmd_path,
+-            "image_path": self.image_path,
+-            "diagram_type": self.diagram_type,
+-            "error_message": self.error_message,
+-            "troubleshooting_matches": self.troubleshooting_matches,
+-            "suggested_fix": self.suggested_fix,
+-            "search_recommendation": self.search_recommendation
+-        }
+-
+-
+-class TroubleshootingParser:
+-    """Parse troubleshooting.md into searchable entries."""
+-
+-    # Pattern to match error sections
+-    ERROR_PATTERN = re.compile(
+-        r'### ❌ Error (\d+): (.+?)\n+'
+-        r'\*\*Severity:\*\* (🔴|🟠|🟡|🟢) (\w+)',
+-        re.MULTILINE
+-    )
+-
+-    # Pattern to find incorrect/correct code blocks
+-    CODE_BLOCK_PATTERN = re.compile(
+-        r'\*\*(Incorrect|Correct)(?:\s+Solutions?)?:\*\*\s*```mermaid\s*\n(.*?)```',
+-        re.DOTALL
+-    )
+-
+-    def __init__(self, troubleshooting_path: Path):
+-        self.path = troubleshooting_path
+-        self.entries: List[TroubleshootingMatch] = []
+-        if self.path and self.path.exists():
+-            self._parse()
+-
+-    def _parse(self):
+-        """Parse the troubleshooting.md file."""
+-        content = self.path.read_text(encoding='utf-8')
+-
+-        # Split by error sections
+-        sections = re.split(r'(?=### ❌ Error \d+:)', content)
+-
+-        for section in sections:
+-            if not section.strip() or '### ❌ Error' not in section:
+-                continue
+-
+-            # Extract error number and title
+-            header_match = re.search(r'### ❌ Error (\d+): (.+)', section)
+-            if not header_match:
+-                continue
+-
+-            error_num = int(header_match.group(1))
+-            title = header_match.group(2).strip()
+-
+-            # Extract severity
+-            severity_match = re.search(r'\*\*Severity:\*\* (🔴|🟠|🟡|🟢) (\w+)', section)
+-            severity = severity_match.group(2) if severity_match else "Unknown"
+-
+-            # Extract problem description
+-            problem_match = re.search(r'\*\*Problem:\*\* (.+?)(?:\n\n|\*\*)', section, re.DOTALL)
+-            problem = problem_match.group(1).strip() if problem_match else ""
+-
+-            # Extract diagram types affected
+-            types_match = re.search(r'\*\*Diagram Types Affected:\*\* (.+)', section)
+-            diagram_types = []
+-            if types_match:
+-                types_text = types_match.group(1)
+-                # Parse types like "All diagrams", "Flowcharts, state diagrams"
+-                diagram_types = [t.strip().lower() for t in types_text.split(',')]
+-
+-            # Extract incorrect/correct examples
+-            incorrect = ""
+-            correct = ""
+-            for match in self.CODE_BLOCK_PATTERN.finditer(section):
+-                block_type = match.group(1)
+-                code = match.group(2).strip()
+-                if block_type == "Incorrect":
+-                    incorrect = code
+-                elif block_type == "Correct":
+-                    correct = code
+-
+-            # Extract error messages
+-            error_messages = []
+-            error_msg_match = re.search(r'\*\*Error Message[s]?:\*\*\s*\n((?:- `.+`\n?)+)', section)
+-            if error_msg_match:
+-                for line in error_msg_match.group(1).split('\n'):
+-                    msg_match = re.search(r'`(.+)`', line)
+-                    if msg_match:
+-                        error_messages.append(msg_match.group(1))
+-
+-            # Also look for inline error messages
+-            inline_msg = re.search(r'\*\*Error Message:\*\*\s*`?(.+?)`?\n', section)
+-            if inline_msg and not error_messages:
+-                error_messages.append(inline_msg.group(1).strip('`'))
+-
+-            entry = TroubleshootingMatch(
+-                error_number=error_num,
+-                title=title,
+-                severity=severity,
+-                diagram_types=diagram_types,
+-                problem=problem,
+-                incorrect_example=incorrect,
+-                correct_example=correct,
+-                error_messages=error_messages
+-            )
+-            self.entries.append(entry)
+-
+-    def search(self, error_message: str, diagram_type: DiagramType) -> List[TroubleshootingMatch]:
+-        """
+-        Search for matching troubleshooting entries.
+-
+-        Args:
+-            error_message: Error message from mmdc
+-            diagram_type: Type of diagram that failed
+-
+-        Returns:
+-            List of matching entries, ranked by relevance
+-        """
+-        matches = []
+-        error_lower = error_message.lower()
+-        type_name = diagram_type.value.lower()
+-
+-        for entry in self.entries:
+-            score = 0
+-
+-            # Check error message matches
+-            for known_error in entry.error_messages:
+-                if known_error.lower() in error_lower:
+-                    score += 10
+-                elif any(word in error_lower for word in known_error.lower().split()):
+-                    score += 3
+-
+-            # Check diagram type matches
+-            if "all" in ' '.join(entry.diagram_types).lower():
+-                score += 2
+-            elif any(type_name in t for t in entry.diagram_types):
+-                score += 5
+-
+-            # Check problem keywords
+-            problem_keywords = entry.problem.lower().split()
+-            for keyword in ['reserved', 'missing', 'invalid', 'incorrect', 'error', 'syntax']:
+-                if keyword in error_lower and keyword in problem_keywords:
+-                    score += 2
+-
+-            # Check title keywords
+-            title_keywords = entry.title.lower().split()
+-            for keyword in title_keywords:
+-                if keyword in error_lower:
+-                    score += 2
+-
+-            if score > 0:
+-                matches.append((score, entry))
+-
+-        # Sort by score descending
+-        matches.sort(key=lambda x: x[0], reverse=True)
+-
+-        return [entry for _, entry in matches[:5]]  # Return top 5 matches
+-
+-
+-class ResilientDiagramGenerator:
+-    """
+-    Generate Mermaid diagrams with resilient error recovery.
+-
+-    Workflow:
+-    1. Parse and identify diagram type
+-    2. Generate filename using convention
+-    3. Save .mmd file
+-    4. Run mmdc to generate image
+-    5. On error, search troubleshooting.md
+-    6. Return structured result with recovery info
+-    """
+-
+-    # Patterns to detect diagram type from first line
+-    DIAGRAM_TYPE_PATTERNS = {
+-        DiagramType.FLOWCHART: [
+-            r'^flowchart\s+(TB|TD|BT|RL|LR)',
+-            r'^graph\s+(TB|TD|BT|RL|LR)',
+-        ],
+-        DiagramType.SEQUENCE: [r'^sequenceDiagram'],
+-        DiagramType.CLASS: [r'^classDiagram'],
+-        DiagramType.STATE: [r'^stateDiagram(-v2)?'],
+-        DiagramType.ER: [r'^erDiagram'],
+-        DiagramType.GANTT: [r'^gantt'],
+-        DiagramType.PIE: [r'^pie'],
+-        DiagramType.MINDMAP: [r'^mindmap'],
+-        DiagramType.TIMELINE: [r'^timeline'],
+-        DiagramType.QUADRANT: [r'^quadrantChart'],
+-        DiagramType.REQUIREMENT: [r'^requirementDiagram'],
+-        DiagramType.JOURNEY: [r'^journey'],
+-        DiagramType.C4: [r'^C4Context', r'^C4Container', r'^C4Component', r'^C4Deployment'],
+-    }
+-
+-    def __init__(self, troubleshooting_path: Optional[Path] = None):
+-        """
+-        Initialize generator.
+-
+-        Args:
+-            troubleshooting_path: Path to troubleshooting.md guide (auto-detected if not provided)
+-        """
+-        self.troubleshooting_path = troubleshooting_path or self._find_troubleshooting_guide()
+-        self.troubleshooting = TroubleshootingParser(self.troubleshooting_path) if self.troubleshooting_path else None
+-
+-    def _find_troubleshooting_guide(self) -> Optional[Path]:
+-        """Find troubleshooting.md relative to script location."""
+-        script_dir = Path(__file__).parent
+-        guide_path = script_dir.parent / "references" / "guides" / "troubleshooting.md"
+-        return guide_path if guide_path.exists() else None
+-
+-    def detect_diagram_type(self, mermaid_code: str) -> DiagramType:
+-        """
+-        Detect diagram type from Mermaid code.
+-
+-        Args:
+-            mermaid_code: Raw Mermaid diagram code
+-
+-        Returns:
+-            DiagramType enum value
+-        """
+-        # Get first non-empty, non-comment line
+-        lines = mermaid_code.strip().split('\n')
+-        first_line = ""
+-        for line in lines:
+-            stripped = line.strip()
+-            if stripped and not stripped.startswith('%%'):
+-                first_line = stripped
+-                break
+-
+-        for diagram_type, patterns in self.DIAGRAM_TYPE_PATTERNS.items():
+-            for pattern in patterns:
+-                if re.match(pattern, first_line, re.IGNORECASE):
+-                    return diagram_type
+-
+-        return DiagramType.UNKNOWN
+-
+-    def generate_filename(
+-        self,
+-        markdown_file: str,
+-        diagram_num: int,
+-        diagram_type: str,
+-        title: str
+-    ) -> str:
+-        """
+-        Generate filename following convention:
+-        <markdown_file_name>_<diagram_num>_<image_type>_<title>
+-
+-        Args:
+-            markdown_file: Source markdown filename (without extension)
+-            diagram_num: Diagram number in the document
+-            diagram_type: Detected diagram type
+-            title: User-provided title
+-
+-        Returns:
+-            Base filename string (without extension)
+-        """
+-        # Sanitize markdown file name
+-        safe_md = re.sub(r'[^a-zA-Z0-9_-]', '_', markdown_file.lower())
+-        safe_md = re.sub(r'_+', '_', safe_md).strip('_')
+-
+-        # Sanitize title: lowercase, replace spaces/special chars with underscores
+-        safe_title = re.sub(r'[^a-zA-Z0-9]', '_', title.lower())
+-        safe_title = re.sub(r'_+', '_', safe_title).strip('_')
+-        # Truncate to first 20 chars for reasonable filename length
+-        safe_title = safe_title[:20].rstrip('_')
+-
+-        return f"{safe_md}_{diagram_num:02d}_{diagram_type}_{safe_title}"
+-
+-    def save_mmd_file(
+-        self,
+-        mermaid_code: str,
+-        output_dir: Path,
+-        base_filename: str
+-    ) -> Path:
+-        """
+-        Save diagram to .mmd file.
+-
+-        Args:
+-            mermaid_code: Mermaid diagram code
+-            output_dir: Directory for output files
+-            base_filename: Base filename without extension
+-
+-        Returns:
+-            Path to saved .mmd file
+-        """
+-        output_dir.mkdir(parents=True, exist_ok=True)
+-
+-        mmd_path = output_dir / f"{base_filename}.mmd"
+-        mmd_path.write_text(mermaid_code.strip() + '\n', encoding='utf-8')
+-
+-        return mmd_path
+-
+-    def render_image(
+-        self,
+-        mmd_path: Path,
+-        image_format: str = "png"
+-    ) -> Tuple[bool, Optional[Path], Optional[str]]:
+-        """
+-        Render diagram to image using mmdc.
+-
+-        Args:
+-            mmd_path: Path to .mmd file
+-            image_format: Output format (png, svg, pdf)
+-
+-        Returns:
+-            Tuple of (success, image_path, error_message)
+-        """
+-        image_path = mmd_path.with_suffix(f".{image_format}")
+-
+-        # Check mmdc is installed
+-        if not self._check_mmdc_installed():
+-            return False, None, "mmdc not found. Install with: npm install -g @mermaid-js/mermaid-cli"
+-
+-        try:
+-            result = subprocess.run(
+-                ['mmdc', '-i', str(mmd_path), '-o', str(image_path), '-b', 'transparent'],
+-                capture_output=True,
+-                text=True,
+-                timeout=60
+-            )
+-
+-            if result.returncode != 0:
+-                error_msg = result.stderr.strip() or result.stdout.strip() or "Unknown rendering error"
+-                return False, None, error_msg
+-
+-            if not image_path.exists():
+-                return False, None, f"Output file not created: {image_path}"
+-
+-            if image_path.stat().st_size == 0:
+-                return False, None, f"Output file is empty: {image_path}"
+-
+-            return True, image_path, None
+-
+-        except subprocess.TimeoutExpired:
+-            return False, None, "Rendering timed out after 60 seconds"
+-        except Exception as e:
+-            return False, None, str(e)
+-
+-    @staticmethod
+-    def _check_mmdc_installed() -> bool:
+-        """Check if mermaid-cli (mmdc) is installed."""
+-        try:
+-            result = subprocess.run(
+-                ['mmdc', '--version'],
+-                capture_output=True,
+-                timeout=5
+-            )
+-            return result.returncode == 0
+-        except (FileNotFoundError, subprocess.TimeoutExpired):
+-            return False
+-
+-    def get_search_recommendation(
+-        self,
+-        error_message: str,
+-        diagram_type: DiagramType
+-    ) -> str:
+-        """
+-        Generate search query for external tools when troubleshooting fails.
+-
+-        Priority order for search tools:
+-        1. perplexity_ask MCP
+-        2. brave_web_search MCP
+-        3. gemini skill
+-        4. WebSearch tool
+-
+-        Returns:
+-            Search query string
+-        """
+-        # Clean up error message for search
+-        clean_error = re.sub(r'\s+', ' ', error_message[:150]).strip()
+-        clean_error = re.sub(r'[^\w\s:.-]', '', clean_error)
+-
+-        return f"mermaid {diagram_type.value} diagram syntax error: {clean_error}"
+-
+-    def generate(
+-        self,
+-        mermaid_code: str,
+-        markdown_file: str,
+-        diagram_num: int,
+-        title: str,
+-        output_dir: Path,
+-        image_format: str = "png"
+-    ) -> DiagramResult:
+-        """
+-        Execute full resilient generation workflow.
+-
+-        Args:
+-            mermaid_code: Mermaid diagram code
+-            markdown_file: Source markdown filename
+-            diagram_num: Diagram number
+-            title: Diagram title
+-            output_dir: Output directory
+-            image_format: png, svg, or pdf
+-
+-        Returns:
+-            DiagramResult with full status and error recovery info
+-        """
+-        # Step 1: Detect diagram type
+-        diagram_type = self.detect_diagram_type(mermaid_code)
+-
+-        # Step 2: Generate filename
+-        base_filename = self.generate_filename(
+-            markdown_file, diagram_num, diagram_type.value, title
+-        )
+-
+-        # Step 3: Save .mmd file
+-        mmd_path = self.save_mmd_file(mermaid_code, output_dir, base_filename)
+-
+-        # Step 4: Render image
+-        success, image_path, error_message = self.render_image(mmd_path, image_format)
+-
+-        if success:
+-            return DiagramResult(
+-                success=True,
+-                mmd_path=str(mmd_path),
+-                image_path=str(image_path),
+-                diagram_type=diagram_type.value,
+-                error_message=None
+-            )
+-
+-        # Step 5: On error, search troubleshooting guide
+-        matches = []
+-        suggested_fix = None
+-
+-        if self.troubleshooting and error_message:
+-            found_matches = self.troubleshooting.search(error_message, diagram_type)
+-            matches = [m.to_dict() for m in found_matches]
+-
+-            if found_matches:
+-                # Get suggested fix from best match
+-                best_match = found_matches[0]
+-                if best_match.correct_example:
+-                    suggested_fix = best_match.correct_example
+-
+-        # Step 6: Generate search recommendation if no good matches
+-        search_rec = None
+-        if not matches or (matches and matches[0].get('error_number', 0) == 0):
+-            search_rec = self.get_search_recommendation(error_message, diagram_type)
+-
+-        return DiagramResult(
+-            success=False,
+-            mmd_path=str(mmd_path),
+-            image_path=None,
+-            diagram_type=diagram_type.value,
+-            error_message=error_message,
+-            troubleshooting_matches=matches,
+-            suggested_fix=suggested_fix,
+-            search_recommendation=search_rec
+-        )
+-
+-
+-def main():
+-    parser = argparse.ArgumentParser(
+-        description='Resilient Mermaid diagram generation with error recovery',
+-        formatter_class=argparse.RawDescriptionHelpFormatter,
+-        epilog="""
+-Examples:
+-  # Generate from code string
+-  python resilient_diagram.py --code "flowchart TD; A-->B" \\
+-      --markdown-file design_doc --diagram-num 1 --title "overview"
+-
+-  # Generate from existing .mmd file
+-  python resilient_diagram.py --mmd-file diagram.mmd \\
+-      --markdown-file doc --diagram-num 1 --title "flow"
+-
+-  # Read from stdin with JSON output
+-  cat diagram.mmd | python resilient_diagram.py --stdin \\
+-      --markdown-file doc --diagram-num 2 --title "sequence" --json
+-
+-  # Full options with custom output directory
+-  python resilient_diagram.py --code "sequenceDiagram..." \\
+-      --markdown-file api_design --diagram-num 1 --title "auth_flow" \\
+-      --format svg --output-dir ./images/ --json
+-
+-Output Files:
+-  The script generates both .mmd (source) and image files:
+-  - ./diagrams/api_design_01_sequence_auth_flow.mmd
+-  - ./diagrams/api_design_01_sequence_auth_flow.png
+-
+-Error Recovery:
+-  On validation failure, the script:
+-  1. Searches troubleshooting.md for matching errors
+-  2. Returns suggested fixes from the guide
+-  3. Generates search queries for external tools:
+-     - perplexity_ask MCP (primary)
+-     - brave_web_search MCP (secondary)
+-     - gemini skill (tertiary)
+-     - WebSearch tool (fallback)
+-        """
+-    )
+-
+-    # Input options (mutually exclusive)
+-    input_group = parser.add_mutually_exclusive_group(required=True)
+-    input_group.add_argument('--code', '-c', type=str, help='Mermaid code string')
+-    input_group.add_argument('--mmd-file', '-i', type=Path, help='Path to existing .mmd file')
+-    input_group.add_argument('--stdin', action='store_true', help='Read Mermaid code from stdin')
+-
+-    # Output options
+-    parser.add_argument('--output-dir', '-o', type=Path, default=Path('./diagrams'),
+-                        help='Output directory (default: ./diagrams)')
+-    parser.add_argument('--markdown-file', '-m', type=str, default='diagram',
+-                        help='Source markdown filename for naming convention')
+-    parser.add_argument('--diagram-num', '-n', type=int, default=1,
+-                        help='Diagram number (default: 1)')
+-    parser.add_argument('--title', '-t', type=str, default='diagram',
+-                        help='Diagram title for filename')
+-    parser.add_argument('--format', '-f', choices=['png', 'svg', 'pdf'], default='png',
+-                        help='Image format (default: png)')
+-
+-    # Output format
+-    parser.add_argument('--json', '-j', action='store_true',
+-                        help='Output result as JSON (recommended for programmatic use)')
+-
+-    # Troubleshooting guide override
+-    parser.add_argument('--troubleshooting', type=Path,
+-                        help='Path to troubleshooting.md (auto-detected if not specified)')
+-
+-    args = parser.parse_args()
+-
+-    # Get mermaid code from input source
+-    if args.code:
+-        mermaid_code = args.code
+-    elif args.mmd_file:
+-        if not args.mmd_file.exists():
+-            print(f"ERROR: File not found: {args.mmd_file}", file=sys.stderr)
+-            sys.exit(1)
+-        mermaid_code = args.mmd_file.read_text(encoding='utf-8')
+-    elif args.stdin:
+-        mermaid_code = sys.stdin.read()
+-
+-    if not mermaid_code.strip():
+-        print("ERROR: No Mermaid code provided", file=sys.stderr)
+-        sys.exit(1)
+-
+-    # Initialize generator
+-    generator = ResilientDiagramGenerator(troubleshooting_path=args.troubleshooting)
+-
+-    # Generate diagram
+-    result = generator.generate(
+-        mermaid_code=mermaid_code,
+-        markdown_file=args.markdown_file,
+-        diagram_num=args.diagram_num,
+-        title=args.title,
+-        output_dir=args.output_dir,
+-        image_format=args.format
+-    )
+-
+-    # Output result
+-    if args.json:
+-        print(json.dumps(result.to_dict(), indent=2))
+-    else:
+-        if result.success:
+-            print(f"SUCCESS: Generated diagram")
+-            print(f"  MMD file:   {result.mmd_path}")
+-            print(f"  Image file: {result.image_path}")
+-            print(f"  Type:       {result.diagram_type}")
+-        else:
+-            print(f"FAILED: {result.error_message}", file=sys.stderr)
+-            print(f"  MMD file: {result.mmd_path}")
+-            print(f"  Type:     {result.diagram_type}")
+-
+-            if result.troubleshooting_matches:
+-                print(f"\nTroubleshooting matches found ({len(result.troubleshooting_matches)}):")
+-                for match in result.troubleshooting_matches[:3]:
+-                    print(f"  - Error {match['error_number']}: {match['title']} ({match['severity']})")
+-
+-                if result.suggested_fix:
+-                    print(f"\nSuggested fix (from Error {result.troubleshooting_matches[0]['error_number']}):")
+-                    print("```mermaid")
+-                    print(result.suggested_fix)
+-                    print("```")
+-
+-            if result.search_recommendation:
+-                print(f"\nNo exact match found. Search recommendation:")
+-                print(f"  Query: {result.search_recommendation}")
+-                print(f"\n  Search tools (in priority order):")
+-                print(f"    1. perplexity_ask MCP")
+-                print(f"    2. brave_web_search MCP")
+-                print(f"    3. gemini skill")
+-                print(f"    4. WebSearch tool")
+-
+-    sys.exit(0 if result.success else 1)
+-
++"""Render an existing review source; report classified local failures without external search."""
++from mermaid_to_image import main
+ 
+ if __name__ == '__main__':
+-    main()
++    raise SystemExit(main())

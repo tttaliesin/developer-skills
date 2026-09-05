@@ -28,7 +28,7 @@ def main():
         with tempfile.TemporaryDirectory(prefix='developer-skills-verify-') as tmp:
             target = Path(tmp) / 'skills' / name
             shutil.copytree(snapshot / meta['source_directory'], target)
-            if not (target / 'LICENSE.txt').exists():
+            if not (target / 'LICENSE.txt').exists() and (snapshot / 'LICENSE').is_file():
                 shutil.copyfile(snapshot / 'LICENSE', target / 'LICENSE.txt')
             patch = ROOT / 'patches' / f'{name}.patch'
             for options in [['--check'], []]:
