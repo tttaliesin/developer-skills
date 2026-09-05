@@ -11,6 +11,8 @@ Workspace 공통 정책은 workspace-rules가, Vault 운영은 Second Brain이 �
 | 3 | [differential-review](skills/differential-review/SKILL.md) | 증거에 근거한 심각도 판정, 작업 범위 안의 보고서 저장, 자체적으로 수행 가능한 분석 |
 | 4 | [webapp-testing](skills/webapp-testing/SKILL.md) | 기존 브라우저·테스트 도구 사용, 제한 시간 내 준비 상태 관찰, 프로세스 소유권 확인 |
 
+새로 적용한 [Mermaid 스킬과 검증 runtime](docs/mermaid-adoption.md)은 Markdown 다이어그램 작성·검증·이미지 변환을 지원한다.
+
 ## 원본과 수정 기록
 
 [원본 고정 정보](upstream-lock.json)는 저장소, 리비전, 원본 디렉터리, 라이선스와 보존한 모든 원본 파일의 해시를 기록한다.
