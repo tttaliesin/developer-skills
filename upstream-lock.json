@@ -66,5 +66,42 @@
       "skills/webapp-testing/examples/static_html_automation.py": "9d533aafb875ee3ab8b8ebf8f5b9003ac8d999da3d09b285cce252e623140064",
       "skills/webapp-testing/scripts/with_server.py": "b0dcf4918935b795f4eda9821579b9902119235ff4447f687a30286e7d0925fd"
     }
+  },
+  "design-doc-mermaid": {
+    "repository": "https://github.com/spillwavesolutions/design-doc-mermaid",
+    "revision": "c36d83503d2ba9c1e51638dc2d8a34758a377dea",
+    "source_directory": ".",
+    "license": "MIT (declared in README and plugin metadata; standalone text absent upstream)",
+    "upstream_files": {
+      ".claude-plugin/plugin.json": "5d0ddbb2081c2a3d9c2d3bf245acc9c5a7c2307757c4c06fe598929fdc938d8a",
+      ".gitignore": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "HIGH_CONTRAST_UPDATE.md": "b58b317dcfa4815154c8ebf10f427d785d77607f5a3faed538b1dae666ec3219",
+      "README.md": "7e9a9cdde9bd7373ac006b5fe3f3be66447ecf328b88294d32b3b32e88ca4a6a",
+      "SKILL.md": "a63eac94737b587294ee529c92bd24b72c17928521e24d500aa933e840c675e4",
+      "assets/api-design-template.md": "4f3ec5d9958b1a9742ebfbac887550d525cff0d6fe23ddd1908a28e86064b8b2",
+      "assets/architecture-design-template.md": "bf9572b8d86e4fd76058ef584a30bf7c3bedeea51211933321e55f019586f908",
+      "assets/database-design-template.md": "1bf2d4cec49816f4eec5360cebc4937ce0a9c0f1cc844fa88abca1d71e790aef",
+      "assets/feature-design-template.md": "fc5b31ad1c3bccf006e1b5f2184d6e32af4be2ae4a12e420e0ace5dd6d8df0c2",
+      "assets/system-design-template.md": "c4d897df42a1a51ca5cbfacbf3e4a0411e17897bee899d5ecbb17c890199ef1f",
+      "examples/fastapi/README.md": "7f369c0b01172d59d0e5e2107d721e8fd35d696e0a5bccc84951a2074800299f",
+      "examples/java-webapp/README.md": "6650982a133325b7a50cb44da41bd040c33deccfbc1e071974eca10d6d67e07a",
+      "examples/node-webapp/README.md": "f676c0b6ea5c0667cead78832c42d01d27383551fcb9f2633cfd7bf48b7c427d",
+      "examples/python-etl/README.md": "83999661f2e1e16d71da439a31eb22b2ba1fe21d849c89ef6010dce4aa0651a8",
+      "examples/react/README.md": "fc0cd097720038a395830578ced6b5834ef6df6e444399f89bd3f6f5c44d6f61",
+      "examples/spring-boot/README.md": "6c0f37bc3615e06c6642c5161890ecfef485c343cd1f8e2540cc41977e46de44",
+      "references/guides/code-to-diagram/README.md": "95e44d024962809513d7c59c4eff22f1e7ebe446373a0370dc48d5c24dcaad10",
+      "references/guides/diagrams/activity-diagrams.md": "b91d0866a2d4513c1a7da633160fdc421d810191c2af3fcd28d6c6b0969c3eb4",
+      "references/guides/diagrams/architecture-diagrams.md": "7c078b16d44f59b1e6f69a3cfeae0a4261bb39eb9e1b3813572604739d4cec0d",
+      "references/guides/diagrams/deployment-diagrams.md": "dd1b4e691ea3e4e4205d90fa0606469c72f7c1532d0b181f876f9b661bbd299e",
+      "references/guides/diagrams/sequence-diagrams.md": "0f2a58439091f73e61b98c1a195d323e2b32a74cb033b25223e93e62365a709b",
+      "references/guides/resilient-workflow.md": "61738fa1dd315c2fbbbfe6a08f4c9bf5c931201c64567d515055038cc182c104",
+      "references/guides/troubleshooting.md": "f6ef9b679a1ff05a33ceb51e0dd14a3604461f7bd58e17a102671e1d113c04c4",
+      "references/guides/unicode-symbols/guide.md": "08737adf3d6de6f5aae1b60c37cd7a7d83f6d78b35966ce07703bca8f3d5d92c",
+      "references/guides/wiki-ticket-and-github.md": "221d921a11990219cb3941dba37915ef37345bfff43889138f263cb9d6d4fd7c",
+      "references/mermaid-diagram-guide.md": "32345e60d61744b1e7395ca3c93bcb7355ac4f493466264d634074c209af2820",
+      "scripts/extract_mermaid.py": "956e616fa07f9a9ef0d6b1604af69699b91e18497aac941eca4033491ca976c5",
+      "scripts/mermaid_to_image.py": "cf2b769f5eb4aeb18dfd3ad9eab7573ff7e500cc52c85d5d4732aa85e7a6bc63",
+      "scripts/resilient_diagram.py": "de92e7bf44e8fa10a2391849bdda280cb7a20025d87c76d0755bb2150296939a"
+    }
   }
 }
