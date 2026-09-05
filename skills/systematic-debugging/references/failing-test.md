@@ -2,7 +2,9 @@
 
 Adapted from obra/superpowers test-driven-development and writing-good-tests (MIT).
 
-Before implementing a bug fix, create the simplest meaningful failing reproduction.
+Before implementing a bug fix, establish the simplest meaningful failing reproduction.
+Reuse an existing test when its observed failure demonstrates the target defect; do not create a duplicate merely to satisfy this step.
+If no existing test demonstrates the defect, create a reproduction.
 Use the repository's test framework when available, or a one-off test script when it has none.
 Observe failure for the target defect, not a syntax error, unavailable service, or broken fixture.
 Keep this requirement even for an apparently obvious fix.

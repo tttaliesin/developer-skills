@@ -154,15 +154,17 @@ You MUST complete each phase before proceeding to the next.
 4. **When You Don't Know**
    - Say "I don't understand X"
    - Don't pretend to know
-   - Ask for help
-   - Research more
+   - First narrow the unknown through authorized investigation
+   - Ask when the remaining information can only come from the user or an explicit user decision is required
+   - Continue independent authorized investigation while that answer is pending
 
 ### Phase 4: Implementation
 
 **Fix the root cause, not the symptom:**
 
-1. **Create Failing Test Case**
+1. **Establish Failing Test Case**
    - Simplest possible reproduction
+   - Reuse an existing test when it demonstrates the target defect; otherwise create a reproduction
    - Automated test if possible
    - One-off test script if no framework
    - MUST have before fixing
@@ -183,6 +185,8 @@ You MUST complete each phase before proceeding to the next.
 4. **If Fix Doesn't Work**
    - STOP
    - Count: How many fixes have you tried?
+   - Count applied attempts to fix the target defect that failed; keep lookup or diagnostic-command failures separate
+   - An applied fix still counts when called an experiment; do not relabel failed fixes to bypass the discussion gate
    - If < 3: Return to Phase 1, re-analyze with new information
    - **If ≥ 3: STOP and question the architecture (step 5 below)**
    - DON'T attempt Fix #4 without architectural discussion
@@ -254,7 +258,7 @@ If you catch yourself thinking:
 | **1. Root Cause** | Read errors, reproduce, check changes, gather evidence | Understand WHAT and WHY |
 | **2. Pattern** | Find working examples, compare | Identify differences |
 | **3. Hypothesis** | Form theory, test minimally | Confirmed or new hypothesis |
-| **4. Implementation** | Create test, fix, verify | Bug resolved, tests pass |
+| **4. Implementation** | Establish reproduction, fix, verify | Bug resolved, tests pass |
 
 ## When Process Reveals "No Root Cause"
 

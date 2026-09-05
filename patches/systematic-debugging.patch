@@ -203,7 +203,24 @@
  
  5. **Trace Data Flow**
  
-@@ -174,7 +166,7 @@
+@@ -162,19 +154,21 @@
+ 4. **When You Don't Know**
+    - Say "I don't understand X"
+    - Don't pretend to know
+-   - Ask for help
+-   - Research more
++   - First narrow the unknown through authorized investigation
++   - Ask when the remaining information can only come from the user or an explicit user decision is required
++   - Continue independent authorized investigation while that answer is pending
+ 
+ ### Phase 4: Implementation
+ 
+ **Fix the root cause, not the symptom:**
+ 
+-1. **Create Failing Test Case**
++1. **Establish Failing Test Case**
+    - Simplest possible reproduction
++   - Reuse an existing test when it demonstrates the target defect; otherwise create a reproduction
     - Automated test if possible
     - One-off test script if no framework
     - MUST have before fixing
@@ -212,7 +229,7 @@
  
  2. **Implement Single Fix**
     - Address the root cause identified
-@@ -186,7 +178,7 @@
+@@ -186,11 +180,13 @@
     - Test passes now?
     - No other tests broken?
     - Issue actually resolved?
@@ -221,7 +238,13 @@
  
  4. **If Fix Doesn't Work**
     - STOP
-@@ -209,7 +201,8 @@
+    - Count: How many fixes have you tried?
++   - Count applied attempts to fix the target defect that failed; keep lookup or diagnostic-command failures separate
++   - An applied fix still counts when called an experiment; do not relabel failed fixes to bypass the discussion gate
+    - If < 3: Return to Phase 1, re-analyze with new information
+    - **If ≥ 3: STOP and question the architecture (step 5 below)**
+    - DON'T attempt Fix #4 without architectural discussion
+@@ -209,7 +205,8 @@
  
     **Discuss with your human partner before attempting more fixes**
  
@@ -231,7 +254,7 @@
  
  ## Red Flags - STOP and Follow Process
  
-@@ -252,7 +245,7 @@
+@@ -252,7 +249,7 @@
  | "Multiple fixes at once saves time" | Can't isolate what worked. Causes new bugs. |
  | "Reference too long, I'll adapt the pattern" | Partial understanding guarantees bugs. Read it completely. |
  | "I see the problem, let me fix it" | Seeing symptoms ≠ understanding root cause. |
@@ -239,6 +262,15 @@
 +| "One more fix attempt" (after 2+ failures) | 3+ failures require architectural discussion before another fix; they do not prove an architectural defect. |
  
  ## Quick Reference
+ 
+@@ -261,7 +258,7 @@
+ | **1. Root Cause** | Read errors, reproduce, check changes, gather evidence | Understand WHAT and WHY |
+ | **2. Pattern** | Find working examples, compare | Identify differences |
+ | **3. Hypothesis** | Form theory, test minimally | Confirmed or new hypothesis |
+-| **4. Implementation** | Create test, fix, verify | Bug resolved, tests pass |
++| **4. Implementation** | Establish reproduction, fix, verify | Bug resolved, tests pass |
+ 
+ ## When Process Reveals "No Root Cause"
  
 --- a/skills/systematic-debugging/defense-in-depth.md
 +++ b/skills/systematic-debugging/defense-in-depth.md
@@ -348,12 +380,14 @@
 +If execution is unavailable or prohibited, report that limitation rather than claiming success.
 --- /dev/null
 +++ b/skills/systematic-debugging/references/failing-test.md
-@@ -0,0 +1,20 @@
+@@ -0,0 +1,22 @@
 +# Failing reproduction before a fix
 +
 +Adapted from obra/superpowers test-driven-development and writing-good-tests (MIT).
 +
-+Before implementing a bug fix, create the simplest meaningful failing reproduction.
++Before implementing a bug fix, establish the simplest meaningful failing reproduction.
++Reuse an existing test when its observed failure demonstrates the target defect; do not create a duplicate merely to satisfy this step.
++If no existing test demonstrates the defect, create a reproduction.
 +Use the repository's test framework when available, or a one-off test script when it has none.
 +Observe failure for the target defect, not a syntax error, unavailable service, or broken fixture.
 +Keep this requirement even for an apparently obvious fix.

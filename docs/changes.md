@@ -24,6 +24,12 @@ Bundle failing-test and completion-evidence guidance instead of assuming unavail
 Retain upstream test/creation documents only in the snapshot; remove the npm-specific polluter helper from installation because suppressed failures and existing-state handling cannot prove clean tests.
 Keep repository runner output and exit status intact and preserve unrelated changes during regression reproduction.
 Correct claims that three failures prove architectural failure and the tracing diagram's contradictory symptom-fix branch.
+For the subsequent project-only autonomy clarification, investigate unknowns before asking the user and continue independent authorized investigation while an answer is pending.
+Distinguish failed applied fixes from diagnostic-command failures without allowing fixes labeled as experiments to bypass the fourth-fix discussion gate.
+Reuse an existing test that demonstrates the defect instead of requiring a duplicate reproduction; the failing-reproduction requirement and explicit exemption approval remain unchanged.
+This follow-up changes the local package and reconstruction patch only; it does not synchronize global installations or change workspace policy.
+After the user's subsequent explicit installation request, synchronize systematic-debugging to Codex and Pi through the Skills CLI.
+Both installed paths were verified against the source package and regenerated provenance; this initial installed snapshot was recorded as uncommitted.
 
 ### API design principles
 
