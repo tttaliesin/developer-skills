@@ -1,0 +1,616 @@
+--- /dev/null
++++ b/skills/differential-review/NOTICE.md
+@@ -0,0 +1,8 @@
++# Attribution and local adaptation
++
++This package adapts [https://github.com/trailofbits/skills](https://github.com/trailofbits/skills) at revision `d3323cefbcf645678b8dc481de204b02ad3d02dc`.
++Original path: `plugins/differential-review/skills/differential-review`.
++Original authors retain their copyright; see [LICENSE.txt](LICENSE.txt).
++Local modifications dated 2026-09-05 preserve task authorization and adapt execution to Codex and Pi.
++The management repository retains the upstream snapshot, per-file hashes, and reviewable customization patch.
++This adapted package is distributed under CC BY-SA 4.0, as is the upstream work.
+--- a/skills/differential-review/SKILL.md
++++ b/skills/differential-review/SKILL.md
+@@ -14,9 +14,26 @@
+ 2. **Evidence-Based**: Every finding backed by git history, line numbers, attack scenarios
+ 3. **Adaptive**: Scale to codebase size (SMALL/MEDIUM/LARGE)
+ 4. **Honest**: Explicitly state coverage limits and confidence level
+-5. **Output-Driven**: Always generate comprehensive markdown report file
+-
+----
++5. **Output-Driven**: Generate a persistent Markdown report by default, subject to the output boundary below
++
++---
++
++## Scope and output boundary
++
++Review the requested base/head or working-tree diff without changing branches, discarding work, or editing reviewed code.
++Use `git show`, `git diff`, and `git blame` for baseline evidence.
++Generate a persistent Markdown report in the authorized project location by default.
++Honor an explicitly requested chat/other format, read-only scope, or write restriction instead; state when the file artifact was not written.
++Do not substitute chat merely by preference when persistence is authorized and no different format was requested.
++Never fall back to Desktop, skill installation directories, or another repository to bypass a write boundary.
++Review output is repository evidence, not automatically canonical Vault knowledge; apply Second Brain capture separately when applicable.
++Skill routing and optional delegation preserve existing scope and approvals; external issue creation or PR posting needs its own authorization.
++
++Record unavailable history, line numbers, commits, execution, and caller evidence with a concrete reason rather than fabricating them or declaring full coverage.
++Caller counts are a search aid; assess externally reachable users, records, tenants, and effects as well as code callers.
++Review priority, vulnerability severity, and confidence are separate.
++Missing tests increase investigation priority and constitute a verification gap; they do not alone establish a vulnerability or increase its severity.
++Severity requires evidence of impact, reachability, and exploit conditions.
+ 
+ ## Rationalizations (Do Not Skip)
+ 
+@@ -26,9 +43,9 @@
+ | "I know this codebase" | Familiarity breeds blind spots | Build explicit baseline context |
+ | "Git history takes too long" | History reveals regressions | Never skip Phase 1 |
+ | "Blast radius is obvious" | You'll miss transitive callers | Calculate quantitatively |
+-| "No tests = not my problem" | Missing tests = elevated risk rating | Flag in report, elevate severity |
++| "No tests = not my problem" | Missing tests leave a verification gap | Flag the gap and prioritize investigation; rate severity from demonstrated impact |
+ | "Just a refactor, no security impact" | Refactors break invariants | Analyze as HIGH until proven LOW |
+-| "I'll explain verbally" | No artifact = findings lost | Always write report |
++| "I'll explain verbally" | Persistent output is the default | Follow the scope and output boundary |
+ 
+ ---
+ 
+@@ -48,7 +65,7 @@
+ |------------|----------|
+ | HIGH | Auth, crypto, external calls, value transfer, validation removal |
+ | MEDIUM | Business logic, state changes, new public APIs |
+-| LOW | Comments, tests, UI, logging |
++| LOW | Changes with no demonstrated security exposure; UI, logging, tests, and comments still require exposure checks for secrets, auth, encoding, and executable examples |
+ 
+ ---
+ 
+@@ -74,8 +91,7 @@
+ ├─ Analyzing HIGH RISK change?
+ │  ├─ Read: adversarial.md
+ │  │  (Phase 5: Attacker modeling, exploit scenarios, exploitability rating)
+-│  └─ Or delegate to: differential-review:adversarial-modeler agent
+-│     (Autonomous attacker modeling with concrete exploit scenarios)
++│  └─ Perform locally, or delegate only when the host and task permit it
+ │
+ ├─ Writing the final report?
+ │  └─ Read: reporting.md
+@@ -91,15 +107,11 @@
+ 
+ ---
+ 
+-## Agents
+-
+-**`differential-review:adversarial-modeler`** — Models attacker perspectives and
+-builds exploit scenarios for HIGH RISK code changes. Follows the 5-step
+-adversarial methodology (attacker model, attack vectors, exploitability rating,
+-exploit scenario, baseline cross-reference) and produces structured vulnerability
+-reports. Delegate to this agent when Phase 5 analysis is needed on high-risk
+-changes, passing that full namespaced name as `subagent_type` — a bare
+-`adversarial-modeler` is unregistered and the dispatch fails at runtime.
++## Optional delegation
++
++The local [adversarial.md](adversarial.md) method is sufficient without an installed companion agent.
++When delegation is available and authorized, use the host's actual tool schema and give the agent the requested diff and bounded analysis scope.
++Do not assume a `subagent_type` or namespaced agent exists.
+ 
+ ---
+ 
+@@ -107,25 +119,21 @@
+ 
+ Before delivering:
+ 
+-- [ ] All changed files analyzed
++- [ ] Changed files inventoried; analyzed, surface-scanned, and omitted scope explicitly identified
+ - [ ] Git blame on removed security code
+ - [ ] Blast radius calculated for HIGH risk
+ - [ ] Attack scenarios are concrete (not generic)
+-- [ ] Findings reference specific line numbers + commits
+-- [ ] Report file generated
++- [ ] Findings reference specific line numbers + commits when available; otherwise state the limitation
++- [ ] Output delivered according to the scope and output boundary
+ - [ ] User notified with summary
+ 
+ ---
+ 
+ ## Integration
+ 
+-**audit-context-building skill:**
+-- Pre-Analysis: Build baseline context
+-- Phase 4: Deep context on HIGH RISK changes
+-
+-**issue-writer skill:**
+-- Transform findings into formal audit reports
+-- Command: `issue-writer --input DIFFERENTIAL_REVIEW_REPORT.md --format audit-report`
++Use the baseline and deep-context procedures in [methodology.md](methodology.md).
++An available context-building skill can assist but is not a required CLI executable.
++Use [reporting.md](reporting.md) for a self-contained report; do not invoke an assumed issue-writer command or post findings externally without authorization.
+ 
+ ---
+ 
+@@ -156,8 +164,8 @@
+ ### Deep Audit (Large, Critical Change)
+ ```
+ Input: 450 files, auth system rewrite
+-Strategy: SURGICAL + audit-context-building
+-1. Baseline context with audit-context-building
++Strategy: SURGICAL + local baseline analysis
++1. Baseline context using methodology.md
+ 2. Deep analysis on auth changes only
+ 3. Blast radius analysis
+ 4. Adversarial modeling
+@@ -199,7 +207,7 @@
+ - Generate concrete attack scenarios
+ - Reference specific line numbers and commits
+ - Be honest about coverage limitations
+-- Always generate the output file
++- Generate the default report file when authorized; honor explicit output restrictions
+ 
+ **Don't:**
+ - Skip git history analysis
+@@ -207,7 +215,7 @@
+ - Claim full analysis when time-limited
+ - Forget to check test coverage
+ - Miss high blast radius changes
+-- Output report only to chat (file required)
++- Choose chat-only output without an explicit format request or write restriction
+ 
+ ---
+ 
+--- a/skills/differential-review/adversarial.md
++++ b/skills/differential-review/adversarial.md
+@@ -111,7 +111,7 @@
+ 
+ Generate this for each finding:
+ 
+-```markdown
++````markdown
+ ## [SEVERITY] Vulnerability Title
+ 
+ **Attacker Model:**
+@@ -138,65 +138,21 @@
+ 
+ **Blast Radius:** [N callers affected]
+ **Baseline Violation:** [Which invariant/pattern broken]
+-```
++````
+ 
+ ---
+ 
+-## Example: Complete Adversarial Analysis
++## Example: Distinguish changed behavior from demonstrated impact
+ 
+-**Change:** Removed `require(amount > 0)` check from `withdraw()` function
++**Change:** `require(amount > 0)` was removed from `withdraw()`.
++Assume the supplied code shows only `withdrawnAmount[user] += amount` and an emitted `Withdraw` event after the check.
+ 
+-### 1. Attacker Model
+-- **WHO:** Unauthenticated external user
+-- **ACCESS:** Can call public contract functions
+-- **INTERFACE:** `withdraw(uint256 amount)` at 0x1234...
+-
+-### 2. Attack Vector
+-**ENTRY POINT:** `withdraw(0)`
+-
+-**ATTACK SEQUENCE:**
+-1. Call `withdraw(0)` from attacker address
+-2. Code bypasses amount check (removed)
+-3. Withdraw event emitted with 0 amount
+-4. Accounting updated incorrectly
+-
+-**PROOF:** Function is `external`, no auth required
+-
+-### 3. Exploitability
+-**RATING:** EASY
+-- Single transaction
+-- Public function
+-- No special state required
+-
+-### 4. Exploit Scenario
+-**ATTACKER POSITION:** Has user account with 0 balance
+-
+-**EXPLOITATION:**
+-```solidity
+-Step 1: attacker.withdraw(0)
+-  - Passes removed validation
+-  - Emits Withdraw(user, 0)
+-  - Updates withdrawnAmount[user] += 0
+-
+-Step 2: Off-chain indexer sees Withdraw event
+-  - Credits attacker for 0 withdrawal
+-  - But accounting thinks withdrawal happened
+-
+-Step 3: Accounting mismatch exploited
+-  - Total supply decremented
+-  - User balance not changed
+-  - System invariants broken
+-```
+-
+-**IMPACT:**
+-- Protocol accounting corrupted
+-- Can be used to manipulate LP calculations
+-- Estimated $50K impact on pool prices
+-
+-### 5. Baseline Violation
+-- Violates invariant: "All withdrawals must transfer non-zero value"
+-- Breaks validation pattern: Amount checks present in all other value transfers
+-- Regression: Check added in commit abc123 "Fix zero-amount exploit"
++A public caller can now request `withdraw(0)` and emit a zero-value event.
++Adding zero does not establish accounting corruption or a supply change.
++Inspect downstream consumers and the historical reason for the check before claiming a security impact.
++If an indexer grants a fixed reward for every event without validating amount, demonstrate that consumer path and its conditions before reporting reward abuse.
++Without that evidence, report the changed invariant and unresolved downstream effect, not an invented exploit or financial loss.
++Use actual file lines and commits when available; explicitly state unavailable evidence.
+ 
+ ---
+ 
+--- a/skills/differential-review/methodology.md
++++ b/skills/differential-review/methodology.md
+@@ -6,21 +6,9 @@
+ 
+ **FIRST ACTION - Build complete baseline understanding:**
+ 
+-If `audit-context-building` skill is available:
+-
+-```bash
+-# Checkout baseline commit
+-git checkout <baseline_commit>
+-
+-# Invoke audit-context-building skill on baseline codebase
+-# Scope = entire relevant project (e.g., packages/contracts/contracts/ for Solidity, src/ for Rust, etc.)
+-audit-context-building --scope [entire project or main contract directory] --focus invariants,trust-boundaries,validation-patterns,call-graphs,state-flows
+-
+-# Examples:
+-# For Solidity: audit-context-building --scope packages/contracts/contracts
+-# For Rust: audit-context-building --scope src
+-# For full repo: audit-context-building --scope .
+-```
++Read baseline files with `git show <base>:<path>` and history with `git blame <base> -- <path>`.
++Do not checkout the baseline in the user's working tree.
++Use the following questions directly; an available context-building skill is optional and is not an assumed shell command.
+ 
+ **Capture from baseline analysis:**
+ - System-wide invariants (what must ALWAYS be true across all code)
+@@ -39,7 +27,7 @@
+ 
+ **Store baseline context for reference during differential analysis.**
+ 
+-After baseline analysis, checkout back to head commit to analyze changes.
++Read head files with `git show <head>:<path>` or inspect the requested working-tree diff without changing repository state.
+ 
+ ---
+ 
+@@ -71,7 +59,7 @@
+ **Risk score each file:**
+ - **HIGH**: Auth, crypto, external calls, value transfer, validation removal
+ - **MEDIUM**: Business logic, state changes, new public APIs
+-- **LOW**: Comments, tests, UI, logging
++- **LOW**: No security exposure identified after checking actual behavior; UI, logs, tests, and comments are not automatically low risk.
+ 
+ ---
+ 
+@@ -97,8 +85,8 @@
+    ```
+ 
+    **Red flags:**
+-   - Removed code from "fix", "security", "CVE" commits → CRITICAL
+-   - Recently added (<1 month) then removed → HIGH
++   - Removed code from "fix", "security", "CVE" commits → investigate prior invariant and exploitability urgently
++   - Recently added (<1 month) then removed → prioritize regression analysis; age alone is not severity
+ 
+ 4. **Check for regressions (re-added code):**
+    ```bash
+@@ -141,10 +129,12 @@
+ grep -r "test.*functionName" test/ --include="*.sol" --include="*.js"
+ ```
+ 
+-**Risk elevation rules:**
+-- NEW function + NO tests → Elevate risk MEDIUM→HIGH
+-- MODIFIED validation + UNCHANGED tests → HIGH RISK
+-- Complex logic (>20 lines) + NO tests → HIGH RISK
++**Verification gaps and review priority:**
++- New functions without relevant tests warrant more investigation.
++- Changed validation with unchanged tests requires checking whether existing cases still cover the invariant.
++- Complex untested logic warrants deeper analysis.
++These are coverage gaps, not automatic vulnerability severity upgrades.
++A matching test name does not prove coverage; inspect assertions and report execution separately.
+ 
+ ---
+ 
+@@ -156,11 +146,15 @@
+ grep -r "functionName(" --include="*.sol" . | wc -l
+ ```
+ 
+-**Classify blast radius:**
++These counts are review-priority heuristics, not measured affected users or vulnerability severity.
++Public endpoint exposure, transitive effects, and tenant/data scope can dominate even with one code caller.
++Use symbol-aware tracing where available and label text-match counts as approximate.
++
++**Classify caller-count breadth:**
+ - 1-5 calls: LOW
+ - 6-20 calls: MEDIUM
+ - 21-50 calls: HIGH
+-- 50+ calls: CRITICAL
++- 51+ calls: CRITICAL
+ 
+ **Priority matrix:**
+ 
+@@ -175,14 +169,7 @@
+ 
+ ## Phase 4: Deep Context Analysis
+ 
+-**If `audit-context-building` skill is available**, invoke it to help answer all the questions below for each HIGH RISK changed function:
+-
+-```bash
+-# Run audit-context-building on the changed function and its dependencies
+-audit-context-building --scope [file containing changed function] --focus flow-analysis,call-graphs,invariants,root-cause
+-```
+-
+-**The audit-context-building skill will help you answer:**
++Use these questions for each high-priority changed function:
+ 
+ 1. **Map complete function flow:**
+    - Entry conditions (preconditions, requires, modifiers)
+@@ -213,7 +200,7 @@
+    - WHY is this approach chosen?
+    - WHY could this fail in production?
+ 
+-**If `audit-context-building` skill is NOT available**, manually perform the line-by-line analysis above using Read, Grep, and code tracing.
++Perform the line-by-line analysis using available read/search tools and code tracing.
+ 
+ **Cross-cutting pattern detection:**
+ ```bash
+--- a/skills/differential-review/reporting.md
++++ b/skills/differential-review/reporting.md
+@@ -6,7 +6,8 @@
+ 
+ ## Report Structure
+ 
+-Generate markdown report with these mandatory sections:
++Use these sections for the default persistent report.
++Honor the explicit format and write restrictions in SKILL.md; do not fabricate unavailable evidence to fill a section.
+ 
+ ### 1. Executive Summary
+ 
+@@ -16,7 +17,7 @@
+ - Key metrics (test gaps, blast radius, red flags)
+ 
+ **Template:**
+-```markdown
++````markdown
+ # Executive Summary
+ 
+ | Severity | Count |
+@@ -34,7 +35,7 @@
+ - Test coverage gaps: N functions
+ - High blast radius changes: M functions
+ - Security regressions detected: P
+-```
++````
+ 
+ ---
+ 
+@@ -45,7 +46,7 @@
+ - Lines changed stats
+ 
+ **Template:**
+-```markdown
++````markdown
+ ## What Changed
+ 
+ **Commit Range:** `base..head`
+@@ -58,7 +59,7 @@
+ | file2.sol | +10 | -5 | MEDIUM | LOW |
+ 
+ **Total:** +N, -M lines across K files
+-```
++````
+ 
+ ---
+ 
+@@ -66,7 +67,7 @@
+ 
+ For each HIGH/CRITICAL issue:
+ 
+-```markdown
++````markdown
+ ### [SEVERITY] Title
+ 
+ **File**: path/to/file.ext:lineNumber
+@@ -89,10 +90,10 @@
+ 
+ **Recommendation**:
+ [Specific fix with code]
+-```
++````
+ 
+ **Example:**
+-```markdown
++````markdown
+ ### 🔴 CRITICAL: Authorization Bypass in Withdraw
+ 
+ **File**: TokenVault.sol:156
+@@ -128,7 +129,7 @@
+     // ... rest of function
+ }
+ ```
+-```
++````
+ 
+ ---
+ 
+@@ -139,7 +140,7 @@
+ - Risk assessment
+ 
+ **Template:**
+-```markdown
++````markdown
+ ## Test Coverage Analysis
+ 
+ **Coverage:** X% of changed code
+@@ -152,7 +153,7 @@
+ 
+ **Risk Assessment:**
+ N HIGH-risk functions without tests → Recommend blocking merge
+-```
++````
+ 
+ ---
+ 
+@@ -163,7 +164,7 @@
+ - Impact quantification
+ 
+ **Template:**
+-```markdown
++````markdown
+ ## Blast Radius Analysis
+ 
+ **High-Impact Changes:**
+@@ -171,7 +172,7 @@
+ |----------|---------|------|----------|
+ | transfer() | 89 | HIGH | P0 |
+ | validate() | 45 | MEDIUM | P1 |
+-```
++````
+ 
+ ---
+ 
+@@ -182,7 +183,7 @@
+ - Commit message red flags
+ 
+ **Template:**
+-```markdown
++````markdown
+ ## Historical Context
+ 
+ **Security-Related Removals:**
+@@ -191,7 +192,7 @@
+ 
+ **Regression Risks:**
+ - Code pattern removed in commit X, re-added in commit Y
+-```
++````
+ 
+ ---
+ 
+@@ -202,7 +203,7 @@
+ - Technical debt (future)
+ 
+ **Template:**
+-```markdown
++````markdown
+ ## Recommendations
+ 
+ ### Immediate (Blocking)
+@@ -215,7 +216,7 @@
+ 
+ ### Technical Debt
+ - [ ] Refactor validation pattern consistency
+-```
++````
+ 
+ ---
+ 
+@@ -229,7 +230,7 @@
+ - Confidence level
+ 
+ **Template:**
+-```markdown
++````markdown
+ ## Analysis Methodology
+ 
+ **Strategy:** FOCUSED (80 files, medium codebase)
+@@ -251,7 +252,7 @@
+ - Limited to 1-hop caller analysis
+ 
+ **Confidence:** HIGH for analyzed scope, MEDIUM overall
+-```
++````
+ 
+ ---
+ 
+@@ -287,7 +288,7 @@
+ - 🟢 LOW
+ 
+ **Before/After comparisons:**
+-```markdown
++````markdown
+ **BEFORE:**
+ ```code
+ old code
+@@ -297,9 +298,9 @@
+ ```code
+ new code
+ ```
+-```
+-
+-**Line number references:** Always include
++````
++
++**Line number references:** Include when available; otherwise record the evidence limitation
+ - Format: `file.sol:L123`
+ - Link to commit: `file.sol:L123 (commit abc123)`
+ 
+@@ -307,10 +308,10 @@
+ 
+ ## File Naming and Location
+ 
+-**Priority order for output:**
+-1. Current working directory (if project repo)
+-2. User's Desktop
+-3. `~/.claude/skills/differential-review/output/`
++Use the user-requested authorized path, otherwise a suitable project report path.
++Do not overwrite unrelated existing reports; choose a unique filename within that scope.
++For explicit chat-only or read-only requests, deliver the review in chat and write no report file.
++Do not use Desktop, global skill directories, or a different repository as fallback destinations.
+ 
+ **Filename format:**
+ ```
+@@ -325,7 +326,7 @@
+ 
+ After generating report:
+ 
+-```markdown
++````markdown
+ Report generated successfully!
+ 
+ 📄 File: [filename]
+@@ -341,29 +342,15 @@
+ Next steps:
+ - Review findings in detail
+ - Address CRITICAL/HIGH issues before merge
+-- Consider chaining with issue-writer for stakeholder report
+-```
+-
+----
+-
+-## Integration with issue-writer
+-
+-After generating differential review, transform into audit report:
+-
+-```bash
+-issue-writer --input DIFFERENTIAL_REVIEW_REPORT.md --format audit-report
+-```
+-
+-This creates polished documentation for non-technical stakeholders.
+-
+----
+-
+-## Error Handling
+-
+-If file write fails:
+-1. Try Desktop location
+-2. Try temp directory
+-3. As last resort, output full report to chat
+-4. Notify user to save manually
+-
+-**Always prioritize persistent artifact generation over ephemeral chat output.**
++- Adapt the local report for stakeholders when requested
++````
++
++---
++
++## Further formatting and write failures
++
++Use the report above directly or adapt its format when the user requests a stakeholder version.
++External issue creation and PR posting are separate authorized operations, not an automatic review phase.
++If writing the authorized report fails, state the exact limitation and deliver findings in chat.
++Do not expand filesystem permissions or switch destinations merely to complete auxiliary persistence.
++Persistent output remains the default when authorized and no different format was requested.
