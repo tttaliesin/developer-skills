@@ -1,0 +1,376 @@
+--- /dev/null
++++ b/skills/webapp-testing/NOTICE.md
+@@ -0,0 +1,7 @@
++# Attribution and local adaptation
++
++This package adapts [https://github.com/anthropics/skills](https://github.com/anthropics/skills) at revision `41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f`.
++Original path: `skills/webapp-testing`.
++Original authors retain their copyright; see [LICENSE.txt](LICENSE.txt).
++Local modifications dated 2026-09-05 preserve task authorization and adapt execution to Codex and Pi.
++The management repository retains the upstream snapshot, per-file hashes, and reviewable customization patch.
+--- a/skills/webapp-testing/SKILL.md
++++ b/skills/webapp-testing/SKILL.md
+@@ -1,96 +1,52 @@
+ ---
+ name: webapp-testing
+-description: Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.
++description: Inspect and test local web application behavior, rendered UI, browser errors, and end-to-end flows using the available browser or repository test stack.
+ license: Complete terms in LICENSE.txt
+ ---
+ 
+ # Web Application Testing
+ 
+-To test local web applications, write native Python Playwright scripts.
++## Choose the execution surface
+ 
+-**Helper Scripts Available**:
+-- `scripts/with_server.py` - Manages server lifecycle (supports multiple servers)
++For interactive inspection, follow the available Browser skill and the user's selected browser/session.
++Preserve login state and browser permissions; do not switch to a separate browser session to bypass a limitation.
++For repository E2E work, inspect existing test commands, framework, language, fixtures, and browser configuration first.
++Use that stack rather than imposing native Python Playwright, Chromium, or headless mode.
++Python Playwright is an optional fallback only when compatible with the task and environment.
++Do not add a second framework or download browser binaries just to follow an example.
+ 
+-**Always run scripts with `--help` first** to see usage. DO NOT read the source until you try running the script first and find that a customized solution is abslutely necessary. These scripts can be very large and thus pollute your context window. They exist to be called directly as black-box scripts rather than ingested into your context window.
++A read-only task does not implicitly authorize writing repository scripts, screenshot/report files, application data changes, or server startup.
++Nonmutating inspection through existing tools, including ephemeral browser screenshots, can remain within read-only scope; honor any stricter user restrictions.
++Use available inspection tools and report unavailable execution evidence when the requested flow exceeds scope.
++Reuse existing approvals for the same target; preserve explicit approval, credential, and production gates.
+ 
+-## Decision Tree: Choosing Your Approach
++## Establish server ownership and readiness
+ 
+-```
+-User task → Is it static HTML?
+-    ├─ Yes → Read HTML file directly to identify selectors
+-    │         ├─ Success → Write Playwright script using selectors
+-    │         └─ Fails/Incomplete → Treat as dynamic (below)
+-    │
+-    └─ No (dynamic webapp) → Is the server already running?
+-        ├─ No → Run: python scripts/with_server.py --help
+-        │        Then use the helper + write simplified Playwright script
+-        │
+-        └─ Yes → Reconnaissance-then-action:
+-            1. Navigate and wait for networkidle
+-            2. Take screenshot or inspect DOM
+-            3. Identify selectors from rendered state
+-            4. Execute actions with discovered selectors
+-```
++Reuse an existing server after verifying its address and application identity.
++An open port alone proves neither application identity nor readiness.
++If startup is authorized and necessary, use the repository's existing lifecycle tooling.
++Before first use or after a helper update, inspect its subprocess, network, output, and cleanup behavior; unchanged reviewed helpers need not be reread.
++Use help output after this check when needed for correct arguments.
++Record task-owned processes and stop only those processes and their owned children.
++Never kill a preexisting server or all processes on a port as cleanup.
++The upstream with_server.py helper and Python examples remain in the management repository's upstream snapshot, not this installed package.
+ 
+-## Example: Using with_server.py
++## Inspect, wait, act, verify
+ 
+-To start a server, run `--help` first, then use the helper:
++1. Inspect the route, rendered DOM, visible state, and relevant browser errors.
++2. Wait with a bounded timeout for the observable condition needed by the next action: expected route, visible element, enabled control, or loaded data state.
++3. Select elements from observed state, preferring roles, labels, or existing test IDs.
++4. Perform only actions within the user's scope and verify the resulting UI/data state.
++5. Record reproducible steps, expected versus actual behavior, and what was or was not executed.
+ 
+-**Single server:**
+-```bash
+-python scripts/with_server.py --server "npm run dev" --port 5173 -- python your_automation.py
+-```
++Persistent connections, polling, SSE, or WebSockets can prevent network idle indefinitely.
++`networkidle` is optional diagnostic evidence, never a prerequisite for inspection or proof that the UI is ready.
++Avoid fixed sleeps as readiness proof; fail with the missing expected condition at the bounded timeout.
++For asynchronous commands, distinguish UI acceptance from confirmed backend/device execution.
+ 
+-**Multiple servers (e.g., backend + frontend):**
+-```bash
+-python scripts/with_server.py \
+-  --server "cd backend && python server.py" --port 3000 \
+-  --server "cd frontend && npm run dev" --port 5173 \
+-  -- python your_automation.py
+-```
++## Evidence and cleanup
+ 
+-To create an automation script, include only Playwright logic (servers are managed automatically):
+-```python
+-from playwright.sync_api import sync_playwright
+-
+-with sync_playwright() as p:
+-    browser = p.chromium.launch(headless=True) # Always launch chromium in headless mode
+-    page = browser.new_page()
+-    page.goto('http://localhost:5173') # Server already running and ready
+-    page.wait_for_load_state('networkidle') # CRITICAL: Wait for JS to execute
+-    # ... your automation logic
+-    browser.close()
+-```
+-
+-## Reconnaissance-Then-Action Pattern
+-
+-1. **Inspect rendered DOM**:
+-   ```python
+-   page.screenshot(path='/tmp/inspect.png', full_page=True)
+-   content = page.content()
+-   page.locator('button').all()
+-   ```
+-
+-2. **Identify selectors** from inspection results
+-
+-3. **Execute actions** using discovered selectors
+-
+-## Common Pitfall
+-
+-❌ **Don't** inspect the DOM before waiting for `networkidle` on dynamic apps
+-✅ **Do** wait for `page.wait_for_load_state('networkidle')` before inspection
+-
+-## Best Practices
+-
+-- **Use bundled scripts as black boxes** - To accomplish a task, consider whether one of the scripts available in `scripts/` can help. These scripts handle common, complex workflows reliably without cluttering the context window. Use `--help` to see usage, then invoke directly. 
+-- Use `sync_playwright()` for synchronous scripts
+-- Always close the browser when done
+-- Use descriptive selectors: `text=`, `role=`, CSS selectors, or IDs
+-- Add appropriate waits: `page.wait_for_selector()` or `page.wait_for_timeout()`
+-
+-## Reference Files
+-
+-- **examples/** - Examples showing common patterns:
+-  - `element_discovery.py` - Discovering buttons, links, and inputs on a page
+-  - `static_html_automation.py` - Using file:// URLs for local HTML
+-  - `console_logging.py` - Capturing console logs during automation
+\ No newline at end of file
++Capture screenshots or focused console excerpts only when authorized and useful, using the requested artifact location.
++Avoid capturing credentials, session tokens, or unrelated sensitive screen/log content.
++Use repository browser fixtures to close task-owned sessions; do not close the user's interactive browser.
++Report the tested browser/configuration and limitations instead of inferring broad browser compatibility or production health.
+--- a/skills/webapp-testing/examples/console_logging.py
++++ /dev/null
+@@ -1,35 +0,0 @@
+-from playwright.sync_api import sync_playwright
+-
+-# Example: Capturing console logs during browser automation
+-
+-url = 'http://localhost:5173'  # Replace with your URL
+-
+-console_logs = []
+-
+-with sync_playwright() as p:
+-    browser = p.chromium.launch(headless=True)
+-    page = browser.new_page(viewport={'width': 1920, 'height': 1080})
+-
+-    # Set up console log capture
+-    def handle_console_message(msg):
+-        console_logs.append(f"[{msg.type}] {msg.text}")
+-        print(f"Console: [{msg.type}] {msg.text}")
+-
+-    page.on("console", handle_console_message)
+-
+-    # Navigate to page
+-    page.goto(url)
+-    page.wait_for_load_state('networkidle')
+-
+-    # Interact with the page (triggers console logs)
+-    page.click('text=Dashboard')
+-    page.wait_for_timeout(1000)
+-
+-    browser.close()
+-
+-# Save console logs to file
+-with open('/mnt/user-data/outputs/console.log', 'w') as f:
+-    f.write('\n'.join(console_logs))
+-
+-print(f"\nCaptured {len(console_logs)} console messages")
+-print(f"Logs saved to: /mnt/user-data/outputs/console.log")
+\ No newline at end of file
+--- a/skills/webapp-testing/examples/element_discovery.py
++++ /dev/null
+@@ -1,40 +0,0 @@
+-from playwright.sync_api import sync_playwright
+-
+-# Example: Discovering buttons and other elements on a page
+-
+-with sync_playwright() as p:
+-    browser = p.chromium.launch(headless=True)
+-    page = browser.new_page()
+-
+-    # Navigate to page and wait for it to fully load
+-    page.goto('http://localhost:5173')
+-    page.wait_for_load_state('networkidle')
+-
+-    # Discover all buttons on the page
+-    buttons = page.locator('button').all()
+-    print(f"Found {len(buttons)} buttons:")
+-    for i, button in enumerate(buttons):
+-        text = button.inner_text() if button.is_visible() else "[hidden]"
+-        print(f"  [{i}] {text}")
+-
+-    # Discover links
+-    links = page.locator('a[href]').all()
+-    print(f"\nFound {len(links)} links:")
+-    for link in links[:5]:  # Show first 5
+-        text = link.inner_text().strip()
+-        href = link.get_attribute('href')
+-        print(f"  - {text} -> {href}")
+-
+-    # Discover input fields
+-    inputs = page.locator('input, textarea, select').all()
+-    print(f"\nFound {len(inputs)} input fields:")
+-    for input_elem in inputs:
+-        name = input_elem.get_attribute('name') or input_elem.get_attribute('id') or "[unnamed]"
+-        input_type = input_elem.get_attribute('type') or 'text'
+-        print(f"  - {name} ({input_type})")
+-
+-    # Take screenshot for visual reference
+-    page.screenshot(path='/tmp/page_discovery.png', full_page=True)
+-    print("\nScreenshot saved to /tmp/page_discovery.png")
+-
+-    browser.close()
+\ No newline at end of file
+--- a/skills/webapp-testing/examples/static_html_automation.py
++++ /dev/null
+@@ -1,33 +0,0 @@
+-from playwright.sync_api import sync_playwright
+-import os
+-
+-# Example: Automating interaction with static HTML files using file:// URLs
+-
+-html_file_path = os.path.abspath('path/to/your/file.html')
+-file_url = f'file://{html_file_path}'
+-
+-with sync_playwright() as p:
+-    browser = p.chromium.launch(headless=True)
+-    page = browser.new_page(viewport={'width': 1920, 'height': 1080})
+-
+-    # Navigate to local HTML file
+-    page.goto(file_url)
+-
+-    # Take screenshot
+-    page.screenshot(path='/mnt/user-data/outputs/static_page.png', full_page=True)
+-
+-    # Interact with elements
+-    page.click('text=Click Me')
+-    page.fill('#name', 'John Doe')
+-    page.fill('#email', 'john@example.com')
+-
+-    # Submit form
+-    page.click('button[type="submit"]')
+-    page.wait_for_timeout(500)
+-
+-    # Take final screenshot
+-    page.screenshot(path='/mnt/user-data/outputs/after_submit.png', full_page=True)
+-
+-    browser.close()
+-
+-print("Static HTML automation completed!")
+\ No newline at end of file
+--- a/skills/webapp-testing/scripts/with_server.py
++++ /dev/null
+@@ -1,106 +0,0 @@
+-#!/usr/bin/env python3
+-"""
+-Start one or more servers, wait for them to be ready, run a command, then clean up.
+-
+-Usage:
+-    # Single server
+-    python scripts/with_server.py --server "npm run dev" --port 5173 -- python automation.py
+-    python scripts/with_server.py --server "npm start" --port 3000 -- python test.py
+-
+-    # Multiple servers
+-    python scripts/with_server.py \
+-      --server "cd backend && python server.py" --port 3000 \
+-      --server "cd frontend && npm run dev" --port 5173 \
+-      -- python test.py
+-"""
+-
+-import subprocess
+-import socket
+-import time
+-import sys
+-import argparse
+-
+-def is_server_ready(port, timeout=30):
+-    """Wait for server to be ready by polling the port."""
+-    start_time = time.time()
+-    while time.time() - start_time < timeout:
+-        try:
+-            with socket.create_connection(('localhost', port), timeout=1):
+-                return True
+-        except (socket.error, ConnectionRefusedError):
+-            time.sleep(0.5)
+-    return False
+-
+-
+-def main():
+-    parser = argparse.ArgumentParser(description='Run command with one or more servers')
+-    parser.add_argument('--server', action='append', dest='servers', required=True, help='Server command (can be repeated)')
+-    parser.add_argument('--port', action='append', dest='ports', type=int, required=True, help='Port for each server (must match --server count)')
+-    parser.add_argument('--timeout', type=int, default=30, help='Timeout in seconds per server (default: 30)')
+-    parser.add_argument('command', nargs=argparse.REMAINDER, help='Command to run after server(s) ready')
+-
+-    args = parser.parse_args()
+-
+-    # Remove the '--' separator if present
+-    if args.command and args.command[0] == '--':
+-        args.command = args.command[1:]
+-
+-    if not args.command:
+-        print("Error: No command specified to run")
+-        sys.exit(1)
+-
+-    # Parse server configurations
+-    if len(args.servers) != len(args.ports):
+-        print("Error: Number of --server and --port arguments must match")
+-        sys.exit(1)
+-
+-    servers = []
+-    for cmd, port in zip(args.servers, args.ports):
+-        servers.append({'cmd': cmd, 'port': port})
+-
+-    server_processes = []
+-
+-    try:
+-        # Start all servers
+-        for i, server in enumerate(servers):
+-            print(f"Starting server {i+1}/{len(servers)}: {server['cmd']}")
+-
+-            # Use shell=True to support commands with cd and &&
+-            process = subprocess.Popen(
+-                server['cmd'],
+-                shell=True,
+-                stdout=subprocess.PIPE,
+-                stderr=subprocess.PIPE
+-            )
+-            server_processes.append(process)
+-
+-            # Wait for this server to be ready
+-            print(f"Waiting for server on port {server['port']}...")
+-            if not is_server_ready(server['port'], timeout=args.timeout):
+-                raise RuntimeError(f"Server failed to start on port {server['port']} within {args.timeout}s")
+-
+-            print(f"Server ready on port {server['port']}")
+-
+-        print(f"\nAll {len(servers)} server(s) ready")
+-
+-        # Run the command
+-        print(f"Running: {' '.join(args.command)}\n")
+-        result = subprocess.run(args.command)
+-        sys.exit(result.returncode)
+-
+-    finally:
+-        # Clean up all servers
+-        print(f"\nStopping {len(server_processes)} server(s)...")
+-        for i, process in enumerate(server_processes):
+-            try:
+-                process.terminate()
+-                process.wait(timeout=5)
+-            except subprocess.TimeoutExpired:
+-                process.kill()
+-                process.wait()
+-            print(f"Server {i+1} stopped")
+-        print("All servers stopped")
+-
+-
+-if __name__ == '__main__':
+-    main()
+\ No newline at end of file
