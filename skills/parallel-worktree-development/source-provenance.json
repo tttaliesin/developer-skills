@@ -1,0 +1,13 @@
+{
+  "schema_version": 2,
+  "tool_version": "2.0.0",
+  "repository": "urn:local-repository:developer-skills",
+  "canonical_source": "skills/parallel-worktree-development",
+  "base_revision": "4756940bc2dde1c1e4c8dc8d1b18da1d5c74b59f",
+  "uncommitted": true,
+  "files": {
+    "SKILL.md": "bb49d4fbe7a937a273a45f5b76dfda0ddbe603171079372a6dd6df7a73995a7d",
+    "agents/openai.yaml": "0101606acb1794a21b26be29d3711700b5893a2aef799ff64f3fac46656f46fd",
+    "references/ownership-boundary.md": "43db0660405aedc0dcf0608a66c2fe178c42f8bc4fab66b59949bad3aa3cc8f2"
+  }
+}

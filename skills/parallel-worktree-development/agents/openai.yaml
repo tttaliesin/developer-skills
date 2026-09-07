@@ -1,0 +1,4 @@
+interface:
+  display_name: "Parallel Worktree Development"
+  short_description: "Coordinate isolated local implementation slices"
+  default_prompt: "Use $parallel-worktree-development when independent implementation slices can be developed and integrated in isolated Git worktrees."

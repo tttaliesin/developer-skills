@@ -1,6 +1,7 @@
 # 개발자 스킬
 
-Codex와 Pi에서 사용할 수 있도록 공개 스킬을 수정하고 유지보수하는 `tools/` 소유 저장소다.
+Codex와 Pi의 개발 지원 스킬과 유지보수·검증 도구를 관리하는 `tools/` 소유 저장소다.
+공개 스킬의 승인된 수정과 자체 스킬을 구분하여 관리한다.
 Workspace 공통 정책은 workspace-rules가, Vault 운영은 Second Brain이 담당한다.
 다음 표는 관리하는 패키지와 주요 수정 내용을 보여준다.
 
@@ -12,6 +13,9 @@ Workspace 공통 정책은 workspace-rules가, Vault 운영은 Second Brain이 �
 | 4 | [webapp-testing](skills/webapp-testing/SKILL.md) | 기존 브라우저·테스트 도구 사용, 제한 시간 내 준비 상태 관찰, 프로세스 소유권 확인 |
 
 새로 적용한 [Mermaid 스킬과 검증 runtime](docs/mermaid-adoption.md)은 Markdown 다이어그램 작성·검증·이미지 변환을 지원한다.
+
+이관한 [parallel-worktree-development](skills/parallel-worktree-development/SKILL.md)는 자체 개발 지원 스킬이다.
+[외부 스킬 개인 수정 기록](docs/local-skill-customizations.md)과 [패키지·출처 도구 유지보수](docs/package-maintenance.md)는 upstream 수정 패키지와 구분한다.
 
 ## 원본과 수정 기록
 
@@ -51,14 +55,14 @@ Patch 생성 도구는 `upstream-lock.json`에 등록된 패키지 이름 하나
 패키지와 patch의 변경 내역을 함께 검토한다.
 
 전체 유지보수 검증에는 외부에 설치된 Skill Creator와 Markdown Authoring 도구도 사용한다.
-설치 출처 검증에는 별도의 workspace-rules checkout을 사용하며, 이 도구들은 현재 저장소에 포함되어 있지 않다.
+설치 출처 검증 도구는 이 저장소의 `scripts/skill-provenance.py`이며 별도 checkout이 필요하지 않다.
+Skill Creator와 Markdown Authoring만 외부 도구로 사용한다.
 아래 예시는 이 개인 workspace의 디렉터리 구성을 사용한다.
 다른 환경에서는 경로를 바꾸고, 명시된 스크립트가 존재하는지 확인한 뒤 실행한다.
 
 ```bash
 SKILL_CREATOR_ROOT="${CODEX_HOME:-$HOME/.codex}/skills/.system/skill-creator"
 MARKDOWN_AUTHORING_ROOT="$HOME/.agents/skills/markdown-authoring"
-WORKSPACE_RULES_ROOT="$HOME/workspace/governance/workspace-rules"
 
 (
 for package in systematic-debugging api-design-principles differential-review webapp-testing; do
@@ -83,17 +87,18 @@ Upstream을 갱신할 때는 기존 고정 정보와 스냅샷을 보존하고, 
 
 ## 전역 설치
 
-패키지는 공개 스킬을 수정한 것이며, 아래 설치·출처 기록 절차는 앞서 설명한 외부 도구를 갖춘 개인 Codex/Pi workspace를 대상으로 한다.
+아래 설치·출처 기록 절차는 공개 수정 패키지와 자체 스킬에 적용하며, 앞서 설명한 외부 도구를 갖춘 개인 Codex/Pi workspace를 대상으로 한다.
 `npx`를 포함한 Node.js/npm, Skills CLI에 대한 접근, 선택한 전역 스킬 경로의 쓰기 권한이 필요하다.
 저장소 수정이나 commit만으로 전역 동기화까지 승인되는 것은 아니다.
 승인된 설치를 수행하기 전에 기존 설치본과 정본을 비교하고, 설치본에서 별도로 수정한 파일을 보존한다.
 
 ### 현재 checkout의 출처 기록 준비
 
-출처 기록에는 정본의 절대 경로, 기준 Git 리비전과 패키지 해시가 포함된다.
-다른 경로에 clone했거나 checkout을 이동했거나 패키지 내용이 바뀌었다면, 설치 전에 선택한 패키지의 기록을 재생성해야 한다.
-이전 기록을 그대로 복사하면 검증에 실패한다.
-`HEAD` commit이 있는 Git checkout을 사용하고, 작업 디렉터리는 저장소 루트로 유지한다.
+새 출처 기록에는 portable repository locator, 저장소 상대 package 경로, 기준 Git 리비전과 패키지 해시가 포함된다.
+같은 논리적 저장소와 package 상대 경로라면 checkout 이동 후에도 검증할 수 있다.
+기존 절대 경로 기록은 구형 검증을 유지하므로 위치가 달라지면 원본을 검토한 뒤 재생성한다.
+`HEAD` commit이 있는 Git checkout을 사용한다.
+명령의 상대 package 경로는 실행 cwd 기준이며 아래 예시는 저장소 루트에서 실행한다.
 
 유지보수 중 내용을 갱신할 때는 최종 패키지와 patch를 먼저 commit한 뒤, 출처 기록을 생성해 별도로 commit한다.
 새 로컬 checkout에서는 내용 변경이나 원격 게시 없이 해당 checkout의 출처 기록을 생성할 수 있다.
@@ -103,8 +108,8 @@ Upstream을 갱신할 때는 기존 고정 정보와 스냅샷을 보존하고, 
 ```bash
 (
 for package in systematic-debugging api-design-principles differential-review webapp-testing; do
-  python3 "$WORKSPACE_RULES_ROOT/scripts/skill-provenance.py" write "skills/$package" || exit 1
-  python3 "$WORKSPACE_RULES_ROOT/scripts/skill-provenance.py" check "skills/$package" || exit 1
+  python3 scripts/skill-provenance.py write "skills/$package" --repository urn:local-repository:developer-skills || exit 1
+  python3 scripts/skill-provenance.py check "skills/$package" --repository urn:local-repository:developer-skills || exit 1
 done
 )
 ```
@@ -122,6 +127,7 @@ npx skills add ./skills/systematic-debugging --agent codex pi --global --yes
 npx skills add ./skills/api-design-principles --agent codex pi --global --yes
 npx skills add ./skills/differential-review --agent codex pi --global --yes
 npx skills add ./skills/webapp-testing --agent codex pi --global --yes
+npx skills add ./skills/parallel-worktree-development --agent codex pi --global --yes
 ```
 
 설치 도구가 보고한 두 에이전트의 설치 경로를 각각 검증한다.
@@ -134,9 +140,9 @@ PI_SKILLS_ROOT="$HOME/.pi/agent/skills"
 
 (
 for package in systematic-debugging api-design-principles differential-review webapp-testing; do
-  python3 "$WORKSPACE_RULES_ROOT/scripts/skill-provenance.py" check "skills/$package" \
+  python3 scripts/skill-provenance.py check "skills/$package" --repository urn:local-repository:developer-skills \
     --installed "$CODEX_SKILLS_ROOT/$package" || exit 1
-  python3 "$WORKSPACE_RULES_ROOT/scripts/skill-provenance.py" check "skills/$package" \
+  python3 scripts/skill-provenance.py check "skills/$package" --repository urn:local-repository:developer-skills \
     --installed "$PI_SKILLS_ROOT/$package" || exit 1
 done
 )

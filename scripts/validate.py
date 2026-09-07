@@ -21,6 +21,15 @@ def inventory(path):
 
 def main():
     lock = json.loads((ROOT / 'upstream-lock.json').read_text())
+    originals = {'parallel-worktree-development'}
+    packages = {p.name for p in (ROOT / 'skills').iterdir() if (p / 'SKILL.md').is_file()}
+    if packages != set(lock) | originals or set(lock) & originals:
+        raise SystemExit('Every package must belong to exactly one upstream/original classification')
+    for name in originals:
+        package = ROOT / 'skills' / name
+        if not (package / 'references/ownership-boundary.md').is_file():
+            raise SystemExit(f'{name}: missing packaged ownership boundary')
+        print(f'{name}: original package classified separately (not an upstream patch)')
     for name, meta in lock.items():
         snapshot = ROOT / 'upstream' / name
         if inventory(snapshot) != meta['upstream_files']:

@@ -1,0 +1,50 @@
+--- /home/tttal/.agents/skills/doc-coauthoring/SKILL.md
++++ /home/tttal/.agents/skills/doc-coauthoring/SKILL.md
+@@ -9,0 +10,9 @@
++## Choose the requested collaboration mode
++
++Use the interview and per-section checkpoints below only when the user explicitly requests or accepts interactive co-authoring.
++For an ordinary drafting or editing request, use supplied context and authorized sources to produce the complete draft and perform the applicable self-review without waiting at each phase.
++Ask only about unresolved facts that materially affect the outcome; reuse answers already present in the task.
++Routine transitions to drafting, another section, or reader review do not require approval.
++An explicit user checkpoint or approval requirement still applies.
++The connected-tool search approval below is preserved: reuse prior authorization for the same sources and search scope, and continue independent drafting while an unapproved search remains pending.
++
+@@ -18 +27,4 @@
+-Offer the user a structured workflow for co-authoring the document. Explain the three stages:
++When the user seeks interactive co-authoring but has not chosen a workflow, offer the three-stage approach.
++If they have already selected it, proceed without asking again.
++For ordinary artifact requests, use the complete-draft path above.
++The interactive approach has three stages:
+@@ -84 +96,2 @@
+-  - Wait for user confirmation before searching
++  - Wait for user confirmation before searching unless the user already authorized the same source and search scope in the current task
++  - Reuse that authorization and continue independent authorized drafting while waiting
+--- /home/tttal/.agents/skills/find-skills/SKILL.md
++++ /home/tttal/.agents/skills/find-skills/SKILL.md
+@@ -130,2 +130,3 @@
+-2. Offer to help with the task directly using your general capabilities
+-3. Suggest the user could create their own skill with `npx skills init`
++2. If the user requested the actual task, continue it with available capabilities within the existing authorization; do not ask again merely because no skill was found
++3. If the user requested only skill discovery, report the search outcome without starting a new task
++4. Optionally suggest the user could create their own skill with `npx skills init`
+@@ -137 +138 @@
+-I can still help you with this task directly! Would you like me to proceed?
++I will continue the requested task with the available capabilities.
+--- /home/tttal/.codex/skills/.system/openai-docs/SKILL.md
++++ /home/tttal/.codex/skills/.system/openai-docs/SKILL.md
+@@ -11,0 +12,5 @@
++**Local instruction review exception:** For a request to review or edit the user's AGENTS.md or skill instructions, inspect those local files first.
++Apply official documentation search only to claims that depend on current OpenAI product, API, or supported behavior.
++Reading applicable local instructions and performing a read-only Second Brain preflight are permitted before the docs-first sequence.
++If official retrieval is unavailable, continue the local review and leave only the product-dependent claims unverified.
++
+@@ -14 +19 @@
+-**Only exception:** An explicitly requested, genuinely broad, cross-topic Codex setup, orientation, or system-map synthesis may use the manual first when shell execution and an allowed temporary cache are available. A specific Codex feature, setting, command, error, model, or requested citation remains docs-first. Mixed Chat/Work/Codex comparisons are official documentation questions, not manual-first Codex requests.
++**Additional manual-first exception:** An explicitly requested, genuinely broad, cross-topic Codex setup, orientation, or system-map synthesis may use the manual first when shell execution and an allowed temporary cache are available. A specific Codex feature, setting, command, error, model, or requested citation remains docs-first. Mixed Chat/Work/Codex comparisons are official documentation questions, not manual-first Codex requests.
+--- /home/tttal/.codex/plugins/cache/openai-primary-runtime/pdf/26.904.11930/skills/pdf/SKILL.md
++++ /home/tttal/.codex/plugins/cache/openai-primary-runtime/pdf/26.904.11930/skills/pdf/SKILL.md
+@@ -139 +139,2 @@
+-- Do not deliver until the latest PNG inspection shows zero visual or formatting defects.
++- Render the final revision and inspect its PNGs before delivery. Fix missing or clipped content, overlapping elements, unreadable glyphs, incorrect values, and violations of explicit layout requirements. Once those defects are resolved, cosmetic preferences alone do not require another revision.
++- If rendering or inspection is unavailable, report the blocked verification and preserve the current artifact; do not deliver it as a verified final PDF. Continue independent authorized work. This does not relax the pre-delivery inspection requirement.
