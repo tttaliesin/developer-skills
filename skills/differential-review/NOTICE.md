@@ -4,5 +4,5 @@ This package adapts [https://github.com/trailofbits/skills](https://github.com/t
 Original path: `plugins/differential-review/skills/differential-review`.
 Original authors retain their copyright; see [LICENSE.txt](LICENSE.txt).
 Local modifications dated 2026-09-05 preserve task authorization and adapt execution to Codex and Pi.
-The management repository retains the upstream snapshot, per-file hashes, and reviewable customization patch.
+Local changes are maintained in Git history.
 This adapted package is distributed under CC BY-SA 4.0, as is the upstream work.

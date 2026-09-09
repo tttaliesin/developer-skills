@@ -1,6 +1,0 @@
-{
-  "version": "2.0.0",
-  "owner": "urn:local-repository:developer-skills",
-  "source": "scripts/skill-provenance.py",
-  "sha256": "4ea0be1e7fcde656daebc895d3a8daaa90eec24ce9a5e034f4482a1d4ae41882"
-}

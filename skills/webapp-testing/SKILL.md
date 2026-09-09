@@ -29,7 +29,7 @@ Before first use or after a helper update, inspect its subprocess, network, outp
 Use help output after this check when needed for correct arguments.
 Record task-owned processes and stop only those processes and their owned children.
 Never kill a preexisting server or all processes on a port as cleanup.
-The upstream with_server.py helper and Python examples remain in the management repository's upstream snapshot, not this installed package.
+The upstream with_server.py helper and Python examples are not included in this package.
 
 ## Inspect, wait, act, verify
 

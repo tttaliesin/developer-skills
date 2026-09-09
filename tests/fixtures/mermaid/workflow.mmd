@@ -1,8 +1,0 @@
-flowchart LR
-    S["● Source"] --> P["◆ Proposal"]
-    P --> R{"✓ Review approved?"}
-    R -->|yes| A["▶ Apply"]
-    R -->|no| P
-    A --> H["● Health evidence"]
-    classDef step fill:#90EE90,stroke:#333,color:darkgreen
-    class S,P,A,H step

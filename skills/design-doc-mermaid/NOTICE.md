@@ -5,9 +5,9 @@ The plugin identifies its author as Rick Hightower, https://github.com/RichardHi
 Upstream README declares: “Part of Claude Code Skills - MIT License”.
 The upstream plugin declares `"license": "MIT"`.
 There is no standalone license text in that revision; [LICENSE.txt](LICENSE.txt) supplies the standard declared terms without inventing a copyright year.
-The management repository retains those original declarations and all pinned source files.
+The original declarations can be found at the upstream revision linked above.
 
 Local modifications on 2026-09-05 implement task-scoped output/publication, evidence and review gates, host-independent tool selection, and safer local rendering and Markdown conversion.
 Python helper implementations were replaced; their supported CLI interface is documented in the local workflow.
 Upstream presentation discretion was not expanded: semantic Unicode requirements and PlantUML opt-in remain.
-The complete source/customization diff is retained by the management repository.
+Local changes are maintained in Git history.

@@ -79,6 +79,7 @@ The optional change making symbols discretionary was not accepted in this implem
 
 ## Local tools
 
+For runtime setup or package maintenance, read [runtime setup](references/runtime-setup.md).
 Helpers require Python 3.9+ and an existing or explicitly authorized Mermaid CLI runtime.
 They discover `mmdc` on PATH, `DESIGN_DOC_MERMAID_MMDC`, or the host-local developer-skills runtime configuration.
 They do not install dependencies, upload artifacts, or send error/source text to external services.

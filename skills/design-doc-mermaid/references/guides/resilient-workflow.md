@@ -60,6 +60,7 @@ User/team approval and final integration remain separate actions.
 
 ## Runtime and failure classification
 
+For an authorized runtime installation or package regression checks, use [runtime setup](../runtime-setup.md).
 Resolve a repository-established renderer first by passing `--mmdc` and, if needed, `--puppeteer-config`.
 Otherwise use the existing approved installation discovered by the helper.
 Host configuration is `$XDG_CONFIG_HOME/developer-skills/mermaid-runtime.json`, defaulting to `~/.config/developer-skills/mermaid-runtime.json`.

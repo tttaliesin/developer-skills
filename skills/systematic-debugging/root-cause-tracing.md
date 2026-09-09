@@ -100,7 +100,7 @@ If something appears during tests but you don't know which test:
 Use the repository's test runner to isolate candidate tests in an authorized disposable fixture.
 Record preexisting state before each run and stop when the unwanted change appears.
 Do not delete existing files or suppress test failures as proof that tests are clean.
-The upstream npm-specific helper is retained only in the source snapshot, not this installed package.
+The upstream npm-specific helper is not included in this package.
 
 ## Real Example: Empty projectDir
 
