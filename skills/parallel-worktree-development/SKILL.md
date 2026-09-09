@@ -54,7 +54,7 @@ Assign one integration owner before creating worker worktrees. Only the integrat
 modify the integration branch or integration worktree. Record this contract before dispatch:
 
 - exact repository root, verified remote identity when one is relevant, base revision, and
-  integration branch;
+  integration branch and final delivery path/worktree (including any destination beyond the integration worktree);
 - exact acceptance criteria and repository validation commands;
 - one named slice per worker with owned files, directories, or symbols and explicit non-goals;
 - interfaces shared across slices, including signatures, schemas, generated-source ownership, and
@@ -64,6 +64,10 @@ modify the integration branch or integration worktree. Record this contract befo
   risks;
 - integration order when commits are not commutative; and
 - the rule that workers never push, merge, rewrite the integration branch, or remove refs.
+
+Name the final integration owner in that contract.
+This owner remains accountable across skill transitions until the agreed destination is verified or an explicit pending handoff names its reason, owner, and resumption condition.
+A worker's completion does not complete the user's task.
 
 A file or generated artifact may have only one mutation owner. If unavoidable overlap is discovered,
 stop the overlapping workers and serialize that boundary under the integration owner. Workers may
@@ -148,8 +152,11 @@ Verification happens from the integration worktree after all selected commits la
 - record the integrated commit SHA, commands, results, and remaining unverified boundaries.
 
 A passing worker check is not integrated proof. A merge or cherry-pick success is not behavioral
-proof. Do not return to `github-operations` until the integration worktree is internally consistent
-and the task's observable acceptance criteria are verified.
+proof.
+Do not report successful integration to `github-operations` until the integration worktree is internally consistent and the task's observable acceptance criteria are verified.
+Copying files onto an older or dirty checkout does not establish integration.
+Verify the destination's base, preserve unrelated changes, and use the Git owner's safe integration procedure; confirm the integrated revision and relevant checks at the agreed final destination.
+If that destination is still pending, return an explicit incomplete handoff rather than claiming integrated delivery.
 
 ## Return control and clean safely
 
@@ -158,10 +165,15 @@ integrated commit SHA, worker commit SHAs, validation evidence, and any pending 
 `github-operations` may push, create or merge a pull request, verify Issue closure, or delete remote
 refs.
 
+Local integration does not authorize remote publication.
+If the agreed endpoint is a local diff or review-only result, name its exact path, base revision, diff, and checks instead of implying a commit or push occurred; the worker commit contract above applies to this multi-worktree implementation workflow, not to every message or single-worker task.
+
 Do not remove a worker worktree or local branch while it contains tracked, untracked, or ignored
 files, while another process may own it, or before its commit is integrated and verified. For
 Issue-resolution cleanup, use the safety and merged-SHA rules owned by `github-operations`; never use
 `git branch -D`, unconditional remote deletion, or force removal to make cleanup appear complete.
+An idle worker alone is not grounds for deletion.
+Keep pending cleanup in the task's final status with its reason, owner, and resumption condition, even after implementation or a skill handoff ends.
 
 ## Stop conditions
 
