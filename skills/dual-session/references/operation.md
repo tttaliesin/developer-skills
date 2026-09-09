@@ -70,7 +70,35 @@ Keep the executor persistent so the user can inspect and steer it directly.
 For a shared checkout, the executor is the sole code writer while a job is running; the planner waits for a stable result before inspecting the diff.
 For separate worktrees, explicitly identify both paths and transfer results through the repository's normal integration process; never assume files appear in both checkouts.
 Existing repository skills continue to own Git, deployment, and other specialized operations.
-This skill does not require a commit for every message or grant permission to push, merge, publish, archive, or delete.
+An ordinary implementation request includes the necessary local integration into its established delivery target, unless the user or repository policy limits that scope.
+This does not require a commit for every message or authorize remote push, remote PR merge, publication, archival, or deletion beyond the user's existing authorization.
+
+## Complete an implementation job
+
+Use this lifecycle for ordinary implementation, rather than leaving integration for a separate user request.
+
+1. Before dispatch, establish the canonical delivery checkout, integration branch, base commit, and acceptance criteria from the project and user's request.
+   Use the project's verified default integration branch, such as `main`, unless another target is specified; do not invent `main`, create it automatically, or treat an arbitrary current task branch as the final target.
+   The planner owns integration by default and may assign its execution to a named owner while retaining acceptance responsibility.
+   State any review-only, experiment-only, or deliberately uncommitted local-diff endpoint here; these do not implicitly require integration or a commit.
+2. In a separate worktree, the executor implements from the agreed base on a job branch, verifies the result, and returns its exact result commit and checks for review.
+   A detached worktree must have an identified job branch before ordinary implementation; preserve any existing work before preparing it.
+   In a shared checkout, retain the single-writer arrangement and review the agreed commit or diff in place without manufacturing a second branch or merge.
+3. The planner reviews the exact submitted result and requests in-scope corrections when necessary.
+   Once it passes review, the executor stops modifying that result and the planner proceeds immediately to authorized local integration within the same job, using the Git owner's procedures.
+   Recheck the target revision and dirty state; use fast-forward when possible or the repository's appropriate history-preserving integration when histories diverge.
+   A changed target, conflicting result, or unrelated dirty state must be reconciled safely, not overwritten to match the reviewed worker files.
+4. Verify the accepted changes and relevant behavior at the canonical delivery checkout after integration, record the resulting branch and revision, and only then mark the implementation job completed.
+   Executor `completed` describes its submitted result; the shared job remains running through review and integration, or blocked with a reason, owner, and resumption condition when progress is prevented.
+   A handoff does not satisfy user completion while integration is still owed; preserve the existing pending-handoff rules.
+5. Keep the executor conversation and usable worktree for later jobs, independently of the completed job branch's lifetime.
+   Before the next implementation, inspect that worktree for uncommitted changes, unique commits, and current ownership, then safely prepare its next job branch from the latest verified integration-target commit and confirm its HEAD.
+   Do not continue from a stale detached HEAD or reset away unfinished work; reconcile it or report the blocking condition before dispatch.
+   Branch/worktree cleanup is a separate authorized operation, not a prerequisite for reporting verified delivery.
+
+For example, with local `main` as the agreed target, executor checks passing starts planner review; planner acceptance starts local integration; checks at the updated canonical `main` permit job completion.
+Remote push or PR merge follows the task's existing authorization and repository policy; local integration alone grants neither.
+If an explicitly required remote review or protected workflow governs the target, follow that path and retain a pending job rather than bypassing the gate with a local merge or silently redefining the endpoint.
 
 ## Request, execute, return
 

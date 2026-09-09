@@ -19,4 +19,5 @@ Implicit skill selection is contextual, not an always-running hook.
 Keep existing model and reasoning settings when reusing tasks.
 When creating a new Sol executor for the Astra/Sol arrangement, use `gpt-5.6-sol` with `xhigh` reasoning unless the user specifies a different model or reasoning level; do not impose these defaults on other teams.
 Use the available Codex app task tools, not ephemeral subagents, for this workflow.
-Continue the user's already-authorized work through implementation and review without asking again at routine handoffs.
+For ordinary implementation, continue through executor verification, planner review, authorized local integration, and final-location verification in the same job; prepare the next job from the latest integrated revision.
+Follow the operating rules for review/experiment-only exceptions and remote authorization without asking again at routine handoffs.
