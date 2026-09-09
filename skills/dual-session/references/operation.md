@@ -40,7 +40,8 @@ Each new JSON record uses schema version `2` and contains:
 - `job`: `null` when linked and idle; otherwise a unique `id`, `revision`, `scope`, `completion_criteria`, `status`, and optional `result_path` and `commit`
 - `updated_at`: UTC timestamp
 
-For implementation jobs, include the agreed delivery path/worktree, branch or intended local diff, and named integration owner in the existing job context (for example `scope` or `completion_criteria`). Optional `delivery` details may carry these values; no schema migration or extra fields are required for non-implementation work.
+For implementation jobs, include the delivery endpoint (such as a local diff, pushed branch, PR, or merged target), its verified location, the named integration owner, and any remaining delivery stages in the existing `scope` and `completion_criteria`.
+Optional `delivery` details may carry these values; no schema migration is required.
 
 Record presence means the pair is linked and active; there is no separate paused mode.
 The planner is the sole writer of the shared record and writes complete JSON through a temporary sibling file followed by atomic replacement.
@@ -65,39 +66,46 @@ If the record was removed, a late message does not recreate it or authorize work
 
 The planner owns the user's objective, decomposition, acceptance criteria, result interpretation, and next-step decisions.
 The executor owns implementation, execution, proportionate verification, and reporting within the assigned scope.
-Before dispatching implementation, agree on its final delivery location and state and name the integration owner. That owner remains responsible across skill transitions until delivery is verified or an explicit pending handoff names its reason, owner, and resumption condition. A deliberately local diff or review-only result is valid when stated as the agreed deliverable; neither pairing nor a message requires a commit.
+Before dispatching implementation, determine the final delivery location and state from the user's intended outcome, existing session authorization, and verified repository workflow; name the integration owner.
+Issue tracking is a separate decision owned by `github-operations`: neither omitting an Issue nor adding one makes the task local-only or intake-only.
+Reuse established context rather than repeatedly asking for approval; clarify only a material unresolved endpoint or authority boundary.
+That owner remains responsible across skill transitions until delivery is verified or an explicit pending handoff names its reason, owner, and resumption condition.
+A deliberately local diff or review-only result is valid when it matches that endpoint; neither pairing nor a message requires a commit.
 Keep the executor persistent so the user can inspect and steer it directly.
 For a shared checkout, the executor is the sole code writer while a job is running; the planner waits for a stable result before inspecting the diff.
 For separate worktrees, explicitly identify both paths and transfer results through the repository's normal integration process; never assume files appear in both checkouts.
 Existing repository skills continue to own Git, deployment, and other specialized operations.
-An ordinary implementation request includes the necessary local integration into its established delivery target, unless the user or repository policy limits that scope.
-This does not require a commit for every message or authorize remote push, remote PR merge, publication, archival, or deletion beyond the user's existing authorization.
+Use the Git owner's procedures for the local and remote stages required by the established endpoint; do not redefine that endpoint as local integration merely because a worker operates locally.
+Push, PR creation, PR merge, release, and deployment are distinct actions whose authority and actual workflow effects must be assessed separately; neither blanket remote prohibition nor unconditional publication follows from pairing.
+Preserve the target, action, and task scope of any restriction and its source when handing off work.
+Do not carry an earlier task's restriction into a new task without checking its applicability, or present a coordinator's narrower worker assignment as a user-imposed limit on the overall task.
 
 ## Complete an implementation job
 
-Use this lifecycle for ordinary implementation, rather than leaving integration for a separate user request.
+Use this lifecycle for ordinary implementation, rather than leaving already-authorized delivery stages for a separate user request.
 
-1. Before dispatch, establish the canonical delivery checkout, integration branch, base commit, and acceptance criteria from the project and user's request.
-   Use the project's verified default integration branch, such as `main`, unless another target is specified; do not invent `main`, create it automatically, or treat an arbitrary current task branch as the final target.
+1. Before dispatch, establish the delivery endpoint, canonical checkout, target branch or remote resource when applicable, base commit, and acceptance criteria from the project and user's request.
+   Use the verified integration target, such as `main`, when branch integration is part of that endpoint; do not invent `main`, create it automatically, or replace a PR/review endpoint with a local merge.
    The planner owns integration by default and may assign its execution to a named owner while retaining acceptance responsibility.
    State any review-only, experiment-only, or deliberately uncommitted local-diff endpoint here; these do not implicitly require integration or a commit.
 2. In a separate worktree, the executor implements from the agreed base on a job branch, verifies the result, and returns its exact result commit and checks for review.
    A detached worktree must have an identified job branch before ordinary implementation; preserve any existing work before preparing it.
    In a shared checkout, retain the single-writer arrangement and review the agreed commit or diff in place without manufacturing a second branch or merge.
 3. The planner reviews the exact submitted result and requests in-scope corrections when necessary.
-   Once it passes review, the executor stops modifying that result and the planner proceeds immediately to authorized local integration within the same job, using the Git owner's procedures.
+   Once it passes review, the executor stops modifying that result and the planner proceeds immediately to the endpoint's next authorized integration or delivery stage within the same job, using the Git owner's procedures.
    Recheck the target revision and dirty state; use fast-forward when possible or the repository's appropriate history-preserving integration when histories diverge.
    A changed target, conflicting result, or unrelated dirty state must be reconciled safely, not overwritten to match the reviewed worker files.
-4. Verify the accepted changes and relevant behavior at the canonical delivery checkout after integration, record the resulting branch and revision, and only then mark the implementation job completed.
-   Executor `completed` describes its submitted result; the shared job remains running through review and integration, or blocked with a reason, owner, and resumption condition when progress is prevented.
+4. Verify the accepted changes and relevant behavior at the canonical checkout after any local integration and record the resulting branch and revision.
+   If the endpoint includes remote delivery, continue through the Git owner in the same job and verify the actual pushed revision, created PR, or merged target as applicable before marking the overall implementation completed.
+   Executor `completed` describes its submitted result; the shared job remains running through review and remaining delivery stages, or blocked with a reason, owner, and resumption condition when progress is prevented.
    A handoff does not satisfy user completion while integration is still owed; preserve the existing pending-handoff rules.
 5. Keep the executor conversation and usable worktree for later jobs, independently of the completed job branch's lifetime.
    Before the next implementation, inspect that worktree for uncommitted changes, unique commits, and current ownership, then safely prepare its next job branch from the latest verified integration-target commit and confirm its HEAD.
    Do not continue from a stale detached HEAD or reset away unfinished work; reconcile it or report the blocking condition before dispatch.
    Branch/worktree cleanup is a separate authorized operation, not a prerequisite for reporting verified delivery.
 
-For example, with local `main` as the agreed target, executor checks passing starts planner review; planner acceptance starts local integration; checks at the updated canonical `main` permit job completion.
-Remote push or PR merge follows the task's existing authorization and repository policy; local integration alone grants neither.
+For a local-only `main` endpoint, checks at the updated canonical checkout permit completion; for an authorized remote `main` endpoint they are an intermediate check before verifying the remote result.
+For a PR-only endpoint, verify the requested PR without claiming or performing an unrequested merge.
 If an explicitly required remote review or protected workflow governs the target, follow that path and retain a pending job rather than bypassing the gate with a local merge or silently redefining the endpoint.
 
 ## Request, execute, return
@@ -124,8 +132,12 @@ Prefer cursors and at most 60-second waits; do not poll unchanged state repeated
 When dispatched for later work, the executor's return message resumes the planner; do not stay active just to poll.
 
 The planner reviews the result and assigns in-scope corrections with a new revision when needed.
-Worker completion is not user completion. The planner's acceptance must verify the agreed local integration at the final path/worktree and branch, including its revision (or explicit local diff) and relevant checks, rather than only the worker's checks. Local integration and remote publication have separate authorization boundaries; route Git operations to their owner without losing the named integration owner.
-If integration remains owed, keep it visible in the existing job and report an explicit pending handoff with reason, owner, and resumption condition. Do not set `job: null` just because the worker finished. Clear the job only when the agreed delivery is verified or the outstanding obligation is explicitly transferred and remains tracked in the receiving task, or cancelled by the user.
+Worker completion is not user completion.
+The planner's acceptance verifies the established delivery endpoint and relevant checks, including the actual remote state when required, rather than only the worker's checks or a local commit.
+Route Git operations to their owner without losing the named integration owner or shrinking the parent task's endpoint.
+If integration or remote delivery remains owed, keep it visible in the existing job and report an explicit pending handoff with reason, owner, and resumption condition.
+Do not set `job: null` just because the worker finished.
+Clear the job only when the agreed delivery is verified or the outstanding obligation is explicitly transferred and remains tracked in the receiving task, or cancelled by the user; transfer closes this assignment, not the still-pending user outcome.
 Finish once the acceptance criteria are satisfied; a completion message does not authorize unrelated experiments or an indefinite feedback loop.
 Ask only when a material scope change or required external action lacks authorization.
 
