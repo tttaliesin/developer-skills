@@ -14,6 +14,8 @@
 | [parallel-worktree-development](skills/parallel-worktree-development/SKILL.md) | 여러 에이전트의 개발 작업 분담과 결과 통합 |
 | [dual-session](skills/dual-session/SKILL.md) | 지속되는 두 대화로 설계·검토와 구현·실행을 분담 |
 | [multi-github-account-operate](skills/multi-github-account-operate/SKILL.md) | 전역 인증을 바꾸지 않는 저장소별 GitHub 계정 연결 |
+| [markdown-authoring](skills/markdown-authoring/SKILL.md) | Markdown 문서 작성·편집·검토 |
+| [github-operations](skills/github-operations/SKILL.md) | GitHub 작업의 권한·납품·검증 관리 |
 
 ## 설치
 

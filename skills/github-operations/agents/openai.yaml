@@ -1,0 +1,4 @@
+interface:
+  display_name: "GitHub Operations"
+  short_description: "Plan and deliver issue-tracked GitHub work"
+  default_prompt: "Use $github-operations to assess this task for issue intake, or resolve a specified issue through verified completion."

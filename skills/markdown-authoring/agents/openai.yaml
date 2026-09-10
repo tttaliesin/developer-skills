@@ -1,0 +1,4 @@
+interface:
+  display_name: "Markdown Authoring"
+  short_description: "Create, edit, and review Markdown artifacts"
+  default_prompt: "Use $markdown-authoring to create, edit, or review this Markdown artifact using explicit repository requirements and the skill's writing defaults."
