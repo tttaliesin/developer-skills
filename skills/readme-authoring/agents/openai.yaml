@@ -1,0 +1,4 @@
+interface:
+  display_name: "README Authoring"
+  short_description: "Write READMEs around a reader's first useful result"
+  default_prompt: "Use $readme-authoring to write a concise README from this repository and verify the reader's first-use path."
