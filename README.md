@@ -36,12 +36,50 @@ Mermaid 실행 도구를 쓸 때만 [실행 환경 안내](skills/design-doc-mer
 
 ## 수정과 설치
 
-스킬의 지침이나 자료를 직접 수정하고 바뀐 내용에 맞춰 링크 또는 실제 동작을 확인한다.
-별도의 원본 복사본, patch, 파일 해시 기록이나 상시 테스트 체계는 유지하지 않는다.
+개발용 정본은 이 저장소의 `skills/` 디렉터리이며, 배포 원본은 GitHub의 `tttaliesin/developer-skills`
+필요 조건은 Git, Node.js와 npm이 제공하는 `npx`, [Skills CLI](https://github.com/vercel-labs/skills) 실행 환경
+공개 저장소 조회와 설치에는 읽기 접근만 필요하며, GitHub push에는 해당 저장소 쓰기 권한을 가진 계정 인증 필요
 
-설치할 때는 필요한 스킬 폴더 전체를 사용하는 스킬 설치 위치에 반영한다.
-기존 설치본에 따로 수정한 내용이 있다면 먼저 비교해 보존한다.
-저장소 편집만으로 별도 설치본까지 갱신되지는 않는다.
+수정부터 설치본 갱신까지의 기본 흐름은 다음 순서
+
+1. `skills/` 아래 지침과 자료를 정본에서 수정
+2. 변경 범위에 맞는 링크, Markdown 구조, 스크립트 또는 실제 동작 검증
+3. diff와 검증 결과를 검토한 뒤 Git commit 생성
+4. 검증된 commit을 GitHub `main`에 push
+5. 설치본과 정본을 비교하고 설치본에만 있는 변경을 별도로 보존
+6. GitHub 소스를 사용하는 Skills CLI로 필요한 전역 설치본 갱신
+
+별도의 원본 복사본, patch, 파일 해시 기록이나 상시 테스트 체계는 유지하지 않음
+저장소 수정이나 push만으로 기존 설치본까지 자동 갱신되지는 않음
+
+Skills CLI는 GitHub 저장소의 `skills/<name>/SKILL.md`를 검색 대상으로 사용
+설치 전에 발견되는 스킬 목록 확인
+
+```bash
+npx skills add tttaliesin/developer-skills --list
+```
+
+`dual-session`만 Codex 전역 스킬로 설치
+
+```bash
+npx skills add tttaliesin/developer-skills --skill dual-session --agent codex --global
+```
+
+저장소의 일곱 스킬을 모두 Codex 전역 스킬로 설치
+
+```bash
+npx skills add tttaliesin/developer-skills --skill '*' --agent codex --global
+```
+
+이미 설치된 스킬은 설치본의 별도 변경을 보존한 뒤 대상 이름으로 갱신
+현재 Skills CLI 문법의 `dual-session` 전역 갱신 예시
+
+```bash
+npx skills update dual-session --global
+```
+
+다른 스킬 갱신 시 `dual-session`을 대상 스킬 이름으로 교체
+실행 전에 설치된 Skills CLI 버전이 대상 이름과 `--global`을 받는 update 문법을 지원하는지 확인
 
 외부 스킬의 라이선스와 출처 고지는 유지한다.
 `parallel-worktree-development`는 workspace-rules에서 이관한 자체 스킬이며 별도 라이선스를 부여하지 않는다.
