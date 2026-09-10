@@ -187,7 +187,27 @@ def reject_worktree_config(root: Path) -> None:
     if result.returncode not in (0, 1):
         raise RouterError("cannot inspect extensions.worktreeConfig")
     if result.returncode == 0 and decoded(result.stdout).casefold() == "true":
-        raise RouterError("extensions.worktreeConfig repositories are not supported")
+        common = common_directory(root)
+        paths = [common / "config.worktree"]
+        worktrees = common / "worktrees"
+        if worktrees.is_dir():
+            paths.extend(worktrees.glob("*/config.worktree"))
+        found_codex_metadata = False
+        for path in paths:
+            if not path.exists():
+                continue
+            config = git(
+                root, "config", "--file", str(path), "--no-includes",
+                "--null", "--name-only", "--list", check=False,
+            )
+            if config.returncode != 0:
+                raise RouterError("cannot inspect worktree configuration")
+            keys = [key for key in config.stdout.split(b"\0") if key]
+            if any(key.lower() != b"codex.localenvironmentconfigpath" for key in keys):
+                raise RouterError("worktree configuration contains unsupported overrides")
+            found_codex_metadata = found_codex_metadata or bool(keys)
+        if not found_codex_metadata:
+            raise RouterError("extensions.worktreeConfig requires metadata-only Codex configuration")
 
 
 def set_config_values(root: Path, key: str, values: list[str]) -> None:

@@ -3,7 +3,9 @@
 ## 지원 범위
 
 `github_account_router.py`는 GitHub.com HTTPS remote 하나와 계정 하나의 저장소 로컬 바인딩만 지원
-GitHub Enterprise, SSH remote, 여러 계정 fallback, 로그인 자동화와 `extensions.worktreeConfig=true` 저장소는 미지원
+GitHub Enterprise, SSH remote, 여러 계정 fallback과 로그인 자동화는 미지원
+`extensions.worktreeConfig=true`는 main과 모든 linked worktree의 설정 파일에 Codex의 `codex.localEnvironmentConfigPath`만 존재할 때 지원
+credential·alias·remote·include 등 다른 worktree 설정은 연결과 사용 시 거절
 
 GitHub CLI 2.100.0의 `gh auth git-credential`은 credential 요청의 username으로 계정을 선택하지 않고 host의 `ActiveToken`과 `ActiveUser`만 조회
 비활성 계정을 안전하게 선택하려면 [`gh auth token --hostname ... --user ...`](https://cli.github.com/manual/gh_auth_token)의 결과를 capture하는 별도 helper 필요

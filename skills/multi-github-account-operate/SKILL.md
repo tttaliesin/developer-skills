@@ -16,7 +16,7 @@ GitHub.com HTTPS 저장소 하나와 이미 인증된 계정 하나만 명시적
 - Git 저장소, Python 3.10 이상, GitHub CLI 필요
 - 선택 계정이 `gh auth`에 이미 등록된 상태 필요
 - GitHub.com HTTPS remote만 지원하며 SSH와 GitHub Enterprise는 미지원
-- `extensions.worktreeConfig=true` 저장소는 per-worktree override 때문에 미지원
+- `extensions.worktreeConfig=true`는 모든 worktree 설정이 Codex의 `codex.localEnvironmentConfigPath` 메타데이터만 포함할 때 지원하며 그 외 override는 거절
 - 대상 repository URL·owner·repository·계정을 사용자 요청과 remote에서 각각 확인
 - 기존 worktree 변경과 repo-local credential·alias 충돌 확인
 - commit author와 인증 계정은 별도이며 `user.name`·`user.email` 자동 변경 금지
