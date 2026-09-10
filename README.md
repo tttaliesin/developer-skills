@@ -1,6 +1,6 @@
 # 개발자 스킬
 
-개발 작업에서 사용하는 일곱 가지 스킬을 보관하는 저장소다.
+개발 작업용 스킬 여덟 개를 보관하는 저장소
 수정할 때는 `skills/` 안의 파일을 직접 편집하고, 변경 이력과 되돌리기는 Git으로 관리한다.
 
 ## 어떤 스킬이 있나
@@ -14,6 +14,7 @@
 | [design-doc-mermaid](skills/design-doc-mermaid/SKILL.md) | 구조·흐름 다이어그램 작성과 이미지 변환 |
 | [parallel-worktree-development](skills/parallel-worktree-development/SKILL.md) | 여러 에이전트의 개발 작업 분담과 결과 통합 |
 | [dual-session](skills/dual-session/SKILL.md) | 지속되는 두 대화로 설계·검토와 구현·실행을 분담 |
+| [multi-github-account-operate](skills/multi-github-account-operate/SKILL.md) | 전역 인증을 바꾸지 않는 저장소별 GitHub 계정 연결 |
 
 ## 파일은 무슨 역할인가
 
@@ -65,7 +66,7 @@ npx skills add tttaliesin/developer-skills --list
 npx skills add tttaliesin/developer-skills --skill dual-session --agent codex --global
 ```
 
-저장소의 일곱 스킬을 모두 Codex 전역 스킬로 설치
+저장소의 여덟 스킬을 모두 Codex 전역 스킬로 설치
 
 ```bash
 npx skills add tttaliesin/developer-skills --skill '*' --agent codex --global
