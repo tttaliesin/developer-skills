@@ -54,6 +54,19 @@ README는 조사 시점 기본 브랜치에서 해당 파일의 마지막 변경
 | [MarkItDown, 9–24행](https://github.com/microsoft/markitdown/blob/b6e8bbdce628d564c6af031b5f26cda6e818ea10/README.md#L9-L24)·[35–82행](https://github.com/microsoft/markitdown/blob/b6e8bbdce628d564c6af031b5f26cda6e818ea10/README.md#L35-L82)·[262–272행](https://github.com/microsoft/markitdown/blob/b6e8bbdce628d564c6af031b5f26cda6e818ea10/README.md#L262-L272) | 사용 목적과 변환 충실도 제약, 선행 조건, CLI·Python 예제 | 적합성·실행 안내·입출력의 구체성 |
 | [Ollama, 7–58행](https://github.com/ollama/ollama/blob/39df91c9826b3c0c83677f75cd230d8848d287c3/README.md#L7-L58)·[78–105행](https://github.com/ollama/ollama/blob/39df91c9826b3c0c83677f75cd230d8848d287c3/README.md#L78-L105)·[145–151행](https://github.com/ollama/ollama/blob/39df91c9826b3c0c83677f75cd230d8848d287c3/README.md#L145-L151) | 환경별 설치, 실행 뒤 표시될 선택 안내, 모델 실행·API 예제와 문서 연결 | 첫 사용에서 보게 될 상태와 다음 작업 안내 |
 
+## Weekly 가치·사례 표현 보충 관찰
+
+2026-09-10 [Trendshift weekly 목록](https://trendshift.io/weekly)에서 스킬 저장소의 가치와 대표 결과 표현을 보충하기 위해 관련 저장소 3개를 목적 표본으로 선택
+기존 10개 표본을 대체하거나 weekly 목록의 순위·스타 수를 품질 순위로 해석하지 않고, 실제 사용자 이해도나 효과를 검증한 표본으로도 사용하지 않는 원칙
+
+| 사례와 관찰 위치 | 원문에서 확인한 표현 | 도출한 기준 |
+| --- | --- | --- |
+| [i-have-adhd, 32–69행](https://github.com/ayghri/i-have-adhd/blob/0249c455764f503f60d4ee0242cf4188b22df913/README.md#L32-L69) | 답이 묻히는 문제를 제시하고 의도한 응답 형식을 Before/After 표와 규칙 링크로 연결 | 실행형 스킬은 추상적 효용 대신 대표 상황에서 달라지는 행동을 보여 주되 설명용 비교를 실제 효과 검증으로 오인하지 않는 기준 |
+| [diagram-design, 23–41행](https://github.com/cathrynlavery/diagram-design/blob/899579b459c2c70be8858ad69ff8af674eb2b4b0/README.md#L23-L41) | 기존 다이어그램 결과의 문제를 설명하고 만들어지는 시각 결과를 갤러리로 제시 | 결과가 시각 자산이면 실제 예시가 가치 판단을 돕지만 모든 README에 배너·갤러리·별도 Why 절을 강제하지 않는 기준 |
+| [mattpocock/skills, 84–186행](https://github.com/mattpocock/skills/blob/321658273cb1d20b76026717d027d505790106d4/README.md#L84-L186) | 에이전트의 여러 실패 문제를 나누고 각 문제에 대응하는 스킬과 결과 행동을 연결한 뒤 참조 목록으로 이동 | 실행형 스킬 모음은 링크 카탈로그만 두기보다 문제→스킬→달라지는 행동의 대표 경로와 작업별 탐색 구조를 제공하는 기준 |
+
+세 사례의 성능·속도·우월성·성공 효과 주장은 독립 검증하지 않았으며 기준의 사실 근거로 채택하지 않는 방식
+
 ## 그대로 복제하지 않을 부분
 
 [public-apis의 1–24행](https://github.com/public-apis/public-apis/blob/8d3f99c8dac264c3538ccfbabc4ffe2b09247a10/README.md#L1-L24)은 APILayer 홍보가 저장소 자체의 설명보다 먼저 등장하는 구성
