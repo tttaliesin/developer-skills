@@ -16,5 +16,5 @@ Do not test exact instructional prose or private layout merely to detect change.
 
 Make one root-cause fix and rerun the reproduction or equivalent defect check plus relevant regression checks.
 For existing or shared work, never delete or revert user changes to manufacture a red phase.
-If the fix already exists, establish the failing baseline in an authorized isolated fixture or temporary checkout and preserve the working tree.
+If the fix already exists and available pre-fix evidence does not resolve the defect, establish the needed baseline in an authorized isolated fixture or temporary checkout while preserving the working tree.
 A read-only diagnosis stops before mutations; explain the reproduction and missing execution evidence.

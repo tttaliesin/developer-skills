@@ -11,8 +11,9 @@ invariants below throughout the task.
 
 ## Apply common invariants
 
-- Identify the exact repository, owner, resource, base, head, branch, and expected commit SHA from
-  evidence. Ask only when a wrong choice could materially affect another resource.
+- Identify the exact repository and requested resource from evidence. Resolve base, head, branch
+  and expected commit SHA when they affect the selected operation. Ask only when a wrong choice
+  could materially affect another resource.
 - Name the integration owner and final destination before delegating work. A worker result is not
   final delivery, and a handoff does not shrink the established endpoint.
 - Preserve tracked, staged, untracked, ignored, and user-owned work. Never stash, reset, discard,
