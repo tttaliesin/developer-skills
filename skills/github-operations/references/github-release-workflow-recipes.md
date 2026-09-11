@@ -1,8 +1,8 @@
 # GitHub release and workflow recipes
 
-이 문서는 release 발행과 workflow run 실행·진단을 수행하는 command recipe다. 먼저
-[GitHub 운영 규칙](github-operations.md)과
-[공통 GitHub command 규칙](github-operation-recipes.md)을 적용한다.
+이 문서는 release 발행과 workflow run 실행·진단을 수행하는 command recipe다. 진입 지침의
+권한·대상·완료 불변식을 적용하고 GitHub resource를 변경하기 전에
+[공통 command 규칙](github-operation-recipes.md)의 관련 절을 확인한다.
 
 ## Release를 발행한다
 

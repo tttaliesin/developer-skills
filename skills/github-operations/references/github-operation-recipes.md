@@ -1,8 +1,9 @@
 # GitHub operation command rules
 
-이 문서는 이 패키지의 [GitHub 운영 규칙](github-operations.md)을 `gh`와 `git`으로 실행할 때 모든
-operation에 공통으로 적용하는 대상 식별, worktree 보호, command 선택과 재시도 기준이다. 실제
-operation command는 필요한 recipe 하나만 추가로 읽는다.
+이 문서는 branch·worktree 변경이나 정리, GitHub resource mutation, raw API 사용, 결과가 불명확한
+mutation 재시도에 필요한 대상 식별, worktree 보호, command 선택과 재시도 기준을 정의한다.
+진입 지침의 공통 불변식을 적용한 뒤 현재 작업에 해당하는 절과 실제 operation recipe 하나만 읽는다.
+단순한 read-only 조회에는 이 문서 전체를 선행 로드하지 않고 정확한 대상의 좁은 조회 명령에서 시작한다.
 
 ## 필요한 recipe를 선택한다
 

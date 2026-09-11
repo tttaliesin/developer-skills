@@ -1,8 +1,10 @@
 # GitHub repository and pull request recipes
 
-이 문서는 repository 생성·push와 pull request(PR) 생성·check·merge를 수행하는 command recipe다. 먼저
-[GitHub 운영 규칙](github-operations.md)과
-[공통 GitHub command 규칙](github-operation-recipes.md)을 적용한다.
+이 문서는 repository 생성·push와 pull request(PR) 생성·check·merge를 수행하는 command recipe다.
+[완료 지점](github-operations.md#완료-지점을-먼저-정한다)과
+[로컬 통합·완료 기준](github-operations.md#로컬-통합과-완료를-확인한다) 중 현재 작업에 필요한 절을
+적용한다. Branch·worktree 또는 GitHub resource를 변경하기 전에
+[공통 command 규칙](github-operation-recipes.md)의 관련 절을 확인한다.
 
 ## Private repository를 생성하고 push한다
 

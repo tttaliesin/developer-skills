@@ -1,221 +1,124 @@
-# Differential Review Methodology
+# Risk-first differential review methodology
 
-Detailed phase-by-phase workflow for security-focused code review.
+Use this workflow for a focused review after the root skill has selected the material risk-bearing changes
+Apply only the sections needed to resolve the current risk and coverage questions
 
-## Pre-Analysis: Baseline Context Building
+## Establish the exact diff
 
-**FIRST ACTION - Build complete baseline understanding:**
+Read the requested base and head without checking out another revision or altering the working tree
 
-Read baseline files with `git show <base>:<path>` and history with `git blame <base> -- <path>`.
-Do not checkout the baseline in the user's working tree.
-Use the following questions directly; an available context-building skill is optional and is not an assumed shell command.
-
-**Capture from baseline analysis:**
-- System-wide invariants (what must ALWAYS be true across all code)
-- Trust boundaries and privilege levels (who can do what)
-- Validation patterns (what gets checked where - defense-in-depth)
-- Complete call graphs for critical functions (who calls what)
-- State flow diagrams (how state changes)
-- External dependencies and trust assumptions
-
-**Why this matters:**
-- Understand what the code was SUPPOSED to do before changes
-- Identify implicit security assumptions in baseline
-- Detect when changes violate baseline invariants
-- Know which patterns are system-wide vs local
-- Catch when changes break defense-in-depth
-
-**Store baseline context for reference during differential analysis.**
-
-Read head files with `git show <head>:<path>` or inspect the requested working-tree diff without changing repository state.
-
----
-
-## Phase 0: Intake & Triage
-
-**Extract changes:**
 ```bash
-# For commit range
 git diff <base>..<head> --stat
 git log <base>..<head> --oneline
-
-# For PR
-gh pr view <number> --json files,additions,deletions
-
-# Get all changed files
 git diff <base>..<head> --name-only
 ```
 
-**Assess codebase size:**
-```bash
-find . -name "*.sol" -o -name "*.rs" -o -name "*.go" -o -name "*.ts" | wc -l
+For a working-tree review, inspect the relevant staged and unstaged diffs separately
+Record unavailable commits, shallow history, generated files, submodules, or excluded paths rather than implying complete coverage
+
+Inventory every changed file and surface-scan it for:
+
+- Trust-boundary or privilege changes
+- New external input or output
+- Authorization, validation, serialization, or error-path changes
+- Secret, token, logging, and executable-example exposure
+- State transitions, value movement, and irreversible effects
+
+Use repository size only to choose efficient search and sampling tools
+Do not classify risk from file count or extension alone
+
+## Compare selected changed behavior
+
+For each risk-bearing region, inspect both versions and record:
+
+```text
+Before: relevant behavior and invariant
+After: changed behavior
+Boundary: caller, input, state, external system, or privilege crossed
+Security effect: supported risk or confirmed lack of exposure
+Evidence: file, line, revision, and test or caller when available
 ```
 
-**Classify complexity:**
-- **SMALL**: <20 files → Deep analysis (read all deps)
-- **MEDIUM**: 20-200 files → Focused analysis (1-hop deps)
-- **LARGE**: 200+ files → Surgical (critical paths only)
+Check nearby code and the dependencies needed to understand that behavior
+Do not read every dependency merely because the repository is small
+Expand one hop or farther when the changed value, permission, or effect crosses that boundary
 
-**Risk score each file:**
-- **HIGH**: Auth, crypto, external calls, value transfer, validation removal
-- **MEDIUM**: Business logic, state changes, new public APIs
-- **LOW**: No security exposure identified after checking actual behavior; UI, logs, tests, and comments are not automatically low risk.
+### Use history when it can answer a security question
 
----
+Inspect blame or log evidence when:
 
-## Phase 1: Changed Code Analysis
+- Security, validation, authorization, or error-handling code was removed or weakened
+- A change appears to reintroduce a previously removed pattern
+- The reason for a non-obvious invariant affects exploitability or compatibility
+- A commit message or nearby history names a CVE, incident, audit, or regression
 
-For each changed file:
-
-1. **Read both versions** (baseline and changed)
-
-2. **Analyze each diff region:**
-   ```
-   BEFORE: [exact code]
-   AFTER: [exact code]
-   CHANGE: [behavioral impact]
-   SECURITY: [implications]
-   ```
-
-3. **Git blame removed code:**
-   ```bash
-   # When was it added? Why?
-   git log -S "removed_code" --all --oneline
-   git blame <baseline> -- file.sol | grep "pattern"
-   ```
-
-   **Red flags:**
-   - Removed code from "fix", "security", "CVE" commits → investigate prior invariant and exploitability urgently
-   - Recently added (<1 month) then removed → prioritize regression analysis; age alone is not severity
-
-4. **Check for regressions (re-added code):**
-   ```bash
-   git log -S "added_code" --all -p
-   ```
-
-   Pattern: Code added → removed for security → re-added now = REGRESSION
-
-5. **Micro-adversarial analysis** for each change:
-   - What attack did removed code prevent?
-   - What new surface does new code expose?
-   - Can modified logic be bypassed?
-   - Are checks weaker? Edge cases covered?
-
-6. **Generate concrete attack scenarios:**
-   ```
-   SCENARIO: [attack goal]
-   PRECONDITIONS: [required state]
-   STEPS:
-     1. [specific action]
-     2. [expected outcome]
-     3. [exploitation]
-   WHY IT WORKS: [reference code change]
-   IMPACT: [severity + scope]
-   ```
-
----
-
-## Phase 2: Test Coverage Analysis
-
-**Identify coverage gaps:**
 ```bash
-# Production code changes (exclude tests)
-git diff <range> --name-only | grep -v "test"
-
-# Test changes
-git diff <range> --name-only | grep "test"
-
-# For each changed function, search for tests
-grep -r "test.*functionName" test/ --include="*.sol" --include="*.js"
+git log -S "<changed pattern>" --all --oneline
+git blame <base> -- <path>
 ```
 
-**Verification gaps and review priority:**
-- New functions without relevant tests warrant more investigation.
-- Changed validation with unchanged tests requires checking whether existing cases still cover the invariant.
-- Complex untested logic warrants deeper analysis.
-These are coverage gaps, not automatic vulnerability severity upgrades.
-A matching test name does not prove coverage; inspect assertions and report execution separately.
+Age or commit wording alone does not establish severity
+Use history to explain the invariant and regression risk, then confirm the current reachable behavior
 
----
+## Analyze test coverage
 
-## Phase 3: Blast Radius Analysis
+For each selected function, endpoint, parser, or state transition:
 
-**Calculate impact:**
+- Find tests that exercise the changed branch and its security invariant
+- Inspect assertions rather than inferring coverage from a matching test name
+- Check boundary cases relevant to the change, such as missing, duplicate, late, unauthorized, malformed, or reordered input
+- Record whether tests were executed, inspected statically, unavailable, or absent
+
+An untested change is a verification gap and a reason to investigate further
+Rate vulnerability severity only from supported impact, reachability, and exploit conditions
+
+## Trace blast radius
+
+Count direct text matches only as an approximate search aid
+Use symbol-aware or call-graph tools when available, then inspect the meaningful callers
+
 ```bash
-# Count callers for each modified function
-grep -r "functionName(" --include="*.sol" . | wc -l
+rg "<function or endpoint>" <relevant paths>
 ```
 
-These counts are review-priority heuristics, not measured affected users or vulnerability severity.
-Public endpoint exposure, transitive effects, and tenant/data scope can dominate even with one code caller.
-Use symbol-aware tracing where available and label text-match counts as approximate.
+Assess:
 
-**Classify caller-count breadth:**
-- 1-5 calls: LOW
-- 6-20 calls: MEDIUM
-- 21-50 calls: HIGH
-- 51+ calls: CRITICAL
+- External entry points and privilege levels
+- Transitive callers and downstream consumers
+- Records, tenants, assets, or physical effects that can be reached
+- Retry, duplication, timeout, and unknown-outcome behavior
+- Compatibility with older producers, consumers, clients, or persisted data
 
-**Priority matrix:**
+A single public caller can have larger impact than many internal callers
+Do not turn caller-count thresholds into severity labels
 
-| Change Risk | Blast Radius | Priority | Analysis Depth |
-|-------------|--------------|----------|----------------|
-| HIGH | CRITICAL | P0 | Deep + all deps |
-| HIGH | HIGH/MEDIUM | P1 | Deep |
-| HIGH | LOW | P2 | Standard |
-| MEDIUM | CRITICAL/HIGH | P1 | Standard + callers |
+## Build only the needed baseline context
 
----
+For a high-risk or unresolved change, establish the baseline invariants needed to judge it:
 
-## Phase 4: Deep Context Analysis
+- Entry conditions and access control
+- State reads and writes
+- Validation and normalization boundaries
+- Internal and external calls
+- Error, retry, rollback, and unknown-outcome semantics
+- Trust assumptions and defense-in-depth layers
 
-Use these questions for each high-priority changed function:
+Trace only the paths needed to confirm or reject the current risk hypothesis
+Record inferred relationships and unsupported gaps explicitly
 
-1. **Map complete function flow:**
-   - Entry conditions (preconditions, requires, modifiers)
-   - State reads (which variables accessed)
-   - State writes (which variables modified)
-   - External calls (to contracts, APIs, system)
-   - Return values and side effects
+## Detect cross-cutting regressions
 
-2. **Trace internal calls:**
-   - List all functions called
-   - Recursively map their flows
-   - Build complete call graph
+Search for comparable guards, validation patterns, and callsites when a selected change may violate a shared invariant
 
-3. **Trace external calls:**
-   - Identify trust boundaries crossed
-   - List assumptions about external behavior
-   - Check for reentrancy risks
-
-4. **Identify invariants:**
-   - What must ALWAYS be true?
-   - What must NEVER happen?
-   - Are invariants maintained after changes?
-
-5. **Five Whys root cause:**
-   - WHY was this code changed?
-   - WHY did the original code exist?
-   - WHY might this break?
-   - WHY is this approach chosen?
-   - WHY could this fail in production?
-
-Perform the line-by-line analysis using available read/search tools and code tracing.
-
-**Cross-cutting pattern detection:**
 ```bash
-# Find repeated validation patterns
-grep -r "require.*amount > 0" --include="*.sol" .
-grep -r "onlyOwner" --include="*.sol" .
-
-# Check if any removed in diff
-git diff <range> | grep "^-.*require.*amount > 0"
+rg "<validation or access-control pattern>" <relevant paths>
+git diff <base>..<head> -- <relevant paths>
 ```
 
-**Flag if removal breaks defense-in-depth.**
+Flag a regression only when the current change actually removes, bypasses, or contradicts the supported invariant
 
----
+## Continue by risk
 
-**Next steps:**
-- For HIGH RISK changes, proceed to [adversarial.md](adversarial.md)
-- For report generation, see [reporting.md](reporting.md)
+- For a supported high-risk path, read [adversarial analysis](adversarial.md)
+- For a requested persistent artifact, read [reporting](reporting.md)
+- Otherwise report the focused findings, coverage, confidence, and remaining uncertainty directly

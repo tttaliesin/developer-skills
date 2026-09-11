@@ -242,8 +242,16 @@ idempotent한 방법을 사용한다.
 
 ## Command recipe를 선택한다
 
-모든 명령 작업은 먼저 [공통 GitHub command 규칙](github-operation-recipes.md)을 적용한다. 그런 다음
-과제 접수·issue 해결에는 [Issue delivery recipes](github-issue-delivery-recipes.md), repository·push·PR
-작업에는 [Repository와 PR recipes](github-repository-pr-recipes.md), release·workflow run에는
-[Release와 workflow recipes](github-release-workflow-recipes.md)의 해당 절만 사용한다. Recipe는 이
-문서의 권한을 확대하지 않으며, 전체 `gh` manual을 대신하지 않는다.
+진입 지침의 공통 불변식을 먼저 적용하고 현재 작업에 필요한 이 문서의 절만 읽는다.
+과제 접수에는 `Issue로 추적할 과제를 판정한다`, issue 해결에는
+`요청한 작업을 권한의 경계로 삼는다`와 `로컬 통합과 완료를 확인한다`, 구현·통합·정리에는
+`완료 지점을 먼저 정한다`와 `로컬 통합과 완료를 확인한다`를 사용한다.
+
+Branch·worktree 변경이나 정리, GitHub resource mutation, raw API 사용, 결과가 불명확한
+create·publish 재시도 전에 [공통 GitHub command 규칙](github-operation-recipes.md)의 관련 절을 확인한다.
+단순한 read-only 조회는 진입 지침의 공통 불변식과 정확한 대상만 확인한 뒤 좁은 조회 명령에서 시작한다.
+
+과제 접수·issue 해결에는 [Issue delivery recipes](github-issue-delivery-recipes.md),
+repository·push·PR 작업에는 [Repository와 PR recipes](github-repository-pr-recipes.md),
+release·workflow run에는 [Release와 workflow recipes](github-release-workflow-recipes.md)의 해당 절만 사용한다.
+Recipe는 이 문서의 권한을 확대하지 않으며 전체 `gh` manual을 대신하지 않는다.

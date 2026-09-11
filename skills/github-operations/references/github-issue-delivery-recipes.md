@@ -1,8 +1,11 @@
 # GitHub issue delivery recipes
 
-이 문서는 개발 과제를 durable issue로 접수하고, 특정 issue를 development branch부터 merge·정리까지
-해결하는 command recipe다. 먼저 [GitHub 운영 규칙](github-operations.md)과
-[공통 GitHub command 규칙](github-operation-recipes.md)을 적용한다.
+이 문서는 개발 과제를 durable issue로 접수하고 특정 issue를 development branch부터 merge·정리까지
+해결하는 command recipe다. 과제 접수에는
+[Issue 필요성과 분할 기준](github-operations.md#issue로-추적할-과제를-판정한다)을 적용한다. Issue 해결에는
+[권한 lifecycle](github-operations.md#요청한-작업을-권한의-경계로-삼는다)과
+[로컬 통합·완료 기준](github-operations.md#로컬-통합과-완료를-확인한다)을 적용한다. Branch·worktree 또는
+GitHub resource를 변경하기 전에 [공통 command 규칙](github-operation-recipes.md)의 관련 절을 확인한다.
 
 ## 과제를 issue로 접수한다
 
