@@ -96,6 +96,7 @@ Use this lifecycle for ordinary implementation, rather than leaving already-auth
    Recheck the target revision and dirty state; use fast-forward when possible or the repository's appropriate history-preserving integration when histories diverge.
    A changed target, conflicting result, or unrelated dirty state must be reconciled safely, not overwritten to match the reviewed worker files.
 4. Verify the accepted changes and relevant behavior at the canonical checkout after any local integration and record the resulting branch and revision.
+   At the integration target, confirm that submitted evidence applies to the final relevant code, inputs, and environment; rerun affected checks when that evidence no longer applies or an applicable gate requires a fresh run.
    If the endpoint includes remote delivery, continue through the Git owner in the same job and verify the actual pushed revision, created PR, or merged target as applicable before marking the overall implementation completed.
    Executor `completed` describes its submitted result; the shared job remains running through review and remaining delivery stages, or blocked with a reason, owner, and resumption condition when progress is prevented.
    A handoff does not satisfy user completion while integration is still owed; preserve the existing pending-handoff rules.
@@ -132,13 +133,17 @@ Prefer cursors and at most 60-second waits; do not poll unchanged state repeated
 When dispatched for later work, the executor's return message resumes the planner; do not stay active just to poll.
 
 The planner reviews the result and assigns in-scope corrections with a new revision when needed.
+Carry the accepted outcome, delivery endpoint, applicable gates, and usable evidence through each handoff.
+Before requesting another correction or run, the planner identifies the remaining obligation or concrete reason the submitted evidence no longer suffices, and reassesses whether this job still needs work.
+A change of reviewer does not by itself require another execution; acceptance still requires checking the evidence and the actual delivery endpoint.
 Worker completion is not user completion.
 The planner's acceptance verifies the established delivery endpoint and relevant checks, including the actual remote state when required, rather than only the worker's checks or a local commit.
 Route Git operations to their owner without losing the named integration owner or shrinking the parent task's endpoint.
 If integration or remote delivery remains owed, keep it visible in the existing job and report an explicit pending handoff with reason, owner, and resumption condition.
 Do not set `job: null` just because the worker finished.
 Clear the job only when the agreed delivery is verified or the outstanding obligation is explicitly transferred and remains tracked in the receiving task, or cancelled by the user; transfer closes this assignment, not the still-pending user outcome.
-Finish once the acceptance criteria are satisfied; a completion message does not authorize unrelated experiments or an indefinite feedback loop.
+Finish once the acceptance criteria are satisfied; optional experiments do not keep the accepted job open.
+A completion message does not authorize unrelated experiments or an indefinite feedback loop.
 Ask only when a material scope change or required external action lacks authorization.
 
 ## Stop work, disconnect, or archive

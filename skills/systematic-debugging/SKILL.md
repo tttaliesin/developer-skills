@@ -184,6 +184,7 @@ You MUST complete each phase before proceeding to the next.
 
 4. **If Fix Doesn't Work**
    - STOP
+   - Repeated failure or lack of new information calls for reassessing the hypothesis, method, and remaining scope before another run; it does not establish completion or require waiting for a fixed attempt count to reassess
    - Count: How many fixes have you tried?
    - Count applied attempts to fix the target defect that failed; keep lookup or diagnostic-command failures separate
    - An applied fix still counts when called an experiment; do not relabel failed fixes to bypass the discussion gate
@@ -266,8 +267,8 @@ If systematic investigation reveals issue is truly environmental, timing-depende
 
 1. You've completed the process
 2. Document what you investigated
-3. Implement appropriate handling (retry, timeout, error message)
-4. Add monitoring/logging for future investigation
+3. Implement handling only when needed for the requested outcome and authorized scope
+4. Add monitoring or logging only when an identified diagnostic gap requires it and the task authorizes it
 
 **But:** 95% of "no root cause" cases are incomplete investigation.
 
