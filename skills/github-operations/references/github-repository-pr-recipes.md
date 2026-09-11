@@ -168,14 +168,29 @@ gh pr view <PR_URL> -R <OWNER/REPO> \
   --jq '{state: .state, mergedAt: .mergedAt, mergedHead: .commits[-1].oid}'
 ```
 
-## Auto-merge와 merge queue branch를 안전하게 정리한다
+## 병합된 작업용 임시 branch를 안전하게 정리한다
 
-Direct merge, auto-merge와 merge queue 모두 실제 merge를 확인한 뒤 issue branch만 정리한다. Merge
-명령에 `--delete-branch`를 넣지 않는다. Squash와 rebase merge에서는 original branch commit이 base의
-조상이 아닐 수 있으므로 ancestry 기반 `git branch -d`도 사용하지 않는다.
+Direct merge, auto-merge와 merge queue 모두 실제 merge를 확인한 뒤 해당 승인 작업의 정확한 임시 PR head branch만 정리
+Merge 명령의 `--delete-branch` 미사용
+Squash와 rebase merge에서는 original branch commit이 base의 조상이 아닐 수 있으므로 ancestry 기반 `git branch -d`도 미사용
 
-Branch cleanup은 확인된 merged head SHA, branch repository의 verified remote와 worktree 경계를
-함께 받아 helper로 수행한다.
+먼저 PR에 포함된 마지막 head SHA, branch repository의 verified remote, 현재 local·remote ref와 작업트리 소유자를 대조
+Branch가 새 commit으로 전진했거나 다른 작업이 사용 중이거나 소유권이 불명확하면 영향받는 정리만 보류하고 이유·담당자·재개 조건을 기록
+Remote ref만 안전하게 정리할 수 있으면 `--local-branch` 없이 기존 helper를 실행하고 local disposition을 별도로 기록
+
+재사용할 clean 작업트리가 완료 branch를 잡고 있으면 소유자의 작업 종료와 exact branch·HEAD를 확인한 뒤 같은 commit에서 detach
+
+```bash
+python3 <GITHUB_OPERATIONS_SKILL>/scripts/git-safety.py detach \
+  --repository <WORKTREE_PATH> \
+  --expected-branch <LOCAL_BRANCH> \
+  --expected-sha <MERGED_HEAD_SHA>
+```
+
+`detach`는 현재 branch·HEAD와 tracked·staged·untracked·ignored clean 상태를 확인하고 같은 commit의 detached HEAD로 전환한 뒤 branch 해제와 HEAD 보존을 검증
+파일·ref·작업트리를 삭제하지 않고 병합·권한·소유권을 추론하지 않는 경계
+
+그 뒤 확인된 merged head SHA, branch repository의 verified remote와 worktree 경계를 함께 받아 기존 cleanup helper로 local·remote ref 정리
 
 ```bash
 python3 <GITHUB_OPERATIONS_SKILL>/scripts/git-safety.py cleanup \
@@ -193,6 +208,8 @@ remote ref는 expected-SHA lease로 삭제한다.
 
 Helper가 실패하면 force 삭제나 다른 remote로 재시도하지 않는다. Branch가 merge 뒤 전진했거나
 worktree에 파일이 남아 있으면 merge 완료와 branch cleanup 미완료를 분리해 보고한다.
+Local ref, remote ref와 작업트리는 각각 삭제 완료·이유 있는 보존·이유와 담당자 및 재개 조건이 있는 보류·해당 없음으로 기록
+PR-only 완료 지점에서는 head branch를 유지하며, 승인·검증된 merge 전에는 이 절차를 미실행
 
 ## Merge와 workflow run을 분리한다
 

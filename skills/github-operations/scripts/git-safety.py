@@ -122,6 +122,46 @@ def switch_branch(args: argparse.Namespace) -> None:
     print(current)
 
 
+def detach_worktree(args: argparse.Namespace) -> None:
+    root = repository_root(args.repository)
+    expected = git(root, "rev-parse", "--verify", f"{args.expected_sha}^{{commit}}").stdout.strip()
+    current = git(root, "branch", "--show-current").stdout.strip()
+    if current != args.expected_branch:
+        raise SafetyError(f"expected branch {args.expected_branch!r}, current branch is {current!r}")
+
+    head = git(root, "rev-parse", "HEAD").stdout.strip()
+    if head != expected:
+        raise SafetyError(f"HEAD changed: expected {expected}, found {head}")
+
+    status = git(
+        root,
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all",
+        "--ignored",
+    ).stdout
+    if status:
+        raise SafetyError(f"worktree contains tracked, untracked, or ignored files:\n{status.rstrip()}")
+
+    git(root, "switch", "--detach", "--no-overwrite-ignore", expected)
+    current_after = git(root, "branch", "--show-current").stdout.strip()
+    head_after = git(root, "rev-parse", "HEAD").stdout.strip()
+    if current_after or head_after != expected:
+        raise SafetyError(
+            f"detach verification failed: branch={current_after!r}, HEAD={head_after!r}"
+        )
+
+    print(
+        json.dumps(
+            {
+                "detached_branch": args.expected_branch,
+                "head": expected,
+            },
+            sort_keys=True,
+        )
+    )
+
+
 def worktrees(root: Path) -> list[dict[str, str]]:
     entries: list[dict[str, str]] = []
     current: dict[str, str] = {}
@@ -256,6 +296,12 @@ def parser() -> argparse.ArgumentParser:
     switch.add_argument("--branch", required=True)
     switch.add_argument("--track-start-point")
     switch.set_defaults(handler=switch_branch)
+
+    detach = commands.add_parser("detach", help="detach a clean worktree at its verified branch HEAD")
+    detach.add_argument("--repository", default=".")
+    detach.add_argument("--expected-branch", required=True)
+    detach.add_argument("--expected-sha", required=True)
+    detach.set_defaults(handler=detach_worktree)
 
     clean = commands.add_parser("cleanup", help="delete verified local and remote branch refs")
     clean.add_argument("--repository", default=".")

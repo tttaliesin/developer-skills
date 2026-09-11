@@ -100,10 +100,13 @@ Use this lifecycle for ordinary implementation, rather than leaving already-auth
    If the endpoint includes remote delivery, continue through the Git owner in the same job and verify the actual pushed revision, created PR, or merged target as applicable before marking the overall implementation completed.
    Executor `completed` describes its submitted result; the shared job remains running through review and remaining delivery stages, or blocked with a reason, owner, and resumption condition when progress is prevented.
    A handoff does not satisfy user completion while integration is still owed; preserve the existing pending-handoff rules.
-5. Keep the executor conversation and usable worktree for later jobs, independently of the completed job branch's lifetime.
+5. Keep the executor task, conversation, and usable worktree for later jobs independently of completed temporary branches; keeping them does not by itself justify keeping a merged or integrated job branch.
+   The executor returns the exact job branch, HEAD, worktree, remaining unique or dirty work, and whether that branch will be used again so the planner can safely complete its disposition.
+   After verified delivery, the planner carries authorized branch cleanup through the Git owner and records separate local-ref, remote-ref, and worktree dispositions before clearing the job.
+   A reusable clean worktree may detach at the verified job HEAD through the Git owner's helper before branch cleanup; worktree removal remains a separate authorized action.
+   Blocked cleanup remains tracked with its reason, owner, and resumption condition, and clearing the job requires either verified disposition or an explicit tracked handoff.
    Before the next implementation, inspect that worktree for uncommitted changes, unique commits, and current ownership, then safely prepare its next job branch from the latest verified integration-target commit and confirm its HEAD.
    Do not continue from a stale detached HEAD or reset away unfinished work; reconcile it or report the blocking condition before dispatch.
-   Branch/worktree cleanup is a separate authorized operation, not a prerequisite for reporting verified delivery.
 
 For a local-only `main` endpoint, checks at the updated canonical checkout permit completion; for an authorized remote `main` endpoint they are an intermediate check before verifying the remote result.
 For a PR-only endpoint, verify the requested PR without claiming or performing an unrequested merge.
@@ -123,7 +126,7 @@ Each task has its own history: include required context explicitly or link reada
 
 The executor checks the team, job ID, and revision against the existing link and its work history before execution.
 Repeated delivery of the same job returns existing progress or results instead of starting a second run.
-Implement and verify the authorized scope, then return the same IDs and revision, status, changes, verification outcome, result location, and unresolved limitations to the planner.
+Implement and verify the authorized scope, then return the same IDs and revision, status, changes, verification outcome, result location, unresolved limitations, and exact branch, HEAD, worktree, remaining unique or dirty work, and planned branch reuse to the planner.
 Use statuses `queued`, `running`, `completed`, `blocked`, or `cancelled`.
 A result below an experiment's target is still a completed experiment when its protocol was completed.
 

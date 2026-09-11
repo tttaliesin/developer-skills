@@ -103,6 +103,7 @@ merge rather than auto-merge or queue registration, issue closure, and branch cl
 completion, remote completion, pending gates, and remaining work separately when the result is
 partial.
 
-For branch cleanup after auto-merge or a merge queue, delete only the verified issue branch. Confirm
-actual merge and compare the local and remote branch SHA with the PR's merged head SHA immediately
-before deletion. A changed SHA means the branch has advanced and must not be deleted.
+For cleanup after a verified merge or direct integration, act only on the exact temporary branch owned by that authorized delivery, whether or not it used an Issue.
+Preserve a PR-only or branch-delivery endpoint and any branch with an explicit retention purpose.
+Confirm the accepted integration and compare local and remote branch SHA with the verified job or PR head immediately before deletion; a changed SHA means the branch advanced and must not be deleted.
+Record separate local-ref, remote-ref, and worktree dispositions, and keep any pending cleanup visible with its reason, owner, and resumption condition.

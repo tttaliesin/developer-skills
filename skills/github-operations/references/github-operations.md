@@ -120,6 +120,16 @@ Worker 경로의 결과만 있고 최종 목적지가 아직 이전 상태라면
 로컬 전용 endpoint에는 원격 단계를 추가하지 않는다.
 설치본도 납품 범위라면 정본의 Git 상태와 승인된 설치 파일의 반영 여부를 각각 검증한다.
 
+일반 구현이나 Issue 해결의 승인된 납품점이 대상 branch 통합 또는 PR merge까지 포함하면, Issue 유무와 관계없이 그 작업에 사용한 임시 branch의 정리 결과 확인도 같은 통합 책임자가 소유
+PR 없이 `main` 같은 대상 branch에 직접 통합하는 경로도 최종 대상의 수용 상태와 작업 branch의 정확한 head를 확인한 뒤 동일한 정리 계약 적용
+Branch 자체가 납품물이거나 PR 생성만 완료 지점인 경우, 명시적인 보존 목적이 있는 경우, 또는 사용자가 정리를 제외한 경우에는 그 경계를 유지하며 병합이나 삭제 미추가
+
+통합 책임자는 해당 임시 branch의 local ref, remote ref와 작업트리를 각각 `삭제 완료`, `보존`과 구체적 이유, `보류`와 이유·담당자·재개 조건, `해당 없음` 중 하나로 판정하고 같은 작업 결과에 기록
+추가 작업이나 명시적인 보존 목적이 없는 병합·통합 완료 임시 branch는 소유권과 안전 조건을 확인한 뒤 기존 safety helper로 정리
+지속 실행기나 재사용 작업트리를 보존하는 사실만으로 완료된 임시 branch를 보존하지 않는 원칙
+작업트리를 유지해야 하면 clean한 동일 commit에서 helper의 `detach`를 사용해 branch를 해제한 뒤 local·remote ref 정리를 계속하며, 작업트리 제거는 별도 승인된 경우에만 수행
+승인된 병합·통합 납품에 포함된 임시 branch의 정리 결과가 확인되지 않았거나 보류되면 전체 완료로 묶지 않고 완료된 납품과 남은 정리를 함께 보고
+
 남은 통합·정리는 이유, 담당자, 재개 조건과 현재 완료·대기 상태를 기존 작업에 남긴다.
 Worker가 끝났거나 idle이라는 이유로 의무를 지우거나 worktree를 삭제하지 않는다.
 완료 판정은 합의한 납품 검증 이후에만 하며 남은 의무를 다른 task로 명시적으로 이전하면 수신 task에서 계속 추적한다.
@@ -146,13 +156,13 @@ repository, Issue(해당하는 경우), base revision, 최종 납품 경로·wor
   목적지 통합이 남았으면 완료가 아닌 pending handoff로 반환한다.
   Git owner는 통합 결과를 확인한 뒤 기존 승인에 포함된 원격 단계를 이어가며 최종 완료 지점을 검증한다.
 
-이 lifecycle도 issue의 제품 요구와 repository 정책을 바꾸는 권한은 아니다. 다음 작업은 별도 요청이나
-승인이 필요하다.
+이 lifecycle은 제품 요구와 repository 정책을 바꾸는 권한이 아닌 경계
+다음 작업은 별도 요청이나 승인 필요
 
 - `--admin`으로 branch protection, required review 또는 merge queue를 우회한다.
 - Issue 범위와 acceptance criteria를 실질적으로 바꾸거나 unrelated repository를 변경한다.
 - Production 배포, release 발행, visibility 변경 또는 별도 운영 resource를 변경한다.
-- Issue branch가 아닌 다른 branch나 unrelated resource를 삭제한다.
+- 현재 승인된 작업용 임시 branch가 아닌 다른 branch나 unrelated resource 삭제
 
 Required review, 외부 check 또는 권한 때문에 merge를 완료할 수 없으면 우회하지 않는다. 현재 PR과
 대기 조건을 검증해 보고하고, 실제 merge·issue close가 일어나기 전에는 issue 해결을 완료로 판정하지
